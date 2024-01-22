@@ -15,12 +15,21 @@
                     "initialStateCheck": true
                 },
                 {
-                    "name": "DrawSubmit",
+                    "name": "IsDrawing",
+                    "type": "Button",
+                    "id": "7452fa12-faa5-466c-a921-78453d0a5976",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Cast",
                     "type": "Button",
                     "id": "dfd01cf6-d174-485e-9391-e10bba762f7d",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": "MultiTap",
+                    "interactions": "",
                     "initialStateCheck": false
                 }
             ],
@@ -38,12 +47,23 @@
                 },
                 {
                     "name": "",
-                    "id": "19a2503d-b8d5-4a2a-bf5c-df9148dd4b68",
-                    "path": "<Touchscreen>/Press",
+                    "id": "528ebb1c-0209-488a-8723-1e34f407391f",
+                    "path": "<Touchscreen>/primaryTouch/press",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "DrawSubmit",
+                    "action": "IsDrawing",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "19a2503d-b8d5-4a2a-bf5c-df9148dd4b68",
+                    "path": "<Touchscreen>/primaryTouch/tap",
+                    "interactions": "Tap",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Cast",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

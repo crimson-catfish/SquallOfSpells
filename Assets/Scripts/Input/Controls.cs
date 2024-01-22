@@ -37,12 +37,21 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": true
                 },
                 {
-                    ""name"": ""DrawSubmit"",
+                    ""name"": ""IsDrawing"",
+                    ""type"": ""Button"",
+                    ""id"": ""7452fa12-faa5-466c-a921-78453d0a5976"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Cast"",
                     ""type"": ""Button"",
                     ""id"": ""dfd01cf6-d174-485e-9391-e10bba762f7d"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
-                    ""interactions"": ""MultiTap"",
+                    ""interactions"": """",
                     ""initialStateCheck"": false
                 }
             ],
@@ -60,12 +69,23 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""19a2503d-b8d5-4a2a-bf5c-df9148dd4b68"",
-                    ""path"": ""<Touchscreen>/Press"",
+                    ""id"": ""528ebb1c-0209-488a-8723-1e34f407391f"",
+                    ""path"": ""<Touchscreen>/primaryTouch/press"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""DrawSubmit"",
+                    ""action"": ""IsDrawing"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""19a2503d-b8d5-4a2a-bf5c-df9148dd4b68"",
+                    ""path"": ""<Touchscreen>/primaryTouch/tap"",
+                    ""interactions"": ""Tap"",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Cast"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -77,7 +97,8 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         // Touch
         m_Touch = asset.FindActionMap("Touch", throwIfNotFound: true);
         m_Touch_Draw = m_Touch.FindAction("Draw", throwIfNotFound: true);
-        m_Touch_DrawSubmit = m_Touch.FindAction("DrawSubmit", throwIfNotFound: true);
+        m_Touch_IsDrawing = m_Touch.FindAction("IsDrawing", throwIfNotFound: true);
+        m_Touch_Cast = m_Touch.FindAction("Cast", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -140,13 +161,15 @@ public partial class @Controls: IInputActionCollection2, IDisposable
     private readonly InputActionMap m_Touch;
     private List<ITouchActions> m_TouchActionsCallbackInterfaces = new List<ITouchActions>();
     private readonly InputAction m_Touch_Draw;
-    private readonly InputAction m_Touch_DrawSubmit;
+    private readonly InputAction m_Touch_IsDrawing;
+    private readonly InputAction m_Touch_Cast;
     public struct TouchActions
     {
         private @Controls m_Wrapper;
         public TouchActions(@Controls wrapper) { m_Wrapper = wrapper; }
         public InputAction @Draw => m_Wrapper.m_Touch_Draw;
-        public InputAction @DrawSubmit => m_Wrapper.m_Touch_DrawSubmit;
+        public InputAction @IsDrawing => m_Wrapper.m_Touch_IsDrawing;
+        public InputAction @Cast => m_Wrapper.m_Touch_Cast;
         public InputActionMap Get() { return m_Wrapper.m_Touch; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -159,9 +182,12 @@ public partial class @Controls: IInputActionCollection2, IDisposable
             @Draw.started += instance.OnDraw;
             @Draw.performed += instance.OnDraw;
             @Draw.canceled += instance.OnDraw;
-            @DrawSubmit.started += instance.OnDrawSubmit;
-            @DrawSubmit.performed += instance.OnDrawSubmit;
-            @DrawSubmit.canceled += instance.OnDrawSubmit;
+            @IsDrawing.started += instance.OnIsDrawing;
+            @IsDrawing.performed += instance.OnIsDrawing;
+            @IsDrawing.canceled += instance.OnIsDrawing;
+            @Cast.started += instance.OnCast;
+            @Cast.performed += instance.OnCast;
+            @Cast.canceled += instance.OnCast;
         }
 
         private void UnregisterCallbacks(ITouchActions instance)
@@ -169,9 +195,12 @@ public partial class @Controls: IInputActionCollection2, IDisposable
             @Draw.started -= instance.OnDraw;
             @Draw.performed -= instance.OnDraw;
             @Draw.canceled -= instance.OnDraw;
-            @DrawSubmit.started -= instance.OnDrawSubmit;
-            @DrawSubmit.performed -= instance.OnDrawSubmit;
-            @DrawSubmit.canceled -= instance.OnDrawSubmit;
+            @IsDrawing.started -= instance.OnIsDrawing;
+            @IsDrawing.performed -= instance.OnIsDrawing;
+            @IsDrawing.canceled -= instance.OnIsDrawing;
+            @Cast.started -= instance.OnCast;
+            @Cast.performed -= instance.OnCast;
+            @Cast.canceled -= instance.OnCast;
         }
 
         public void RemoveCallbacks(ITouchActions instance)
@@ -192,6 +221,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
     public interface ITouchActions
     {
         void OnDraw(InputAction.CallbackContext context);
-        void OnDrawSubmit(InputAction.CallbackContext context);
+        void OnIsDrawing(InputAction.CallbackContext context);
+        void OnCast(InputAction.CallbackContext context);
     }
 }

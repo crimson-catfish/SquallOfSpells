@@ -1,36 +1,42 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class Drawer : MonoBehaviour
 {
     [SerializeField] private InputManager inputManager;
     
+    List<Vector2> currentDraw;
 
-    private void Awake()
-    {
-
-    }
 
     private void OnEnable()
     {
         inputManager.OnNextDrawPosition += HandleNextDrawPosition;
-        inputManager.OnDrawSubmit += HandleDrawSubmit;
+        inputManager.OnDrawEnd += HandleDrawEnd;
+        inputManager.OnCast += HandleCast;
     }
 
     private void OnDisable()
     {
         inputManager.OnNextDrawPosition -= HandleNextDrawPosition;
-        inputManager.OnDrawSubmit -= HandleDrawSubmit;  
+        inputManager.OnDrawEnd -= HandleDrawEnd;
+        inputManager.OnCast -= HandleCast;
     }
 
 
-    private void HandleNextDrawPosition(Vector2 vector)
+    private void HandleNextDrawPosition(Vector2 position)
     {
-        Debug.Log(vector);
+        currentDraw.Add(position);
     }
-    
-    private void HandleDrawSubmit()
+
+    private void HandleDrawEnd()
     {
-        Debug.Log("ASDFHJ");
+        // recognize rune lol
+        currentDraw.Clear();
     }
+
+    private void HandleCast()
+    {
+        // cast
+    }    
 }

@@ -5,7 +5,8 @@ using UnityEngine.InputSystem;
 public class InputManager : MonoBehaviour
 {
     public event Action<Vector2> OnNextDrawPosition;
-    public event Action OnDrawSubmit;
+    public event Action OnDrawEnd;
+    public event Action OnCast;
 
     private Controls controls;
 
@@ -28,8 +29,8 @@ public class InputManager : MonoBehaviour
     private void Start()
     {
         controls.Touch.Draw.performed += Draw;
-        controls.Touch.Draw.started += (context) => Debug.Log("strt");
-        controls.Touch.DrawSubmit.performed += DrawSubmited;
+        controls.Touch.IsDrawing.canceled += DrawEnd;
+        controls.Touch.Cast.performed += Cast;
     }
 
 
@@ -38,8 +39,13 @@ public class InputManager : MonoBehaviour
         OnNextDrawPosition?.Invoke(context.ReadValue<Vector2>());
     }
 
-    private void DrawSubmited(InputAction.CallbackContext context)
+    private void DrawEnd(InputAction.CallbackContext context)
     {
-        OnDrawSubmit?.Invoke();
+        OnDrawEnd?.Invoke();
+    }
+
+    private void Cast(InputAction.CallbackContext context)
+    {
+        OnCast?.Invoke();
     }
 }
