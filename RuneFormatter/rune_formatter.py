@@ -3,9 +3,9 @@ import glob
 import numpy as np
 import os
 
-RAW_RUNES_PATH = "Runes\\Raw\\*"
-OUTPUT_BLURED_RUNES_PATH = "..\\Assets\\Resources\\Runes\\Blured"
-OUTPUT_UNBLURED_RUNES_PATH = "..\\Assets\\Resources\\Runes\\Unblured"
+RAW_RUNES_PATH = "RuneFormatter\\Runes\\Raw\\*"
+OUTPUT_BLURED_RUNES_PATH = "Assets\\Resources\\Runes\\Blurred"
+OUTPUT_UNBLURED_RUNES_PATH = "Assets\\Resources\\Runes\\Unblurred"
 TRESHHOLD = 128
 TARGET_HEIGHT = 512
 CROP_STEP = 2
@@ -40,3 +40,5 @@ thin_images = list(map(lambda image: image.point(lambda pixel: pixel**1.05 if pi
 
 for i, image in enumerate(thin_images):
     image.save(OUTPUT_BLURED_RUNES_PATH + "\\blurred_rune_" + str(i) + ".bmp")
+
+print("SUCCESS!")
