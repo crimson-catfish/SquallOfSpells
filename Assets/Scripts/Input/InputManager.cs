@@ -28,24 +28,8 @@ public class InputManager : MonoBehaviour
 
     private void Start()
     {
-        controls.Touch.Draw.performed += Draw;
-        controls.Touch.IsDrawing.canceled += DrawEnd;
-        controls.Touch.Cast.performed += Cast;
-    }
-
-
-    private void Draw(InputAction.CallbackContext context)
-    {
-        OnNextDrawPosition?.Invoke(context.ReadValue<Vector2>());
-    }
-
-    private void DrawEnd(InputAction.CallbackContext context)
-    {
-        OnDrawEnd?.Invoke();
-    }
-
-    private void Cast(InputAction.CallbackContext context)
-    {
-        OnCast?.Invoke();
+        controls.Touch.Draw.performed      += (context) => OnNextDrawPosition?.Invoke(context.ReadValue<Vector2>());
+        controls.Touch.IsDrawing.canceled  += (context) => OnDrawEnd?.Invoke();
+        controls.Touch.Cast.performed      += (context) => OnCast?.Invoke();
     }
 }
