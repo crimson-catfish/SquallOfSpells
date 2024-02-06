@@ -12,65 +12,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b6d00d52b30ddf64cabbb72193e27f67, type: 3}
   m_Name: RunesStorage
   m_EditorClassIdentifier: 
-  runeNames:
-  - blurred_rune_0
-  - blurred_rune_1
-  - blurred_rune_10
-  - blurred_rune_11
-  - blurred_rune_12
-  - blurred_rune_13
-  - blurred_rune_14
-  - blurred_rune_15
-  - blurred_rune_16
-  - blurred_rune_17
-  - blurred_rune_18
-  - blurred_rune_19
-  - blurred_rune_2
-  - blurred_rune_20
-  - blurred_rune_21
-  - blurred_rune_22
-  - blurred_rune_23
-  - blurred_rune_24
-  - blurred_rune_25
-  - blurred_rune_26
-  - blurred_rune_27
-  - blurred_rune_28
-  - blurred_rune_29
-  - blurred_rune_3
-  - blurred_rune_30
-  - blurred_rune_31
-  - blurred_rune_32
-  - blurred_rune_33
-  - blurred_rune_34
-  - blurred_rune_35
-  - blurred_rune_36
-  - blurred_rune_37
-  - blurred_rune_38
-  - blurred_rune_39
-  - blurred_rune_4
-  - blurred_rune_40
-  - blurred_rune_41
-  - blurred_rune_42
-  - blurred_rune_43
-  - blurred_rune_44
-  - blurred_rune_45
-  - blurred_rune_46
-  - blurred_rune_47
-  - blurred_rune_48
-  - blurred_rune_49
-  - blurred_rune_5
-  - blurred_rune_50
-  - blurred_rune_51
-  - blurred_rune_52
-  - blurred_rune_53
-  - blurred_rune_54
-  - blurred_rune_55
-  - blurred_rune_56
-  - blurred_rune_57
-  - blurred_rune_58
-  - blurred_rune_59
-  - blurred_rune_6
-  - blurred_rune_60
-  - blurred_rune_7
-  - blurred_rune_8
-  - blurred_rune_9
+  runes:
+  - preview: {fileID: 2800000, guid: 06f033c10c80cee49912b798a39f8208, type: 3}
+    avaregeMass: 0
+    avaregeMassCenter: {x: 0, y: 0}
+    avaregeRatio: 0
+    drawVariations:
+    - points: []
+      mass: 0
+      massCenter: {x: 0, y: 0}
+      ratio: 0
+  - preview: {fileID: 2800000, guid: c644bc3692fd81b418be275c538e4fa1, type: 3}
+    avaregeMass: 0
+    avaregeMassCenter: {x: 0, y: 0}
+    avaregeRatio: 0
+    drawVariations: []
+  - preview: {fileID: 2800000, guid: c644bc3692fd81b418be275c538e4fa1, type: 3}
+    avaregeMass: 0
+    avaregeMassCenter: {x: 0, y: 0}
+    avaregeRatio: 0
+    drawVariations: []
+  - preview: {fileID: 2800000, guid: c644bc3692fd81b418be275c538e4fa1, type: 3}
+    avaregeMass: 0
+    avaregeMassCenter: {x: 0, y: 0}
+    avaregeRatio: 0
+    drawVariations: []

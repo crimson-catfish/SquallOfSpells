@@ -1,10 +1,10 @@
 using System;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
-public class InputManager : MonoBehaviour
+public class InputManager : Singleton<InputManager>
 {
     public event Action<Vector2> OnNextDrawPosition;
+    public event Action OnDrawStart;
     public event Action OnDrawEnd;
     public event Action OnCast;
 
@@ -28,6 +28,7 @@ public class InputManager : MonoBehaviour
 
     private void Start()
     {
+        controls.Touch.IsDrawing.started   += (context) => OnDrawStart?.Invoke();
         controls.Touch.Draw.performed      += (context) => OnNextDrawPosition?.Invoke(context.ReadValue<Vector2>());
         controls.Touch.IsDrawing.canceled  += (context) => OnDrawEnd?.Invoke();
         controls.Touch.Cast.performed      += (context) => OnCast?.Invoke();

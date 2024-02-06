@@ -1,8 +1,8 @@
 using UnityEngine;
 
-public class RuneImporter : MonoBehaviour
+public class OldRuneImporter : MonoBehaviour
 {
-    [SerializeField] private RunesStorage runesStorage;
+    [SerializeField] private OldRunesStorage runesStorage;
 
 
     public void ImportNew()

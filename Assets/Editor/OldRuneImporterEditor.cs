@@ -1,13 +1,13 @@
 using UnityEngine;
 using UnityEditor;
 
-[CustomEditor(typeof(RuneImporter))]
-public class RuneImporterEditor : Editor
+[CustomEditor(typeof(OldRuneImporter))]
+public class OldRuneImporterEditor : Editor
 {
     public override void OnInspectorGUI()
     {
         DrawDefaultInspector();
-        RuneImporter runeImporter = (RuneImporter)target;
+        OldRuneImporter runeImporter = (OldRuneImporter)target;
 
         if (GUILayout.Button("Import new")) runeImporter.ImportNew();
         if (GUILayout.Button("Reimport all")) runeImporter.ReimportAll();

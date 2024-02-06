@@ -3,7 +3,7 @@ using UnityEngine;
 using AYellowpaper.SerializedCollections;
 
 [CreateAssetMenu(fileName = "RunesStorage", menuName = "ScriptableObjects")]
-public class RunesStorage : ScriptableObject
+public class OldRunesStorage : ScriptableObject
 {
     public SerializedDictionary<string, RuneImage> runeImages = new();
 
