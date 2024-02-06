@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class RuneDrawManager : Singleton<RuneDrawManager>
 {
-    public Action<RuneVariation> OnNewDrawVariation;
+    public Action<RuneDrawVariation> OnNewDrawVariation;
 
     [SerializeField] private GameObject pointPrefab;
     
@@ -36,7 +36,6 @@ public class RuneDrawManager : Singleton<RuneDrawManager>
 
     private void HandleNextDrawPosition(Vector2 nextDrawPosition)
     {
-        print("handle" + nextDrawPosition);
         Debug.DrawLine(nextDrawPosition, nextDrawPosition + new Vector2(1, 1), Color.red, 1000);
 
         if (drawPoints.Count > 0)
@@ -44,25 +43,20 @@ public class RuneDrawManager : Singleton<RuneDrawManager>
             // check if distance between previous and current position is too small for the optimisation sake
             if ((lastPointPosition - nextDrawPosition).magnitude < requairedDistanceBetweenPoints)
             {
-                print("too close to last one");
                 return;
             }
             else
             {
-                print("not too close to last");
-                print(lastPointPosition);
             }
         }
         else
         {
-            print("first");
             CreateNewPoint(nextDrawPosition);
             return;
         }
 
         while (true)
         {
-            print("in while loop");
             // find the closest point and distance to it
             float minimalDistance = Mathf.Infinity;
             Vector2 closestPoint = new();
@@ -95,7 +89,7 @@ public class RuneDrawManager : Singleton<RuneDrawManager>
 
     private void PrepareRuneVariation()
     {
-        RuneVariation drawVariation = new();
+        RuneDrawVariation drawVariation = new();
 
         Vector2 size = new(drawFrame[2] - drawFrame[0], drawFrame[3] - drawFrame[1]);
 

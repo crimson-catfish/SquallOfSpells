@@ -5,15 +5,26 @@ using UnityEngine;
 [Serializable]
 public class Rune
 {
-    public Texture2D preview;
-    public float avaregeMass;
-    public Vector2 avaregeMassCenter;
-    public float avaregeRatio;
-    public List<RuneVariation> drawVariations;
+    public Texture2D               Preview           { get; private set; }
+    public float                   AvaregeMass       { get; private set; }
+    public Vector2                 AvaregeMassCenter { get; private set; }
+    public float                   AvaregeRatio      { get; private set; }
+    public List<RuneDrawVariation> DrawVariations    { get; private set; }
+
+    public void AddNewRuneDrawVariation(RuneDrawVariation drawVariation)
+    {
+        //TODO: set preview
+
+        AvaregeMass       = (AvaregeMass       * DrawVariations.Count + drawVariation.mass)       / (DrawVariations.Count + 1);
+        AvaregeMassCenter = (AvaregeMassCenter * DrawVariations.Count + drawVariation.massCenter) / (DrawVariations.Count + 1);
+        AvaregeRatio      = (AvaregeRatio      * DrawVariations.Count + drawVariation.ratio)      / (DrawVariations.Count + 1);
+
+        DrawVariations.Add(drawVariation);
+    }
 }
 
 [Serializable]
-public class RuneVariation
+public class RuneDrawVariation
 {
     public Vector2[] points;
     public int mass = 0;
