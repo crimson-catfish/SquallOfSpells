@@ -13,27 +13,5 @@ MonoBehaviour:
   m_Name: RunesStorage
   m_EditorClassIdentifier: 
   runes:
-  - preview: {fileID: 2800000, guid: 06f033c10c80cee49912b798a39f8208, type: 3}
-    avaregeMass: 0
-    avaregeMassCenter: {x: 0, y: 0}
-    avaregeRatio: 0
-    drawVariations:
-    - points: []
-      mass: 0
-      massCenter: {x: 0, y: 0}
-      ratio: 0
-  - preview: {fileID: 2800000, guid: c644bc3692fd81b418be275c538e4fa1, type: 3}
-    avaregeMass: 0
-    avaregeMassCenter: {x: 0, y: 0}
-    avaregeRatio: 0
-    drawVariations: []
-  - preview: {fileID: 2800000, guid: c644bc3692fd81b418be275c538e4fa1, type: 3}
-    avaregeMass: 0
-    avaregeMassCenter: {x: 0, y: 0}
-    avaregeRatio: 0
-    drawVariations: []
-  - preview: {fileID: 2800000, guid: c644bc3692fd81b418be275c538e4fa1, type: 3}
-    avaregeMass: 0
-    avaregeMassCenter: {x: 0, y: 0}
-    avaregeRatio: 0
-    drawVariations: []
+  - <Preview>k__BackingField: {fileID: 0}
+  - <Preview>k__BackingField: {fileID: 0}

@@ -4,49 +4,60 @@ using UnityEngine;
 
 public class RuneMaker : MonoBehaviour
 {
-    public RuneStorage runeStorage;
-
-    [HideInInspector] public int runeToEditIndex = 0;
+    [SerializeField] private RuneStorage runeStorage;
 
     private Rune runeToEdit;
     private RuneDrawVariation drawVariation;
     private InputManager inputManager;
     private RuneDrawManager drawManager;
-    private SpriteRenderer spriteRenderer;
+    private Texture2D defaultRunePreview;
 
 
     private void Awake()
     {
         inputManager = InputManager.instance;
         drawManager = RuneDrawManager.instance;
-        spriteRenderer = GetComponent<SpriteRenderer>();
+        defaultRunePreview = Resources.Load<Texture2D>("Textures/Runes/defaultRunePreview");
+        runeToEdit = new Rune(defaultRunePreview);
     }
 
     private void OnEnable()
     {
         drawManager.OnNewDrawVariation += CasheNewRuneDrawVariation;
-        inputManager.OnCast += SaveRune;
     }
 
     private void OnDisable()
     {
         drawManager.OnNewDrawVariation -= CasheNewRuneDrawVariation;
-        inputManager.OnCast -= SaveRune;
     }
-
     
+
     private void CasheNewRuneDrawVariation(RuneDrawVariation variation)
     {
         drawVariation = variation;
     }
 
-    private void SaveRune()
+    public void SaveRuneDrawVariation()
     {
-        runeStorage.runes[runeToEditIndex].AddNewRuneDrawVariation(drawVariation);
+        if (drawVariation == null)
+        {
+            print("Draw something to save firstly :)");
+            return;
+        }
+
+        runeToEdit.AddNewRuneDrawVariation(drawVariation);
     }
 
     public void NewRune()
     {
-        runeStorage.runes.Add(new Rune());
+        runeToEdit = new Rune(defaultRunePreview);
+        Debug.Log(runeToEdit);
+        Debug.Log(defaultRunePreview);
+        runeStorage.runes.Add(runeToEdit);
+    }
+
+    public void DeleteCurrentRune()
+    {
+        runeStorage.runes.Remove(runeToEdit);
     }
 }
