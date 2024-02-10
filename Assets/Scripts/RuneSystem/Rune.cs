@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 using System;
-
+    
 [Serializable]
 public class Rune
 {
@@ -24,6 +24,10 @@ public class Rune
 
         DrawVariations.Add(drawVariation);
 
-        Preview = Resources.Load<Texture2D>("Textures/Runes/defaultRunePreview");
+        Texture2D preview = Preview;
+        foreach (Vector2 point in drawVariation.points)
+        {
+            // preview.SetPixels();
+        }
     }
 }

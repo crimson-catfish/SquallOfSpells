@@ -7,13 +7,14 @@ public class RuneDrawManager : Singleton<RuneDrawManager>
     public Action<RuneDrawVariation> OnNewDrawVariation;
 
     [SerializeField] private GameObject pointPrefab;
+    [SerializeField] private int step = 10;
     
     private InputManager inputManager;
     private Vector2 momentSum = Vector2.zero;
     private float[] drawFrame = new float[] { Mathf.Infinity, Mathf.NegativeInfinity, Mathf.Infinity, Mathf.NegativeInfinity };
     private List<Vector2> drawPoints = new();
-    private Vector2 lastPointPosition;
-    private float requairedDistanceBetweenPoints = 20;
+    private Vector2 lastPoint;
+    private float requairedDistance = 20;
 
 
     private void Awake()
@@ -36,47 +37,31 @@ public class RuneDrawManager : Singleton<RuneDrawManager>
 
     private void HandleNextDrawPosition(Vector2 nextDrawPosition)
     {
-        Debug.DrawLine(nextDrawPosition, nextDrawPosition + new Vector2(1, 1), Color.red, 1000);
-
-        if (drawPoints.Count > 0)
-        {
-            // check if distance between previous and current position is too small for the optimisation sake
-            if ((lastPointPosition - nextDrawPosition).magnitude < requairedDistanceBetweenPoints)
-            {
-                return;
-            }
-            else
-            {
-            }
-        }
-        else
+        if (drawPoints.Count == 0)
         {
             CreateNewPoint(nextDrawPosition);
             return;
         }
 
-        while (true)
+        // check for the last point firstly becouse it's likely to be too close and then we don't need to do all heavy calculations
+        if ((nextDrawPosition - lastPoint).magnitude < requairedDistance) return;
+
+        while ((lastPoint - nextDrawPosition).magnitude >= requairedDistance)
         {
-            // find the closest point and distance to it
-            float minimalDistance = Mathf.Infinity;
-            Vector2 closestPoint = new();
-            foreach (Vector2 pointPosition in drawPoints)
-            {
-                float distance = (pointPosition - nextDrawPosition).magnitude;
-                if (distance < minimalDistance) 
-                {
-                    minimalDistance = distance;
-                    closestPoint = pointPosition;
-                }
-            }
+            Vector2 pointToCheck = lastPoint + ((nextDrawPosition - lastPoint).normalized * requairedDistance);
+
+            Closest closest = FindClosestPoint(pointToCheck);
+
 
             // check if distance is long enough
-            if (minimalDistance < requairedDistanceBetweenPoints)
+            if (closest.sqrDistance >= (requairedDistance * requairedDistance * 0.99))
             {
-                break;
+                CreateNewPoint(pointToCheck);
             }
-
-            CreateNewPoint(closestPoint + (nextDrawPosition - closestPoint).normalized * requairedDistanceBetweenPoints * 1f);
+            else
+            {
+                HeavyCheck(nextDrawPosition, pointToCheck);
+            }
         }
     }
 
@@ -86,6 +71,46 @@ public class RuneDrawManager : Singleton<RuneDrawManager>
         ClearVariablesForNewRuneVariation();
     }
 
+    private void HeavyCheck(Vector2 nextDrawPosition, Vector2 pointToCheck)
+    {
+        Closest closest = FindClosestPoint(pointToCheck);
+
+        for (int currentStep = step; currentStep <= (nextDrawPosition - pointToCheck).magnitude; currentStep += step)
+        {
+            pointToCheck += (pointToCheck - lastPoint).normalized * currentStep;
+            
+            closest = FindClosestPoint(pointToCheck);
+
+            if (closest.sqrDistance >= (requairedDistance * requairedDistance * 0.99))
+            {
+                CreateNewPoint(pointToCheck);
+                return;
+            }
+        }
+        lastPoint = closest.point;
+    }
+
+    private Closest FindClosestPoint(Vector2 pointToCheck) 
+    {
+        Closest closest = new();
+        closest.sqrDistance = Mathf.Infinity;
+        foreach (Vector2 point in drawPoints)
+        {
+            float sqrDistance = (point - pointToCheck).sqrMagnitude;
+            if (sqrDistance < closest.sqrDistance) 
+            {
+                closest.sqrDistance = sqrDistance;
+                closest.point = point;
+            }
+        }
+        return closest;
+    }
+
+    private struct Closest
+    {
+        public Vector2 point;
+        public float sqrDistance;
+    }
 
     private void PrepareRuneVariation()
     {
@@ -116,7 +141,7 @@ public class RuneDrawManager : Singleton<RuneDrawManager>
     private void CreateNewPoint(Vector2 position)
     {
         Instantiate(pointPrefab, new Vector3(position.x, position.y, 0f), Quaternion.identity);
-        lastPointPosition = position;
+        lastPoint = position;
         drawPoints.Add(position);
         momentSum += position;
         if (position.x < drawFrame[0]) drawFrame[0] = position.x;

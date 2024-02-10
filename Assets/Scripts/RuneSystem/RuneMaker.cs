@@ -17,8 +17,7 @@ public class RuneMaker : MonoBehaviour
     {
         inputManager = InputManager.instance;
         drawManager = RuneDrawManager.instance;
-        defaultRunePreview = Resources.Load<Texture2D>("Textures/Runes/defaultRunePreview");
-        runeToEdit = new Rune(defaultRunePreview);
+        runeToEdit = new(new Texture2D(128, 128, TextureFormat.Alpha8, false));
     }
 
     private void OnEnable()
@@ -50,7 +49,7 @@ public class RuneMaker : MonoBehaviour
 
     public void NewRune()
     {
-        runeToEdit = new Rune(defaultRunePreview);
+        runeToEdit = new(new Texture2D(128, 128, TextureFormat.Alpha8, false));
         Debug.Log(runeToEdit);
         Debug.Log(defaultRunePreview);
         runeStorage.runes.Add(runeToEdit);
