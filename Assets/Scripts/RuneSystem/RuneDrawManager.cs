@@ -6,15 +6,14 @@ public class RuneDrawManager : Singleton<RuneDrawManager>
 {
     public Action<RuneDrawVariation> OnNewDrawVariation;
 
+    [SerializeField] private RuneDrawParameters parameters;
     [SerializeField] private GameObject pointPrefab;
-    [SerializeField] private int step = 10;
     
     private InputManager inputManager;
     private Vector2 momentSum = Vector2.zero;
     private float[] drawFrame = new float[] { Mathf.Infinity, Mathf.NegativeInfinity, Mathf.Infinity, Mathf.NegativeInfinity };
     private List<Vector2> drawPoints = new();
     private Vector2 lastPoint;
-    private float requairedDistance = 20;
 
 
     private void Awake()
@@ -44,17 +43,17 @@ public class RuneDrawManager : Singleton<RuneDrawManager>
         }
 
         // check for the last point firstly becouse it's likely to be too close and then we don't need to do all heavy calculations
-        if ((nextDrawPosition - lastPoint).magnitude < requairedDistance) return;
+        if ((nextDrawPosition - lastPoint).magnitude < parameters.requairedDistance) return;
 
-        while ((lastPoint - nextDrawPosition).magnitude >= requairedDistance)
+        while ((lastPoint - nextDrawPosition).magnitude >= parameters.requairedDistance)
         {
-            Vector2 pointToCheck = lastPoint + ((nextDrawPosition - lastPoint).normalized * requairedDistance);
+            Vector2 pointToCheck = lastPoint + ((nextDrawPosition - lastPoint).normalized * parameters.requairedDistance);
 
             Closest closest = FindClosestPoint(pointToCheck);
 
 
             // check if distance is long enough
-            if (closest.sqrDistance >= (requairedDistance * requairedDistance * 0.99))
+            if (closest.sqrDistance >= (parameters.requairedDistance * parameters.requairedDistance * (1 - parameters.acceptableError)))
             {
                 CreateNewPoint(pointToCheck);
             }
@@ -75,13 +74,13 @@ public class RuneDrawManager : Singleton<RuneDrawManager>
     {
         Closest closest = FindClosestPoint(pointToCheck);
 
-        for (int currentStep = step; currentStep <= (nextDrawPosition - pointToCheck).magnitude; currentStep += step)
+        for (int currentStep = parameters.heavyCheckStep; currentStep <= (nextDrawPosition - pointToCheck).magnitude; currentStep += parameters.heavyCheckStep)
         {
             pointToCheck += (pointToCheck - lastPoint).normalized * currentStep;
             
             closest = FindClosestPoint(pointToCheck);
 
-            if (closest.sqrDistance >= (requairedDistance * requairedDistance * 0.99))
+            if (closest.sqrDistance >= (parameters.requairedDistance * parameters.requairedDistance * 0.99))
             {
                 CreateNewPoint(pointToCheck);
                 return;

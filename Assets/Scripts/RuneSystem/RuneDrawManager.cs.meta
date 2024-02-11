@@ -4,6 +4,7 @@ MonoImporter:
   externalObjects: {}
   serializedVersion: 2
   defaultReferences:
+  - parameters: {fileID: 11400000, guid: 907586a1789df57438ce9cd466a8e1fa, type: 2}
   - pointPrefab: {fileID: 3951253166124537439, guid: 16723f07151ad2d44ae6eb2be82a754e, type: 3}
   executionOrder: 0
   icon: {instanceID: 0}
