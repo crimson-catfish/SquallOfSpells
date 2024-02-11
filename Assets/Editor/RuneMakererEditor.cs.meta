@@ -3,7 +3,8 @@ guid: 7abb9e9f20c804340a30bf284c9acdb1
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - runeStorage: {fileID: 11400000, guid: be54250f59b104a42828af839132ca3c, type: 2}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

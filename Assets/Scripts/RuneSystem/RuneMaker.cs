@@ -17,7 +17,7 @@ public class RuneMaker : MonoBehaviour
     {
         inputManager = InputManager.instance;
         drawManager = RuneDrawManager.instance;
-        runeToEdit = new(new Texture2D(128, 128, TextureFormat.Alpha8, false));
+        runeToEdit = new(new Texture2D(128, 128, TextureFormat.ARGB32, false));
     }
 
     private void OnEnable()
@@ -49,7 +49,7 @@ public class RuneMaker : MonoBehaviour
 
     public void NewRune()
     {
-        runeToEdit = new(new Texture2D(128, 128, TextureFormat.Alpha8, false));
+        runeToEdit = new(new Texture2D(128, 128, TextureFormat.ARGB32, false));
         runeStorage.runes.Add(runeToEdit);
     }
 
