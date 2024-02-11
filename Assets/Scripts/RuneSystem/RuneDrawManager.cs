@@ -134,13 +134,11 @@ public class RuneDrawManager : Singleton<RuneDrawManager>
             y2xRatio = drawFrame.height / drawFrame.width
         };
 
-
         Vector2 ratioFactor = new(1,drawVariation.y2xRatio);
         for (int i = 0; i < drawPoints.Count; i++)
         {
             drawVariation.points[i] = Rect.PointToNormalized(drawFrame, drawPoints[i]) * ratioFactor;
         }
-
 
         OnNewDrawVariation?.Invoke(drawVariation);
     }
