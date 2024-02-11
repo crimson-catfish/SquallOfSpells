@@ -8,7 +8,11 @@ public class RuneDrawVariation
     /// Normalized by X.
     /// </summary>
     public Vector2[] points;
-    public int mass = 0;
+
+    /// <summary>
+    /// Normalized by X.
+    /// </summary>
     public Vector2 massCenter = Vector2.zero;
+    
     public float y2xRatio;
 }

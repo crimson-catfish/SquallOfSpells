@@ -18,7 +18,7 @@ public class Rune
 
     public void AddNewRuneDrawVariation(RuneDrawVariation drawVariation)
     {
-        AvaregeMass = (AvaregeMass * DrawVariations.Count + drawVariation.mass) / (DrawVariations.Count + 1);
+        AvaregeMass = (AvaregeMass * DrawVariations.Count + drawVariation.points.Length) / (DrawVariations.Count + 1);
         AvaregeMassCenter = (AvaregeMassCenter * DrawVariations.Count + drawVariation.massCenter) / (DrawVariations.Count + 1);
         AvaregeRatio = (AvaregeRatio * DrawVariations.Count + drawVariation.y2xRatio) / (DrawVariations.Count + 1);
 

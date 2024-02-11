@@ -129,12 +129,13 @@ public class RuneDrawManager : Singleton<RuneDrawManager>
         RuneDrawVariation drawVariation = new()
         {
             points = new Vector2[drawPoints.Count],
-            mass = drawPoints.Count,
-            massCenter = momentSum / drawPoints.Count,
             y2xRatio = drawFrame.height / drawFrame.width
         };
 
-        Vector2 ratioFactor = new(1,drawVariation.y2xRatio);
+        Vector2 ratioFactor = new(1, drawVariation.y2xRatio);
+        
+        drawVariation.massCenter = Rect.PointToNormalized(drawFrame, momentSum / drawPoints.Count) * ratioFactor;
+
         for (int i = 0; i < drawPoints.Count; i++)
         {
             drawVariation.points[i] = Rect.PointToNormalized(drawFrame, drawPoints[i]) * ratioFactor;
