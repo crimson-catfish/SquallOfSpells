@@ -1,18 +1,16 @@
 using System;
 using UnityEngine;
 
+/// <summary>
+/// rune's width always 1, height is positive.
+/// </summary>
 [Serializable]
 public class RuneDrawVariation
 {
-    /// <summary>
-    /// Normalized by X.
-    /// </summary>
-    public Vector2[] points;
+    public const float width = 1;
+    public float height;
 
-    /// <summary>
-    /// Normalized by X.
-    /// </summary>
     public Vector2 massCenter = Vector2.zero;
-    
-    public float y2xRatio;
+
+    public Vector2[] points;
 }

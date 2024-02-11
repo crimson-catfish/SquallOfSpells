@@ -50,8 +50,6 @@ public class RuneMaker : MonoBehaviour
     public void NewRune()
     {
         runeToEdit = new(new Texture2D(128, 128, TextureFormat.Alpha8, false));
-        Debug.Log(runeToEdit);
-        Debug.Log(defaultRunePreview);
         runeStorage.runes.Add(runeToEdit);
     }
 
