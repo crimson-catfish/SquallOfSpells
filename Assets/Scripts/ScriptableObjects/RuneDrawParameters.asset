@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2b4ed2837904f9f4f80b11ba04f1c679, type: 3}
-  m_Name: RuneDrawParametrs
+  m_Name: RuneDrawParameters
   m_EditorClassIdentifier: 
   requairedDistance: 20
   acceptableError: 0.01

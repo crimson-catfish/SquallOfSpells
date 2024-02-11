@@ -237,8 +237,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1164934796}
-  - component: {fileID: 1164934798}
   - component: {fileID: 1164934799}
+  - component: {fileID: 1164934798}
   m_Layer: 0
   m_Name: RuneMaker
   m_TagString: EditorOnly

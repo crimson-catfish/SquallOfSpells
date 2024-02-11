@@ -11,7 +11,7 @@ public class RuneDrawManager : Singleton<RuneDrawManager>
     
     private InputManager inputManager;
     private Vector2 momentSum = Vector2.zero;
-    private float[] drawFrame = new float[] { Mathf.Infinity, Mathf.NegativeInfinity, Mathf.Infinity, Mathf.NegativeInfinity };
+    private Rect drawFrame = new();
     private List<Vector2> drawPoints = new();
     private Vector2 lastPoint;
 
@@ -38,6 +38,8 @@ public class RuneDrawManager : Singleton<RuneDrawManager>
     {
         if (drawPoints.Count == 0)
         {
+            momentSum = Vector2.zero;
+            drawFrame = new Rect(nextDrawPosition.x, nextDrawPosition.y, 0, 0);
             CreateNewPoint(nextDrawPosition);
             return;
         }
@@ -67,7 +69,7 @@ public class RuneDrawManager : Singleton<RuneDrawManager>
     private void HandleDrawEnd()
     {
         PrepareRuneVariation();
-        ClearVariablesForNewRuneVariation();
+        drawPoints.Clear();
     }
 
     private void HeavyCheck(Vector2 nextDrawPosition, Vector2 pointToCheck)
@@ -91,8 +93,7 @@ public class RuneDrawManager : Singleton<RuneDrawManager>
 
     private Closest FindClosestPoint(Vector2 pointToCheck) 
     {
-        Closest closest = new();
-        closest.sqrDistance = Mathf.Infinity;
+        Closest closest = new() { sqrDistance = Mathf.Infinity };
         foreach (Vector2 point in drawPoints)
         {
             float sqrDistance = (point - pointToCheck).sqrMagnitude;
@@ -111,41 +112,36 @@ public class RuneDrawManager : Singleton<RuneDrawManager>
         public float sqrDistance;
     }
 
-    private void PrepareRuneVariation()
-    {
-        RuneDrawVariation drawVariation = new();
-
-        Vector2 size = new(drawFrame[2] - drawFrame[0], drawFrame[3] - drawFrame[1]);
-
-        drawVariation.points = new Vector2[drawPoints.Count];
-        for (int i = 0; i < drawPoints.Count; i++)
-        {
-            drawVariation.points[i] = drawPoints[i] / size;
-        }
-
-        drawVariation.mass = drawPoints.Count;
-        drawVariation.massCenter = momentSum / drawPoints.Count;
-        drawVariation.ratio = size.y / size.x;
-
-        OnNewDrawVariation?.Invoke(drawVariation);
-    }
-
-    private void ClearVariablesForNewRuneVariation()
-    {
-        drawPoints.Clear();
-        drawFrame = new float[] { Mathf.Infinity, Mathf.NegativeInfinity, Mathf.Infinity, Mathf.NegativeInfinity };
-        momentSum = Vector2.zero;
-    }
-
     private void CreateNewPoint(Vector2 position)
     {
         Instantiate(pointPrefab, new Vector3(position.x, position.y, 0f), Quaternion.identity);
         lastPoint = position;
         drawPoints.Add(position);
         momentSum += position;
-        if (position.x < drawFrame[0]) drawFrame[0] = position.x;
-        if (position.y < drawFrame[1]) drawFrame[1] = position.y;
-        if (position.x > drawFrame[2]) drawFrame[2] = position.x;
-        if (position.y > drawFrame[3]) drawFrame[3] = position.y;
+        if (position.x > drawFrame.xMax) drawFrame.xMax = position.x;
+        if (position.x < drawFrame.xMin) drawFrame.xMin = position.x;
+        if (position.y > drawFrame.yMax) drawFrame.yMax = position.y;
+        if (position.y < drawFrame.yMin) drawFrame.yMin = position.y;
+    }
+    
+    private void PrepareRuneVariation()
+    {
+        RuneDrawVariation drawVariation = new()
+        {
+            points = new Vector2[drawPoints.Count],
+            mass = drawPoints.Count,
+            massCenter = momentSum / drawPoints.Count,
+            y2xRatio = drawFrame.height / drawFrame.width
+        };
+
+
+        Vector2 ratioFactor = new(1,drawVariation.y2xRatio);
+        for (int i = 0; i < drawPoints.Count; i++)
+        {
+            drawVariation.points[i] = Rect.PointToNormalized(drawFrame, drawPoints[i]) * ratioFactor;
+        }
+
+
+        OnNewDrawVariation?.Invoke(drawVariation);
     }
 }

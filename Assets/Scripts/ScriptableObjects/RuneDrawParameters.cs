@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "RuneDrawParametrs", menuName = "ScriptableObjects/RuneDrawParametrs")]
+[CreateAssetMenu(fileName = "RuneDrawParameters", menuName = "ScriptableObjects/RuneDrawParameters")]
 public class RuneDrawParameters : ScriptableObject
 {
     public float requairedDistance;
