@@ -1,7 +1,10 @@
 using UnityEngine;
 using System.Collections.Generic;
 using System;
-    
+using System.IO;
+using UnityEditor;
+using Unity.VisualScripting;
+
 /// <summary>
 /// rune's width always 1, height is positive.
 /// </summary>
@@ -10,16 +13,34 @@ public class Rune
 {
     public const float width = 1;
 
-    [field: SerializeField] public Texture2D Preview { get; private set; }
     public float AvaregeMass { get; private set; } = 0;
     public Vector2 AvaregeMassCenter { get; private set; } = Vector2.zero;
     public float Height { get; private set; } = 0;
     [field: SerializeField] public List<RuneDrawVariation> DrawVariations { get; private set; } = new();
 
+    public Texture2D Preview
+    {
+        get
+        {
+            if (preview == null) preview = Resources.Load<Texture2D>(previewPath.PartAfter('/').PartAfter('/').PartBefore('.'));
+            return preview;
+        }
+    }
+    private Texture2D preview;
+    private string previewPath;
+
+
     public Rune(Texture2D preview)
     {
-        Preview = preview;
+        previewPath = AssetDatabase.GenerateUniqueAssetPath("Assets/Resources/Textures/Runes/Preview/preview.png");
+        File.WriteAllBytes(previewPath, preview.EncodeToPNG());
     }
+
+    public void FreePreviewTextureFromAssets()
+    {
+        AssetDatabase.DeleteAsset(previewPath);
+    }
+
 
     public void AddNewRuneDrawVariation(RuneDrawVariation drawVariation)
     {
@@ -29,7 +50,6 @@ public class Rune
 
         DrawVariations.Add(drawVariation);
 
-        Texture2D _preview = Preview;
         foreach (Vector2 point in drawVariation.points)
         {
             // preview.SetPixels();

@@ -1,10 +1,11 @@
 fileFormatVersion: 2
-guid: 7abb9e9f20c804340a30bf284c9acdb1
+guid: 11526dfac76e24a4bb28427dbe1cedb0
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
   defaultReferences:
-  - runeStorage: {fileID: 11400000, guid: be54250f59b104a42828af839132ca3c, type: 2}
+  - m_ViewDataDictionary: {instanceID: 0}
+  - storage: {fileID: 11400000, guid: be54250f59b104a42828af839132ca3c, type: 2}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 
