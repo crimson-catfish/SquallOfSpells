@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class RuneDrawManager : Singleton<RuneDrawManager>
 {
-    public Action<RuneDrawVariation> OnNewDrawVariation;
+    public RuneDrawVariation drawVariation;
 
     [SerializeField] private RuneDrawParameters parameters;
     [SerializeField] private GameObject pointPrefab;
@@ -76,8 +76,12 @@ public class RuneDrawManager : Singleton<RuneDrawManager>
     {
         Closest closest = FindClosestPoint(pointToCheck);
 
-        for (int currentStep = parameters.heavyCheckStep; currentStep <= (nextDrawPosition - pointToCheck).magnitude; currentStep += parameters.heavyCheckStep)
-        {
+        for 
+        (   
+            int currentStep = parameters.heavyCheckStep;
+            currentStep <= (nextDrawPosition - pointToCheck).magnitude;
+            currentStep += parameters.heavyCheckStep
+        ) {
             pointToCheck += (pointToCheck - lastPoint).normalized * currentStep;
             
             closest = FindClosestPoint(pointToCheck);
@@ -126,22 +130,17 @@ public class RuneDrawManager : Singleton<RuneDrawManager>
     
     private void PrepareRuneVariation()
     {
-        RuneDrawVariation drawVariation = new()
+        drawVariation = new()
         {
             points = new Vector2[drawPoints.Count],
             height = drawFrame.height / drawFrame.width
         };
 
         Vector2 ratioFactor = new(1, drawVariation.height);
-        
         drawVariation.massCenter = Rect.PointToNormalized(drawFrame, momentSum / drawPoints.Count) * ratioFactor;
-
         for (int i = 0; i < drawPoints.Count; i++)
         {
             drawVariation.points[i] = Rect.PointToNormalized(drawFrame, drawPoints[i]) * ratioFactor;
         }
-
-        print(OnNewDrawVariation);
-        OnNewDrawVariation?.Invoke(drawVariation);
     }
 }

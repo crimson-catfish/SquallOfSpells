@@ -30,8 +30,9 @@ public class Rune
     private string previewPath;
 
 
-    public Rune(Texture2D preview)
+    public Rune()
     {
+        Texture2D preview = new Texture2D(128, 128, TextureFormat.ARGB32, false);
         previewPath = AssetDatabase.GenerateUniqueAssetPath("Assets/Resources/Textures/Runes/Preview/preview.png");
         File.WriteAllBytes(previewPath, preview.EncodeToPNG());
     }

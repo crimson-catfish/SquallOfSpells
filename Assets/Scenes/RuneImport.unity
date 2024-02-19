@@ -415,10 +415,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ccfd0e551f17b34ba8d8592bc417c8a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  runeStorage: {fileID: 11400000, guid: be54250f59b104a42828af839132ca3c, type: 2}
-  runeToEdit:
-    <Preview>k__BackingField: {fileID: 0}
-    <DrawVariations>k__BackingField: []
 --- !u!1 &1655761547
 GameObject:
   m_ObjectHideFlags: 0
@@ -435,7 +431,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1655761548
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -443,12 +439,11 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1655761547}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ebaa3fc3efb5a9b4eb2c4703817f401f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  btnTexture: {fileID: 2800000, guid: 51e02a75f0696ac41affe0f7b1eafd3e, type: 3}
 --- !u!4 &1655761549
 Transform:
   m_ObjectHideFlags: 0

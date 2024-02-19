@@ -1,34 +1,11 @@
 using UnityEngine;
 using UnityEditor;
-using System.Linq;
 
 public class RuneMakerWindow : EditorWindow
 {
     [SerializeField] private RuneStorage storage;
     
-    private RuneDrawVariation drawVariation = null;
-    private RuneDrawManager drawManager;
     private Vector2 scrollPosition;
-    private Texture2D emptyTexture;
-
-
-    private void Awake()
-    {
-        drawManager = RuneDrawManager.instance;
-        Debug.Log(drawManager);
-
-        emptyTexture = new Texture2D(128, 128, TextureFormat.ARGB32, false);
-    }
-
-    private void OnEnable()
-    {
-        drawManager.OnNewDrawVariation += CasheNewRuneDrawVariation;
-    }
-
-    private void OnDisable()
-    {
-        drawManager.OnNewDrawVariation -= CasheNewRuneDrawVariation;
-    }
 
 
     [MenuItem("RuneSystem/Rune Maker")]
@@ -73,13 +50,12 @@ public class RuneMakerWindow : EditorWindow
 
     public void SaveDrawVariation(int whereToSave)
     {
-        Debug.Log(drawVariation);
-        if (drawVariation == null)
+        if (RuneDrawManager.instance.drawVariation == null)
         {
             Debug.Log("Draw something to save");
             return;
         }
-        storage.runes[whereToSave].AddNewRuneDrawVariation(drawVariation);
+        storage.runes[whereToSave].AddNewRuneDrawVariation(RuneDrawManager.instance.drawVariation);
     }
 
     public void DeleteCurrentRune(int runeToDeleteIndex)
@@ -90,12 +66,6 @@ public class RuneMakerWindow : EditorWindow
 
     public void NewRune()
     {
-        storage.runes.Add(new Rune(emptyTexture));
-    }
-
-    private void CasheNewRuneDrawVariation(RuneDrawVariation variation)
-    {
-        Debug.Log("cashed");
-        drawVariation = variation;
+        storage.runes.Add(new Rune());
     }
 }
