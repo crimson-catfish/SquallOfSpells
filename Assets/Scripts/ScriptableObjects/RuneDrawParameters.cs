@@ -7,3 +7,4 @@ public class RuneDrawParameters : ScriptableObject
     public float acceptableError;
     public int heavyCheckStep;
 }
+  

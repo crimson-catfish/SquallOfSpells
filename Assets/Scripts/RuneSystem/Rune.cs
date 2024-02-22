@@ -26,15 +26,18 @@ public class Rune
             return preview;
         }
     }
+
     private Texture2D preview;
     private string previewPath;
 
 
-    public Rune()
+    public Rune NewRune() 
     {
-        Texture2D preview = new Texture2D(128, 128, TextureFormat.ARGB32, false);
+        preview = new Texture2D(128, 128, TextureFormat.ARGB32, false);
+        Debug.Log(preview.isReadable);
         previewPath = AssetDatabase.GenerateUniqueAssetPath("Assets/Resources/Textures/Runes/Preview/preview.png");
         File.WriteAllBytes(previewPath, preview.EncodeToPNG());
+        return this;
     }
 
     public void FreePreviewTextureFromAssets()
@@ -53,7 +56,8 @@ public class Rune
 
         foreach (Vector2 point in drawVariation.points)
         {
-            // preview.SetPixels();
+            Debug.Log(preview.isReadable);
+            preview.SetPixel((int)(point.x * Preview.width), (int)(point.y * Preview.height), Color.black);
         }
     }
 }

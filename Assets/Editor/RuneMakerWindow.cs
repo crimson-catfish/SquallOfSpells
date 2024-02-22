@@ -50,7 +50,7 @@ public class RuneMakerWindow : EditorWindow
 
     public void SaveDrawVariation(int whereToSave)
     {
-        if (RuneDrawManager.instance.drawVariation == null)
+        if (RuneDrawManager.instance.drawVariation == null || RuneDrawManager.instance.drawVariation.points.Length == 0)
         {
             Debug.Log("Draw something to save");
             return;
@@ -66,6 +66,6 @@ public class RuneMakerWindow : EditorWindow
 
     public void NewRune()
     {
-        storage.runes.Add(new Rune());
+        storage.runes.Add(new Rune().NewRune()); // couse unity sucks
     }
 }
