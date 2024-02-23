@@ -66,6 +66,6 @@ public class RuneMakerWindow : EditorWindow
 
     public void NewRune()
     {
-        storage.runes.Add(new Rune().NewRune()); // couse unity sucks
+        storage.runes.Add(new Rune());
     }
 }

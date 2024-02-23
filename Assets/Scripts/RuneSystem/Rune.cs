@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System;
 using System.IO;
 using UnityEditor;
-using Unity.VisualScripting;
 
 /// <summary>
 /// rune's width always 1, height is positive.
@@ -22,27 +21,33 @@ public class Rune
     {
         get
         {
-            if (preview == null) preview = Resources.Load<Texture2D>(previewPath.PartAfter('/').PartAfter('/').PartBefore('.'));
-            return preview;
+            if (_preview == null)
+            {
+                _preview = AssetDatabase.LoadAssetAtPath<Texture2D>(PreviewPath);
+            }
+            return _preview;
         }
     }
 
-    private Texture2D preview;
-    private string previewPath;
-
-
-    public Rune NewRune() 
+    public string PreviewPath
     {
-        preview = new Texture2D(128, 128, TextureFormat.ARGB32, false);
-        Debug.Log(preview.isReadable);
-        previewPath = AssetDatabase.GenerateUniqueAssetPath("Assets/Resources/Textures/Runes/Preview/preview.png");
-        File.WriteAllBytes(previewPath, preview.EncodeToPNG());
-        return this;
+        get
+        {
+            if (_previewPath == "")
+            {
+                return "Assets/Resources/Textures/Runes/Preview/DefaultPreview.png";
+            }
+            return _previewPath;
+        }
     }
+
+    private Texture2D _preview;
+    [SerializeField] private string _previewPath;
+
 
     public void FreePreviewTextureFromAssets()
     {
-        AssetDatabase.DeleteAsset(previewPath);
+        AssetDatabase.DeleteAsset(_previewPath);
     }
 
 
@@ -56,8 +61,8 @@ public class Rune
 
         foreach (Vector2 point in drawVariation.points)
         {
-            Debug.Log(preview.isReadable);
-            preview.SetPixel((int)(point.x * Preview.width), (int)(point.y * Preview.height), Color.black);
+            Debug.Log(_preview.isReadable);
+            _preview.SetPixel((int)(point.x * Preview.width), (int)(point.y * Preview.height), Color.black);
         }
     }
 }
