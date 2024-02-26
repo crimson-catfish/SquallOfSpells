@@ -21,23 +21,16 @@ public class Rune
     {
         get
         {
-            if (_preview == null)
+            if (!string.IsNullOrEmpty(_previewPath) || File.Exists(_previewPath))
             {
-                _preview = AssetDatabase.LoadAssetAtPath<Texture2D>(PreviewPath);
+                _preview = AssetDatabase.LoadAssetAtPath<Texture2D>(_previewPath);
             }
-            return _preview;
-        }
-    }
+            else
+            {
+                _preview = AssetDatabase.LoadAssetAtPath<Texture2D>("Assets/Resources/Textures/Runes/Preview/DefaultPreview.png");
+            }
 
-    public string PreviewPath
-    {
-        get
-        {
-            if (_previewPath == "")
-            {
-                return "Assets/Resources/Textures/Runes/Preview/DefaultPreview.png";
-            }
-            return _previewPath;
+            return _preview;
         }
     }
 
@@ -47,7 +40,7 @@ public class Rune
 
     public void FreePreviewTextureFromAssets()
     {
-        AssetDatabase.DeleteAsset(_previewPath);
+        if (!string.IsNullOrEmpty(_previewPath) || File.Exists(_previewPath)) AssetDatabase.DeleteAsset(_previewPath);
     }
 
 

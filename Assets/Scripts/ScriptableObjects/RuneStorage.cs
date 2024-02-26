@@ -5,5 +5,5 @@ using System.Collections.Generic;
 public class RuneStorage : ScriptableObject
 {
     [Header("DO NOT MODIFY")]
-    [SerializeField] public List<Rune> runes = new();
+    [SerializeReference] public List<Rune> runes = new();
 }

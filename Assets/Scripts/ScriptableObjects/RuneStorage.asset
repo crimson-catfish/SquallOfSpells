@@ -12,12 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b6d00d52b30ddf64cabbb72193e27f67, type: 3}
   m_Name: RuneStorage
   m_EditorClassIdentifier: 
-  runes:
-  - <DrawVariations>k__BackingField: []
-    _previewPath: 
-  - <DrawVariations>k__BackingField: []
-    _previewPath: 
-  - <DrawVariations>k__BackingField: []
-    _previewPath: 
-  - <DrawVariations>k__BackingField: []
-    _previewPath: 
+  runes: []
+  references:
+    version: 2
+    RefIds: []
