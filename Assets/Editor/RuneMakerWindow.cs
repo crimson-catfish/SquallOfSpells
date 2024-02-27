@@ -19,20 +19,22 @@ public class RuneMakerWindow : EditorWindow
         scrollPosition = GUILayout.BeginScrollView(scrollPosition, false, true); 
        
         int runeIndex = 0;
-        while (runeIndex < storage.Runes.Count)
+
+        foreach (Rune rune in storage.Runes)
         {
             EditorGUILayout.BeginHorizontal();
-            GUILayout.Box(storage.Runes[runeIndex].Preview);
+            GUILayout.Box(rune.Preview);
 
             EditorGUILayout.BeginVertical();
-            if (GUILayout.Button("Save draw variation")) SaveDrawVariation(runeIndex);
+            if (GUILayout.Button("Save draw variation")) SaveDrawVariation(rune);
             if (GUILayout.Button("Delete current rune"))
             {
                 GUILayout.Label("Base Settings", EditorStyles.boldLabel);
                 if (EditorUtility.DisplayDialog("Deleting warning", "Delete this rune?", "OK", "cancel"))
                 {
-                    DeleteRune(runeIndex);
-                    continue;
+                    storage.DeleteRune(rune);
+                    OnGUI();
+                    return;
                 }
             }
             EditorGUILayout.EndVertical();
@@ -44,27 +46,17 @@ public class RuneMakerWindow : EditorWindow
 
         GUILayout.EndScrollView();  
 
-        if (GUILayout.Button("New rune")) NewRune();
+        if (GUILayout.Button("New rune")) storage.NewRune();;
     }
 
 
-    public void SaveDrawVariation(int whereToSave)
+    public void SaveDrawVariation(Rune rune)
     {
         if (RuneDrawManager.instance.drawVariation == null || RuneDrawManager.instance.drawVariation.points.Length == 0)
         {
             Debug.Log("Draw something to save");
             return;
         }
-        storage.Runes[whereToSave].AddNewRuneDrawVariation(RuneDrawManager.instance.drawVariation);
-    }
-
-    public void DeleteRune(int runeToDeleteIndex)
-    {
-        storage.DeleteRune(runeToDeleteIndex);
-    }
-
-    public void NewRune()
-    {
-        storage.AddRune(new Rune());
+        rune.AddNewRuneDrawVariation(RuneDrawManager.instance.drawVariation);
     }
 }
