@@ -19,10 +19,10 @@ public class RuneMakerWindow : EditorWindow
         scrollPosition = GUILayout.BeginScrollView(scrollPosition, false, true); 
        
         int runeIndex = 0;
-        while (runeIndex < storage.runes.Count)
+        while (runeIndex < storage.Runes.Count)
         {
             EditorGUILayout.BeginHorizontal();
-            GUILayout.Box(storage.runes[runeIndex].Preview);
+            GUILayout.Box(storage.Runes[runeIndex].Preview);
 
             EditorGUILayout.BeginVertical();
             if (GUILayout.Button("Save draw variation")) SaveDrawVariation(runeIndex);
@@ -31,7 +31,7 @@ public class RuneMakerWindow : EditorWindow
                 GUILayout.Label("Base Settings", EditorStyles.boldLabel);
                 if (EditorUtility.DisplayDialog("Deleting warning", "Delete this rune?", "OK", "cancel"))
                 {
-                    DeleteCurrentRune(runeIndex);
+                    DeleteRune(runeIndex);
                     continue;
                 }
             }
@@ -55,17 +55,16 @@ public class RuneMakerWindow : EditorWindow
             Debug.Log("Draw something to save");
             return;
         }
-        storage.runes[whereToSave].AddNewRuneDrawVariation(RuneDrawManager.instance.drawVariation);
+        storage.Runes[whereToSave].AddNewRuneDrawVariation(RuneDrawManager.instance.drawVariation);
     }
 
-    public void DeleteCurrentRune(int runeToDeleteIndex)
+    public void DeleteRune(int runeToDeleteIndex)
     {
-        storage.runes[runeToDeleteIndex].FreePreviewTextureFromAssets();
-        storage.runes.RemoveAt(runeToDeleteIndex);
+        storage.DeleteRune(runeToDeleteIndex);
     }
 
     public void NewRune()
     {
-        storage.runes.Add(new Rune());
+        storage.AddRune(new Rune());
     }
 }

@@ -8,9 +8,6 @@ public class InputManager : Singleton<InputManager>
     public event Action OnDrawEnd;
     public event Action OnCast;
 
-    public event Action OnChooseRuneLeft;
-    public event Action OnChooseRuneRight;
-
     private Controls controls;
 
 
@@ -30,9 +27,6 @@ public class InputManager : Singleton<InputManager>
         controls.Touch.Draw.performed           += (context) => OnNextDrawPosition?.Invoke(context.ReadValue<Vector2>());
         controls.Touch.IsDrawing.canceled       += (context) => OnDrawEnd?.Invoke();
         controls.Touch.Cast.performed           += (context) => OnCast?.Invoke();
-
-        controls.Touch.ChooseRuneLeft.performed += (context) => OnChooseRuneLeft?.Invoke();
-        controls.Touch.ChooseRuneLeft.performed += (context) => OnChooseRuneLeft?.Invoke();
     }
     
     private void OnDisable()
