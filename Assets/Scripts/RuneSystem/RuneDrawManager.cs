@@ -142,5 +142,8 @@ public class RuneDrawManager : Singleton<RuneDrawManager>
         {
             drawVariation.points[i] = Rect.PointToNormalized(drawFrame, drawPoints[i]) * ratioFactor;
         }
+
+        
+        drawPoints.Clear();
     }
 }
