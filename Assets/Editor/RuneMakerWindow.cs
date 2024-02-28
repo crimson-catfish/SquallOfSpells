@@ -57,6 +57,6 @@ public class RuneMakerWindow : EditorWindow
             Debug.Log("Draw something to save");
             return;
         }
-        rune.AddNewRuneDrawVariation(RuneDrawManager.instance.drawVariation);
+        storage.AddDrawVariation(rune);
     }
 }

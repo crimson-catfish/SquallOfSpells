@@ -30,4 +30,25 @@ public class RuneStorage : ScriptableObject
         AssetDatabase.DeleteAsset(rune.previewPath);
         AssetDatabase.DeleteAsset(AssetDatabase.GetAssetPath(rune));
     }
+
+    public void AddDrawVariation(Rune rune)
+    {
+        RuneDrawVariation variation = RuneDrawManager.instance.drawVariation;
+
+        rune.avaregeMass = (rune.avaregeMass * rune.drawVariations.Count + variation.points.Length) / (rune.drawVariations.Count + 1);
+        rune.avaregeMassCenter = (rune.avaregeMassCenter * rune.drawVariations.Count + variation.massCenter) / (rune.drawVariations.Count + 1);
+        rune.averageHeight = (rune.averageHeight * rune.drawVariations.Count + variation.height) / (rune.drawVariations.Count + 1);
+
+        rune.drawVariations.Add(variation);
+
+        foreach (Vector2 point in variation.points)
+        {
+            rune.Preview.SetPixel((int)(point.x * rune.Preview.width), (int)(point.y * rune.Preview.height), Color.black);
+        }
+
+        rune.Preview.Apply();
+        EditorUtility.SetDirty(rune.Preview);
+
+        EditorUtility.SetDirty(rune);
+    }
 }

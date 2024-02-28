@@ -12,41 +12,20 @@ public class Rune : ScriptableObject
 {
     public const float width = 1;
 
-    public float AvaregeMass { get; set; } = 0;
-    public Vector2 AvaregeMassCenter { get; private set; } = Vector2.zero;
-    public float Height { get; private set; } = 0;
-    [field: SerializeField] public List<RuneDrawVariation> DrawVariations { get; private set; } = new();
-
     public string previewPath;
+    private Texture2D preview;
 
-    public Texture2D Preview
+    [property: SerializeField] public Texture2D Preview
     {
         get
         {
-            if (File.Exists(previewPath))
-            {
-                return AssetDatabase.LoadAssetAtPath<Texture2D>(previewPath);
-            }
-            else
-            {
-                return AssetDatabase.LoadAssetAtPath<Texture2D>("Textures/Runes/Preview/default");
-            }
+            if (preview == null) preview = AssetDatabase.LoadAssetAtPath<Texture2D>(previewPath);
+            return preview;
         }
     }
 
-
-    public void AddNewRuneDrawVariation(RuneDrawVariation drawVariation)
-    {
-        AvaregeMass = (AvaregeMass * DrawVariations.Count + drawVariation.points.Length) / (DrawVariations.Count + 1);
-        AvaregeMassCenter = (AvaregeMassCenter * DrawVariations.Count + drawVariation.massCenter) / (DrawVariations.Count + 1);
-        Height = (Height * DrawVariations.Count + drawVariation.height) / (DrawVariations.Count + 1);
-
-        DrawVariations.Add(drawVariation);
-
-        // foreach (Vector2 point in drawVariation.points)
-        // {
-        //     Debug.Log(_preview.isReadable);
-        //     _preview.SetPixel((int)(point.x * Preview.width), (int)(point.y * Preview.height), Color.black);
-        // }
-    }
+    public float averageHeight = 0;
+    public float avaregeMass = 0;
+    public Vector2 avaregeMassCenter = Vector2.zero;
+    public List<RuneDrawVariation> drawVariations = new();
 }
