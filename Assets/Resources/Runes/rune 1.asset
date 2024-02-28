@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7c97b8f701f365b47b060bff08422dc7, type: 3}
-  m_Name: rune 2
+  m_Name: rune 1
   m_EditorClassIdentifier: 
   <DrawVariations>k__BackingField: []
-  _previewPath: 
+  previewPath: Assets/Textures/Runes/Previews/preview 1.asset

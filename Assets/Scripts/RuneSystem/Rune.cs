@@ -17,27 +17,21 @@ public class Rune : ScriptableObject
     public float Height { get; private set; } = 0;
     [field: SerializeField] public List<RuneDrawVariation> DrawVariations { get; private set; } = new();
 
+    public string previewPath;
+
     public Texture2D Preview
     {
         get
         {
-            if (!string.IsNullOrEmpty(_previewPath) || File.Exists(_previewPath))
+            if (File.Exists(previewPath))
             {
-                return Resources.Load<Texture2D>(_previewPath);
+                return AssetDatabase.LoadAssetAtPath<Texture2D>(previewPath);
             }
             else
             {
-                return Resources.Load<Texture2D>("Textures/Runes/Preview/DefaultPreview");
+                return AssetDatabase.LoadAssetAtPath<Texture2D>("Textures/Runes/Preview/default");
             }
         }
-    }
-
-    [SerializeField] private string _previewPath;
-
-
-    public void FreePreviewTextureFromAssets()
-    {
-        if (!string.IsNullOrEmpty(_previewPath) || File.Exists(_previewPath)) AssetDatabase.DeleteAsset(_previewPath);
     }
 
 
