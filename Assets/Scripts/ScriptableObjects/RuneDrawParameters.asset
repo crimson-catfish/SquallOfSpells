@@ -15,3 +15,5 @@ MonoBehaviour:
   requairedDistance: 20
   acceptableError: 0.01
   heavyCheckStep: 10
+  lineWidth: 300
+  drawMaterial: {fileID: 2100000, guid: 3a25ddc07ccc37348916953a4ed54d89, type: 2}

@@ -1,12 +1,12 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(LineRenderer))]
 public class RuneDrawManager : Singleton<RuneDrawManager>
 {
     public RuneDrawVariation drawVariation;
 
-    [SerializeField] private RuneDrawParameters parameters;
+    [SerializeField] private RuneDrawParameters param;
     [SerializeField] private GameObject pointPrefab;
     
     private InputManager inputManager;
@@ -14,11 +14,13 @@ public class RuneDrawManager : Singleton<RuneDrawManager>
     private Rect drawFrame = new();
     private List<Vector2> drawPoints = new();
     private Vector2 lastPoint;
+    private LineRenderer lineRenderer;
 
 
     private void Awake()
     {
         inputManager = InputManager.instance;
+        lineRenderer = GetComponent<LineRenderer>();
     }
 
     private void OnEnable()
@@ -45,17 +47,17 @@ public class RuneDrawManager : Singleton<RuneDrawManager>
         }
 
         // check for the last point firstly becouse it's likely to be too close and then we don't need to do all heavy calculations
-        if ((nextDrawPosition - lastPoint).magnitude < parameters.requairedDistance) return;
+        if ((nextDrawPosition - lastPoint).magnitude < param.requairedDistance) return;
 
-        while ((lastPoint - nextDrawPosition).magnitude >= parameters.requairedDistance)
+        while ((lastPoint - nextDrawPosition).magnitude >= param.requairedDistance)
         {
-            Vector2 pointToCheck = lastPoint + ((nextDrawPosition - lastPoint).normalized * parameters.requairedDistance);
+            Vector2 pointToCheck = lastPoint + ((nextDrawPosition - lastPoint).normalized * param.requairedDistance);
 
             Closest closest = FindClosestPoint(pointToCheck);
 
 
             // check if distance is long enough
-            if (closest.sqrDistance >= (parameters.requairedDistance * parameters.requairedDistance * (1 - parameters.acceptableError)))
+            if (closest.sqrDistance >= (param.requairedDistance * param.requairedDistance * (1 - param.acceptableError)))
             {
                 CreateNewPoint(pointToCheck);
             }
@@ -78,15 +80,15 @@ public class RuneDrawManager : Singleton<RuneDrawManager>
 
         for 
         (   
-            int currentStep = parameters.heavyCheckStep;
+            int currentStep = param.heavyCheckStep;
             currentStep <= (nextDrawPosition - pointToCheck).magnitude;
-            currentStep += parameters.heavyCheckStep
+            currentStep += param.heavyCheckStep
         ) {
             pointToCheck += (pointToCheck - lastPoint).normalized * currentStep;
             
             closest = FindClosestPoint(pointToCheck);
 
-            if (closest.sqrDistance >= (parameters.requairedDistance * parameters.requairedDistance * 0.99))
+            if (closest.sqrDistance >= (param.requairedDistance * param.requairedDistance * 0.99))
             {
                 CreateNewPoint(pointToCheck);
                 return;
@@ -118,7 +120,8 @@ public class RuneDrawManager : Singleton<RuneDrawManager>
 
     private void CreateNewPoint(Vector2 position)
     {
-        Instantiate(pointPrefab, new Vector3(position.x, position.y, 0f), Quaternion.identity);
+        lineRenderer.positionCount++;
+        lineRenderer.SetPosition(lineRenderer.positionCount - 1, (Vector3)position);
         lastPoint = position;
         drawPoints.Add(position);
         momentSum += position;
@@ -142,7 +145,6 @@ public class RuneDrawManager : Singleton<RuneDrawManager>
         {
             drawVariation.points[i] = Rect.PointToNormalized(drawFrame, drawPoints[i]) * ratioFactor;
         }
-
         
         drawPoints.Clear();
     }
