@@ -4,10 +4,10 @@ using UnityEngine;
 [RequireComponent(typeof(LineRenderer))]
 public class RuneDrawManager : Singleton<RuneDrawManager>
 {
-    public RuneDrawVariation drawVariation;
+    [HideInInspector] public RuneDrawVariation drawVariation;
 
     [SerializeField] private RuneDrawParameters param;
-    [SerializeField] private GameObject pointPrefab;
+    [SerializeField] private bool showDrawPoints;
     
     private InputManager inputManager;
     private Vector2 momentSum = Vector2.zero;
@@ -15,6 +15,7 @@ public class RuneDrawManager : Singleton<RuneDrawManager>
     private List<Vector2> drawPoints = new();
     private Vector2 lastPoint;
     private LineRenderer lineRenderer;
+    private bool wasDrawEndPerformed = true;
 
 
     private void Awake()
@@ -29,6 +30,22 @@ public class RuneDrawManager : Singleton<RuneDrawManager>
         inputManager.OnDrawEnd += HandleDrawEnd;
     }
 
+    private void Start()
+    {
+        Gizmos.color = Color.green;
+    }
+
+    private void OnDrawGizmos()
+    {
+        if (showDrawPoints)
+        {
+            foreach (Vector2 point in drawPoints)
+            {
+                Gizmos.DrawSphere((Vector3)point, param.requairedDistance / 2);
+            }
+        }
+    }
+
     private void OnDisable()
     {
         inputManager.OnNextDrawPosition -= HandleNextDrawPosition;
@@ -38,8 +55,12 @@ public class RuneDrawManager : Singleton<RuneDrawManager>
 
     private void HandleNextDrawPosition(Vector2 nextDrawPosition)
     {
-        if (drawPoints.Count == 0)
+        if (wasDrawEndPerformed)
         {
+            wasDrawEndPerformed = false;
+
+            ClearDrawing();
+            drawPoints.Clear();
             momentSum = Vector2.zero;
             drawFrame = new Rect(nextDrawPosition.x, nextDrawPosition.y, 0, 0);
             CreateNewPoint(nextDrawPosition);
@@ -71,7 +92,7 @@ public class RuneDrawManager : Singleton<RuneDrawManager>
     private void HandleDrawEnd()
     {
         PrepareRuneVariation();
-        drawPoints.Clear();
+        wasDrawEndPerformed = true;
     }
 
     private void HeavyCheck(Vector2 nextDrawPosition, Vector2 pointToCheck)
@@ -122,8 +143,10 @@ public class RuneDrawManager : Singleton<RuneDrawManager>
     {
         lineRenderer.positionCount++;
         lineRenderer.SetPosition(lineRenderer.positionCount - 1, (Vector3)position);
+
         lastPoint = position;
         drawPoints.Add(position);
+
         momentSum += position;
         if (position.x > drawFrame.xMax) drawFrame.xMax = position.x;
         if (position.x < drawFrame.xMin) drawFrame.xMin = position.x;
@@ -145,7 +168,10 @@ public class RuneDrawManager : Singleton<RuneDrawManager>
         {
             drawVariation.points[i] = Rect.PointToNormalized(drawFrame, drawPoints[i]) * ratioFactor;
         }
-        
-        drawPoints.Clear();
+    }
+
+    public void ClearDrawing()
+    {
+        lineRenderer.positionCount = 0;
     }
 }

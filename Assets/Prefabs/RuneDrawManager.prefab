@@ -9,8 +9,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6613464399810632340}
-  - component: {fileID: 1453059140533706827}
   - component: {fileID: 7541837758656338089}
+  - component: {fileID: 1453059140533706827}
   m_Layer: 0
   m_Name: RuneDrawManager
   m_TagString: Untagged
@@ -26,13 +26,31 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9139705917734915051}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 456.41736, y: 677.30286, z: -17.148891}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7541837758656338089
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9139705917734915051}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56179a350b31a0e44995d0f0e4748ec8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  drawVariation:
+    height: 0
+    massCenter: {x: 0, y: 0}
+    points: []
+  param: {fileID: 11400000, guid: 907586a1789df57438ce9cd466a8e1fa, type: 2}
+  showDrawPoints: 1
 --- !u!120 &1453059140533706827
 LineRenderer:
   serializedVersion: 2
@@ -135,21 +153,3 @@ LineRenderer:
   m_UseWorldSpace: 1
   m_Loop: 0
   m_ApplyActiveColorSpace: 1
---- !u!114 &7541837758656338089
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9139705917734915051}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 56179a350b31a0e44995d0f0e4748ec8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  drawVariation:
-    height: 0
-    massCenter: {x: 0, y: 0}
-    points: []
-  param: {fileID: 11400000, guid: 907586a1789df57438ce9cd466a8e1fa, type: 2}
-  pointPrefab: {fileID: 3951253166124537439, guid: 16723f07151ad2d44ae6eb2be82a754e, type: 3}
