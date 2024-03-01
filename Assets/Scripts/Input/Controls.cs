@@ -53,24 +53,6 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""ChooseRuneLeft"",
-                    ""type"": ""Button"",
-                    ""id"": ""f2a715b1-2fda-4e21-b08b-f360d4df6628"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""ChooseRuneRight"",
-                    ""type"": ""Button"",
-                    ""id"": ""32a20d70-0369-4546-acbc-6132e622d8e6"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -106,28 +88,6 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                     ""action"": ""Cast"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""6408fa96-a0f7-4939-84f0-6b19ee3dfcc0"",
-                    ""path"": ""<Keyboard>/leftArrow"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""ChooseRuneLeft"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""f34a1d1a-96eb-4792-9032-cfbbe09c8bb3"",
-                    ""path"": ""<Keyboard>/rightArrow"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""ChooseRuneRight"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -139,8 +99,6 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         m_Touch_Draw = m_Touch.FindAction("Draw", throwIfNotFound: true);
         m_Touch_IsDrawing = m_Touch.FindAction("IsDrawing", throwIfNotFound: true);
         m_Touch_Cast = m_Touch.FindAction("Cast", throwIfNotFound: true);
-        m_Touch_ChooseRuneLeft = m_Touch.FindAction("ChooseRuneLeft", throwIfNotFound: true);
-        m_Touch_ChooseRuneRight = m_Touch.FindAction("ChooseRuneRight", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -205,8 +163,6 @@ public partial class @Controls: IInputActionCollection2, IDisposable
     private readonly InputAction m_Touch_Draw;
     private readonly InputAction m_Touch_IsDrawing;
     private readonly InputAction m_Touch_Cast;
-    private readonly InputAction m_Touch_ChooseRuneLeft;
-    private readonly InputAction m_Touch_ChooseRuneRight;
     public struct TouchActions
     {
         private @Controls m_Wrapper;
@@ -214,8 +170,6 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         public InputAction @Draw => m_Wrapper.m_Touch_Draw;
         public InputAction @IsDrawing => m_Wrapper.m_Touch_IsDrawing;
         public InputAction @Cast => m_Wrapper.m_Touch_Cast;
-        public InputAction @ChooseRuneLeft => m_Wrapper.m_Touch_ChooseRuneLeft;
-        public InputAction @ChooseRuneRight => m_Wrapper.m_Touch_ChooseRuneRight;
         public InputActionMap Get() { return m_Wrapper.m_Touch; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -234,12 +188,6 @@ public partial class @Controls: IInputActionCollection2, IDisposable
             @Cast.started += instance.OnCast;
             @Cast.performed += instance.OnCast;
             @Cast.canceled += instance.OnCast;
-            @ChooseRuneLeft.started += instance.OnChooseRuneLeft;
-            @ChooseRuneLeft.performed += instance.OnChooseRuneLeft;
-            @ChooseRuneLeft.canceled += instance.OnChooseRuneLeft;
-            @ChooseRuneRight.started += instance.OnChooseRuneRight;
-            @ChooseRuneRight.performed += instance.OnChooseRuneRight;
-            @ChooseRuneRight.canceled += instance.OnChooseRuneRight;
         }
 
         private void UnregisterCallbacks(ITouchActions instance)
@@ -253,12 +201,6 @@ public partial class @Controls: IInputActionCollection2, IDisposable
             @Cast.started -= instance.OnCast;
             @Cast.performed -= instance.OnCast;
             @Cast.canceled -= instance.OnCast;
-            @ChooseRuneLeft.started -= instance.OnChooseRuneLeft;
-            @ChooseRuneLeft.performed -= instance.OnChooseRuneLeft;
-            @ChooseRuneLeft.canceled -= instance.OnChooseRuneLeft;
-            @ChooseRuneRight.started -= instance.OnChooseRuneRight;
-            @ChooseRuneRight.performed -= instance.OnChooseRuneRight;
-            @ChooseRuneRight.canceled -= instance.OnChooseRuneRight;
         }
 
         public void RemoveCallbacks(ITouchActions instance)
@@ -281,7 +223,5 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         void OnDraw(InputAction.CallbackContext context);
         void OnIsDrawing(InputAction.CallbackContext context);
         void OnCast(InputAction.CallbackContext context);
-        void OnChooseRuneLeft(InputAction.CallbackContext context);
-        void OnChooseRuneRight(InputAction.CallbackContext context);
     }
 }

@@ -31,24 +31,6 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
-                },
-                {
-                    "name": "ChooseRuneLeft",
-                    "type": "Button",
-                    "id": "f2a715b1-2fda-4e21-b08b-f360d4df6628",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "ChooseRuneRight",
-                    "type": "Button",
-                    "id": "32a20d70-0369-4546-acbc-6132e622d8e6",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -82,28 +64,6 @@
                     "processors": "",
                     "groups": "",
                     "action": "Cast",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "6408fa96-a0f7-4939-84f0-6b19ee3dfcc0",
-                    "path": "<Keyboard>/leftArrow",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "ChooseRuneLeft",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "f34a1d1a-96eb-4792-9032-cfbbe09c8bb3",
-                    "path": "<Keyboard>/rightArrow",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "ChooseRuneRight",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
