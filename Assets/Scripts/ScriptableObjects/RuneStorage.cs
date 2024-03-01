@@ -41,6 +41,9 @@ public class RuneStorage : ScriptableObject
 
     public void AddDrawVariation(Rune rune)
     {
+        Undo.RegisterCompleteObjectUndo(rune, "added draw variation to some rune");
+        Undo.RegisterCompleteObjectUndo(rune.Preview, "changed preview image of added rune");
+
         RuneDrawVariation variation = RuneDrawManager.instance.drawVariation;
 
         if (variation == null)

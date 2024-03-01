@@ -1,0 +1,42 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c97b8f701f365b47b060bff08422dc7, type: 3}
+  m_Name: rune
+  m_EditorClassIdentifier: 
+  previewPath: Assets/Textures/Runes/Previews/preview.asset
+  averageHeight: 0.5489095
+  avaregeMass: 20
+  avaregeMassCenter: {x: 0.50782865, y: 0.25222525}
+  drawVariations:
+  - height: 0.5489095
+    massCenter: {x: 0.50782865, y: 0.25222525}
+    points:
+    - {x: 0.3292534, y: 0.5489095}
+    - {x: 0.45162284, y: 0.5489095}
+    - {x: 0.57399225, y: 0.5489095}
+    - {x: 0.69405997, y: 0.5252867}
+    - {x: 0.8080828, y: 0.48086724}
+    - {x: 0.906202, y: 0.4077447}
+    - {x: 0.9723591, y: 0.30480063}
+    - {x: 1, y: 0.18559387}
+    - {x: 0.90368134, y: 0.110115685}
+    - {x: 0.7983946, y: 0.047753878}
+    - {x: 0.6839599, y: 0.0044066138}
+    - {x: 0.5616441, y: 0.0007846013}
+    - {x: 0.4392763, y: 0.00014340166}
+    - {x: 0.31690687, y: 0}
+    - {x: 0.19686791, y: 0.023768453}
+    - {x: 0.08789851, y: 0.07944565}
+    - {x: 0, y: 0.1645818}
+    - {x: 0.049598306, y: 0.2764489}
+    - {x: 0.14431176, y: 0.35393214}
+    - {x: 0.23845793, y: 0.4321036}

@@ -30,7 +30,7 @@ public class RuneMakerWindow : EditorWindow
             if (GUILayout.Button("Delete current rune"))
             {
                 GUILayout.Label("Base Settings", EditorStyles.boldLabel);
-                if (EditorUtility.DisplayDialog("Deleting warning", "Delete this rune?", "OK", "cancel"))
+                if (EditorUtility.DisplayDialog("Deleting warning", "Delete this rune (can't undo this action)?", "OK", "cancel"))
                 {
                     storage.DeleteRune(rune);
                     OnGUI();
