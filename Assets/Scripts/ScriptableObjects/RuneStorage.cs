@@ -7,6 +7,7 @@ using Unity.Mathematics;
 [CreateAssetMenu(fileName = "RuneStorage", menuName = "ScriptableObjects/RuneStorage")]
 public class RuneStorage : ScriptableObject
 {
+    [Header("changing this properties doesn't affects already created previews. Please recreate them to apply changes")]
     [SerializeField] private int previewSize;
     [SerializeField] private int previewBorder;
     [SerializeField] private int previewPointRadius;
@@ -45,12 +46,12 @@ public class RuneStorage : ScriptableObject
 
         if (variation == null)
         {
-            Debug.Log("Draw something to save");
+            Debug.LogWarning("Draw something to save");
             return;
         }
         if (variation.points.Length <= 5)
         {
-            Debug.Log("Too few points in rune");
+            Debug.LogWarning("Too few points in rune, didn't save");
             return;
         }
 
