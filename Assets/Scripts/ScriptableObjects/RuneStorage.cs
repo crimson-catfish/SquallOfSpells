@@ -2,10 +2,7 @@ using UnityEngine;
 using System.Collections.Generic;
 using UnityEditor;
 using Unity.VisualScripting;
-using System.Linq;
-using System;
 using Unity.Mathematics;
-using UnityEngine.UI;
 
 [CreateAssetMenu(fileName = "RuneStorage", menuName = "ScriptableObjects/RuneStorage")]
 public class RuneStorage : ScriptableObject
@@ -57,20 +54,20 @@ public class RuneStorage : ScriptableObject
             return;
         }
 
+        // update rune data
         rune.avaregeMass = (rune.avaregeMass * rune.drawVariations.Count + variation.points.Length) / (rune.drawVariations.Count + 1);
         rune.avaregeMassCenter = (rune.avaregeMassCenter * rune.drawVariations.Count + variation.massCenter) / (rune.drawVariations.Count + 1);
         rune.averageHeight = (rune.averageHeight * rune.drawVariations.Count + variation.height) / (rune.drawVariations.Count + 1);
-
         rune.drawVariations.Add(variation);
 
+        // resize preview texture
         Texture2D oldPreview = new(rune.Preview.width, rune.Preview.height, TextureFormat.ARGB32, false);
         Graphics.CopyTexture(rune.Preview, oldPreview);
-
         rune.Preview.Reinitialize(previewSize, (int)math.max(rune.Preview.height, variation.height * previewSize));
-
         rune.Preview.SetPixels(0, (rune.Preview.height - oldPreview.height) / 2, oldPreview.width, oldPreview.height,
             oldPreview.GetPixels(0, 0, oldPreview.width, oldPreview.height));
 
+        // add new draw variation on preview texture
         foreach (Vector2 point in variation.points)
         {
             int x = (int)(point.x * (rune.Preview.width - previewBorder * 2)) + previewBorder - previewPointRadius;
@@ -80,9 +77,9 @@ public class RuneStorage : ScriptableObject
             
         }
 
+        // save
         rune.Preview.Apply();
         EditorUtility.SetDirty(rune.Preview);
-
         EditorUtility.SetDirty(rune);
     }
 }
