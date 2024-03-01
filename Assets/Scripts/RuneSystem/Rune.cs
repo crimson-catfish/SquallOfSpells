@@ -22,6 +22,7 @@ public class Rune : ScriptableObject
             if (preview == null) preview = AssetDatabase.LoadAssetAtPath<Texture2D>(previewPath);
             return preview;
         }
+        set { preview = value; }
     }
 
     public float averageHeight = 0;

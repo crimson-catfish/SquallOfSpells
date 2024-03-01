@@ -17,7 +17,7 @@ public class RuneMakerWindow : EditorWindow
 
     void OnGUI(){
         scrollPosition = GUILayout.BeginScrollView(scrollPosition, false, true); 
-       
+
         int runeIndex = 0;
 
         foreach (Rune rune in storage.Runes)
@@ -26,7 +26,7 @@ public class RuneMakerWindow : EditorWindow
             GUILayout.Box(rune.Preview);
 
             EditorGUILayout.BeginVertical();
-            if (GUILayout.Button("Save draw variation")) SaveDrawVariation(rune);
+            if (GUILayout.Button("Save draw variation")) storage.AddDrawVariation(rune);
             if (GUILayout.Button("Delete current rune"))
             {
                 GUILayout.Label("Base Settings", EditorStyles.boldLabel);
@@ -47,16 +47,5 @@ public class RuneMakerWindow : EditorWindow
         GUILayout.EndScrollView();  
 
         if (GUILayout.Button("New rune")) storage.NewRune();;
-    }
-
-
-    public void SaveDrawVariation(Rune rune)
-    {
-        if (RuneDrawManager.instance.drawVariation == null || RuneDrawManager.instance.drawVariation.points.Length == 0)
-        {
-            Debug.Log("Draw something to save");
-            return;
-        }
-        storage.AddDrawVariation(rune);
     }
 }
