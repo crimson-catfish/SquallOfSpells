@@ -7,7 +7,7 @@ using Unity.Mathematics;
 [CreateAssetMenu(fileName = "RuneStorage", menuName = "ScriptableObjects/RuneStorage")]
 public class RuneStorage : ScriptableObject
 {
-    [Header("changing this properties doesn't affects already created previews. Please recreate them to apply changes")]
+    [Header("changing this properties doesn't affects already created previews\nPlease recreate them to apply changes")]
     [SerializeField] private int previewSize;
     [SerializeField] private int previewBorder;
     [SerializeField] private int previewPointRadius;

@@ -12,8 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b4ed2837904f9f4f80b11ba04f1c679, type: 3}
   m_Name: RuneDrawParameters
   m_EditorClassIdentifier: 
-  requairedDistance: 20
-  acceptableError: 0.01
+  requairedDistance: 10
+  acceptableError: 0.1
   heavyCheckStep: 10
-  lineWidth: 300
-  drawMaterial: {fileID: 2100000, guid: 3a25ddc07ccc37348916953a4ed54d89, type: 2}
