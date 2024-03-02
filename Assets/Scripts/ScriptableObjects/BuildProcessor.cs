@@ -4,7 +4,8 @@ using UnityEngine;
 using UnityEditor.Build;
 using UnityEditor.Build.Reporting;
 
-class MyCustomBuildProcessor : IPreprocessBuildWithReport
+[CreateAssetMenu(fileName = "MyCustomBuildProcessor", menuName = "ScriptableObjects/MyCustomBuildProcessor")]
+class CustomBuildProcessor : ScriptableObject, IPreprocessBuildWithReport
 {
     [SerializeField] private RuneStorage storage;
 
