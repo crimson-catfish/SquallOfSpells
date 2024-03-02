@@ -4,7 +4,7 @@ using UnityEditor;
 public class RuneMakerWindow : EditorWindow
 {
     [SerializeField] private RuneStorage storage;
-    
+
     private Vector2 scrollPosition;
 
 
@@ -15,8 +15,9 @@ public class RuneMakerWindow : EditorWindow
         window.Show();
     }
 
-    void OnGUI(){
-        scrollPosition = GUILayout.BeginScrollView(scrollPosition, false, true); 
+    void OnGUI()
+    {
+        scrollPosition = GUILayout.BeginScrollView(scrollPosition, false, true);
 
         int runeIndex = 0;
 
@@ -40,16 +41,15 @@ public class RuneMakerWindow : EditorWindow
             EditorGUILayout.EndVertical();
 
             EditorGUILayout.EndHorizontal();
-            
+
             runeIndex++;
         }
 
-        GUILayout.EndScrollView();  
+        GUILayout.EndScrollView();
 
         EditorGUILayout.BeginHorizontal();
         if (GUILayout.Button("New rune")) storage.NewRune();
         if (GUILayout.Button("Resort saved runes (may take some time)")) storage.SortRunes();
         EditorGUILayout.EndHorizontal();
-
     }
 }

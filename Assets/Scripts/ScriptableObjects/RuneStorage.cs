@@ -5,6 +5,8 @@ using Unity.VisualScripting;
 using Unity.Mathematics;
 using System;
 using System.Linq;
+using UnityEngine.UIElements;
+using System.Threading;
 
 [CreateAssetMenu(fileName = "RuneStorage", menuName = "ScriptableObjects/RuneStorage")]
 public class RuneStorage : ScriptableObject
@@ -20,6 +22,7 @@ public class RuneStorage : ScriptableObject
     [property: SerializeField] public SortedList<float, int> RunesMassCenterY { get; private set; }
     [property: SerializeField] public SortedList<float, int> RunesMass { get; private set; }
     
+    public bool IsSorted { get; private set; } = false;
 
     private int _runesCount = -1;
     [property: SerializeField] public int RunesCount
@@ -105,6 +108,8 @@ public class RuneStorage : ScriptableObject
 
     public void SortRunes()
     {
+        EditorUtility.DisplayProgressBar("Resorting runes", "In process", 0);
+
         DuplicateKeyComparer<float> duplicateKeyComparer = new();
         RunesHeight = new SortedList<float, int>(duplicateKeyComparer);
         RunesMassCenterX = new SortedList<float, int>(duplicateKeyComparer);
@@ -121,7 +126,8 @@ public class RuneStorage : ScriptableObject
             RunesMass.Add(rune.avaregeMass, hash);
         }
 
-        foreach (var v in RunesHeight) Debug.Log(v);
+        IsSorted = true;
+        EditorUtility.ClearProgressBar();
     }
 }
 
