@@ -1,9 +1,12 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(LineRenderer))]
 public class RuneDrawManager : Singleton<RuneDrawManager>
 {
+    public event Action<RuneDrawVariation> RuneDrawn;
+
     [HideInInspector] public RuneDrawVariation drawVariation;
 
     [SerializeField] private RuneDrawParameters param;
@@ -92,6 +95,7 @@ public class RuneDrawManager : Singleton<RuneDrawManager>
     private void HandleDrawEnd()
     {
         PrepareRuneVariation();
+        RuneDrawn?.Invoke(drawVariation);
         wasDrawEndPerformed = true;
     }
 
@@ -169,6 +173,7 @@ public class RuneDrawManager : Singleton<RuneDrawManager>
             drawVariation.points[i] = Rect.PointToNormalized(drawFrame, drawPoints[i]) * ratioFactor;
         }
     }
+
 
     public void ClearDrawing()
     {

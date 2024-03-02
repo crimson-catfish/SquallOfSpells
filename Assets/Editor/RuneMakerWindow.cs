@@ -46,6 +46,10 @@ public class RuneMakerWindow : EditorWindow
 
         GUILayout.EndScrollView();  
 
-        if (GUILayout.Button("New rune")) storage.NewRune();;
+        EditorGUILayout.BeginHorizontal();
+        if (GUILayout.Button("New rune")) storage.NewRune();
+        if (GUILayout.Button("Resort saved runes (may take some time)")) storage.SortRunes();
+        EditorGUILayout.EndHorizontal();
+
     }
 }
