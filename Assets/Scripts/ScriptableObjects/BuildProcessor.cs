@@ -12,7 +12,7 @@ class CustomBuildProcessor : ScriptableObject, IPreprocessBuildWithReport
     public int callbackOrder { get { return 0; } }
     public void OnPreprocessBuild(BuildReport report)
     {
-        if (!storage.IsSorted) storage.SortRunes();
+        if (!storage.areSortedListsUpdated) RuneMaker.instance.ResortRunes();
     }
 }
 

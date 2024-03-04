@@ -44,7 +44,7 @@ public class RuneDrawManager : Singleton<RuneDrawManager>
         {
             foreach (Vector2 point in drawPoints)
             {
-                Gizmos.DrawSphere((Vector3)point, param.requairedDistance / 2);
+                Gizmos.DrawSphere((Vector3)point, param.distanceBetweenPoints / 2);
             }
         }
     }
@@ -71,17 +71,17 @@ public class RuneDrawManager : Singleton<RuneDrawManager>
         }
 
         // check for the last point firstly becouse it's likely to be too close and then we don't need to do all heavy calculations
-        if ((nextDrawPosition - lastPoint).magnitude < param.requairedDistance) return;
+        if ((nextDrawPosition - lastPoint).magnitude < param.distanceBetweenPoints) return;
 
-        while ((lastPoint - nextDrawPosition).magnitude >= param.requairedDistance)
+        while ((lastPoint - nextDrawPosition).magnitude >= param.distanceBetweenPoints)
         {
-            Vector2 pointToCheck = lastPoint + ((nextDrawPosition - lastPoint).normalized * param.requairedDistance);
+            Vector2 pointToCheck = lastPoint + ((nextDrawPosition - lastPoint).normalized * param.distanceBetweenPoints);
 
             Closest closest = FindClosestPoint(pointToCheck);
 
 
             // check if distance is long enough
-            if (closest.sqrDistance >= (param.requairedDistance * param.requairedDistance * (1 - param.acceptableError)))
+            if (closest.sqrDistance >= (param.distanceBetweenPoints * param.distanceBetweenPoints * (1 - param.acceptableError)))
             {
                 CreateNewPoint(pointToCheck);
             }
@@ -113,7 +113,7 @@ public class RuneDrawManager : Singleton<RuneDrawManager>
             
             closest = FindClosestPoint(pointToCheck);
 
-            if (closest.sqrDistance >= (param.requairedDistance * param.requairedDistance * 0.99))
+            if (closest.sqrDistance >= (param.distanceBetweenPoints * param.distanceBetweenPoints * 0.99))
             {
                 CreateNewPoint(pointToCheck);
                 return;

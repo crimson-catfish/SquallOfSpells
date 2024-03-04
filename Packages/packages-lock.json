@@ -1,5 +1,11 @@
 {
   "dependencies": {
+    "com.daemonlair.serializablecollections": {
+      "version": "file:C:/Users/sava_/OneDrive/Рабочий стол/Serializable-Collections-For-Unity-master/Packages/SerializableCollections",
+      "depth": 0,
+      "source": "local",
+      "dependencies": {}
+    },
     "com.unity.2d.animation": {
       "version": "9.0.3",
       "depth": 1,

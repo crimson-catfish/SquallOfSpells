@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "com.daemonlair.serializablecollections": "file:C:/Users/sava_/OneDrive/Рабочий стол/Serializable-Collections-For-Unity-master/Packages/SerializableCollections",
     "com.unity.adaptiveperformance": "4.0.1",
     "com.unity.adaptiveperformance.google.android": "1.2.1",
     "com.unity.adaptiveperformance.samsung.android": "5.0.0",

@@ -1,8 +1,16 @@
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class RuneRecognizer : MonoBehaviour
 {
     [SerializeField] private RuneStorage storage;
+
+    [Header("Recognition settings")]
+    [SerializeField] private float heightRange;
+    [SerializeField] private float massCenterRange;
+    [SerializeField] private float massRange;
+
 
     private RuneDrawManager drawManager;
 
@@ -23,9 +31,18 @@ public class RuneRecognizer : MonoBehaviour
 
     private void OnRuneDrawn(RuneDrawVariation runeDraw)
     {
-        foreach (Rune runeToCheck in storage.Runes)
-        {
-            
-        }
+        //Debug.Log(FindClosestRunesByParams(runeDraw.height, storage.runesHeight, heightRange));
+        // FindClosestRunesByParams(runeDraw.massCenter.x, storage.RunesMassCenterX, massCenterRange);
+        // FindClosestRunesByParams(runeDraw.massCenter.y, storage.RunesMassCenterY, massCenterRange);
+        // Debug.Log(FindClosestRunesByParams(runeDraw.points.Length, storage.RunesMass, massRange));
+        Debug.Log("recognized");
+    }
+
+    private IEnumerable<Rune> FindClosestRunesByParams(float runeParam, SortedList<float, int> sortedRunes, float range)
+    {
+        int lowBound = Search.Binary<float>(sortedRunes.Keys, runeParam - range);
+        int topBound = Search.Binary<float>(sortedRunes.Keys, runeParam + range);
+        
+        return storage.runes.Where(rune => sortedRunes.Keys.Skip(lowBound).Take(topBound - lowBound).Contains(rune.GetHashCode()));
     }
 }
