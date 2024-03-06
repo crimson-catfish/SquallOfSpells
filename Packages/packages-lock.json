@@ -1,11 +1,5 @@
 {
   "dependencies": {
-    "com.daemonlair.serializablecollections": {
-      "version": "file:C:/Users/sava_/OneDrive/Рабочий стол/Serializable-Collections-For-Unity-master/Packages/SerializableCollections",
-      "depth": 0,
-      "source": "local",
-      "dependencies": {}
-    },
     "com.unity.2d.animation": {
       "version": "9.0.3",
       "depth": 1,
@@ -240,6 +234,13 @@
       "dependencies": {
         "com.unity.modules.androidjni": "1.0.0"
       },
+      "url": "https://packages.unity.com"
+    },
+    "com.unity.nuget.newtonsoft-json": {
+      "version": "3.2.1",
+      "depth": 0,
+      "source": "registry",
+      "dependencies": {},
       "url": "https://packages.unity.com"
     },
     "com.unity.profiling.core": {

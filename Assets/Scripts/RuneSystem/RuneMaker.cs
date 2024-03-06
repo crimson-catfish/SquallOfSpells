@@ -1,5 +1,6 @@
+using System.Collections.Generic;
 using System.IO;
-using System.Threading;
+using Newtonsoft.Json;
 using Unity.Mathematics;
 using UnityEditor;
 using UnityEngine;
@@ -17,14 +18,16 @@ public class RuneMaker : Singleton<RuneMaker>
         AssetDatabase.CreateAsset(new Texture2D(prms.previewSize, prms.previewSize, TextureFormat.ARGB32, false), rune.previewPath);
         Debug.Log(new Texture2D(34, 34));
         AssetDatabase.CreateAsset(rune, AssetDatabase.GenerateUniqueAssetPath("Assets/Resources/Runes/rune.asset"));
-        storage.runes.Add(rune);
+        storage.runes.Add(rune.GetHashCode(), rune);
+        storage.areSortedListsUpdated = false;
     }
 
     public void DeleteRune(Rune rune)
     {
-        storage.runes.Remove(rune);
+        storage.runes.Remove(rune.GetHashCode());
         AssetDatabase.DeleteAsset(rune.previewPath);
         AssetDatabase.DeleteAsset(AssetDatabase.GetAssetPath(rune));
+        storage.areSortedListsUpdated = false;
     }
 
     public void AddDrawVariation(Rune rune)
@@ -64,13 +67,15 @@ public class RuneMaker : Singleton<RuneMaker>
             int x = (int)(point.x * (rune.Preview.width - prms.previewBorder * 2)) + prms.previewBorder - prms.previewPointRadius;
             int y = (int)(point.y / variation.height * (rune.Preview.height - prms.previewBorder * 2)) + prms.previewBorder - prms.previewPointRadius;
 
-            rune.Preview.SetPixels(x, y, prms.previewPointRadius, prms.previewPointRadius, new Color[prms.previewSize*prms.previewSize]);
+            rune.Preview.SetPixels(x, y, prms.previewPointRadius, prms.previewPointRadius, new Color[prms.previewSize * prms.previewSize]);
         }
 
         // save
         rune.Preview.Apply();
         EditorUtility.SetDirty(rune.Preview);
         EditorUtility.SetDirty(rune);
+
+        storage.areSortedListsUpdated = false;
     }
 
     public void ResortRunes()
@@ -78,15 +83,22 @@ public class RuneMaker : Singleton<RuneMaker>
         DuplicateKeyComparer<float> comparer = new();
 
         storage.runesHeight = new();
+        storage.runesMassCenterX = new();
+        storage.runesMassCenterY = new();
+        storage.runesMass = new();
 
-        foreach (Rune rune in storage.runes)
+        foreach (KeyValuePair<int, Rune> rune in storage.runes)
         {
-            int hash = rune.GetHashCode();
-
-            storage.runesHeight.Add(rune.averageHeight, hash);
+            storage.runesHeight.Add(rune.Value.averageHeight, rune.Key);
+            storage.runesMassCenterX.Add(rune.Value.avaregeMassCenter.x, rune.Key);
+            storage.runesMassCenterY.Add(rune.Value.avaregeMassCenter.y, rune.Key);
+            storage.runesMass.Add(rune.Value.avaregeMass, rune.Key);
         }
 
-        File.WriteAllText("Assets/Resources/Runes/sorted.json", storage.runesHeight.ToString());
+        File.WriteAllText("Assets/Resources/Runes/height.json", JsonConvert.SerializeObject(storage.runesHeight));
+        File.WriteAllText("Assets/Resources/Runes/massCenterX.json", JsonConvert.SerializeObject(storage.runesMassCenterX));
+        File.WriteAllText("Assets/Resources/Runes/massCenterY.json", JsonConvert.SerializeObject(storage.runesMassCenterY));
+        File.WriteAllText("Assets/Resources/Runes/mass.json", JsonConvert.SerializeObject(storage.runesMass));
 
         storage.areSortedListsUpdated = true;
     }

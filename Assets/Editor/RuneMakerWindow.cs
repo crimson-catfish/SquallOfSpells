@@ -28,7 +28,7 @@ public class RuneMakerWindow : EditorWindow
 
         int runeIndex = 0;
 
-        foreach (Rune rune in storage.runes)
+        foreach (Rune rune in storage.runes.Values)
         {
             EditorGUILayout.BeginHorizontal();
             GUILayout.Box(rune.Preview);

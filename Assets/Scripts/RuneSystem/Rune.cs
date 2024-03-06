@@ -8,14 +8,15 @@ using UnityEditor;
 /// rune's width always 1, height is positive.
 /// </summary>
 [Serializable]
-public class Rune : ScriptableObject
+public class Rune : ScriptableObject, IComparable<Rune>
 {
     public const float width = 1;
 
     public string previewPath;
     private Texture2D preview;
 
-    [property: SerializeField] public Texture2D Preview
+    [property: SerializeField]
+    public Texture2D Preview
     {
         get
         {
@@ -29,4 +30,11 @@ public class Rune : ScriptableObject
     public float avaregeMass = 0;
     public Vector2 avaregeMassCenter = Vector2.zero;
     public List<RuneDrawVariation> drawVariations = new();
+
+    public int CompareTo(Rune other)
+    {
+        if (this.GetHashCode() < other.GetHashCode()) return -1;
+        if (this.GetHashCode() > other.GetHashCode()) return 1;
+        return 0;
+    }
 }
