@@ -32,10 +32,18 @@ public class RuneRecognizer : MonoBehaviour
 
     private void OnRuneDrawn(RuneDrawVariation runeDraw)
     {
-        HashSet<int> hashSet = new HashSet<int>(FindClosestRunesByParams(runeDraw.height, storage.runesHeight, heightRange));
-        hashSet.IntersectWith(FindClosestRunesByParams(runeDraw.massCenter.x, storage.runesMassCenterX, massCenterRange));
-        hashSet.IntersectWith(FindClosestRunesByParams(runeDraw.massCenter.y, storage.runesMassCenterY, massCenterRange));
-        hashSet.IntersectWith(FindClosestRunesByParams(runeDraw.points.Length, storage.runesMass, massRange));
+        HashSet<int> runesToCheck = new HashSet<int>(FindClosestRunesByParams(runeDraw.height, storage.runesHeight, heightRange));
+        foreach (var v in runesToCheck) Debug.Log(v);
+        Debug.Log("================");
+        runesToCheck.IntersectWith(FindClosestRunesByParams(runeDraw.massCenter.x, storage.runesMassCenterX, massCenterRange));
+        foreach (var v in runesToCheck) Debug.Log(v);
+        Debug.Log("================");
+        runesToCheck.IntersectWith(FindClosestRunesByParams(runeDraw.massCenter.y, storage.runesMassCenterY, massCenterRange));
+        foreach (var v in runesToCheck) Debug.Log(v);
+        Debug.Log("================");
+        runesToCheck.IntersectWith(FindClosestRunesByParams(runeDraw.points.Length, storage.runesMass, massRange));
+        foreach (var v in runesToCheck) Debug.Log(v);
+        Debug.Log("================");
     }
 
     private IEnumerable<int> FindClosestRunesByParams(float runeParam, SortedList<float, int> sortedRunes, float range)
