@@ -1,23 +1,25 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
+[RequireComponent(typeof(SpriteRenderer))]
 public class RuneRecognizer : MonoBehaviour
 {
     [SerializeField] private RuneStorage storage;
 
     [Header("Recognition settings")]
-    [SerializeField] private readonly float heightRange;
-    [SerializeField] private readonly float massCenterRange;
-    [SerializeField] private readonly float massRange;
+    [SerializeField] private float heightRange;
+    [SerializeField] private float massCenterRange;
+    [SerializeField] private float massRange;
 
+    private SpriteRenderer renderer;
 
     private RuneDrawManager drawManager;
 
     private void Awake()
     {
         drawManager = RuneDrawManager.instance;
+        renderer = GetComponent<SpriteRenderer>();
     }
 
     private void OnEnable()
@@ -40,9 +42,31 @@ public class RuneRecognizer : MonoBehaviour
         List<Rune> runesToCheck = new();
         foreach (int hash in selectedRuneHashes) runesToCheck.Add(storage.runes[hash]);
 
+        foreach (var v in runesToCheck) Debug.Log(v);
+
+        CheckResult bestCheckResult = new() { totalError = Mathf.Infinity, minError = Mathf.Infinity };
+        Rune runeWithBestVariation;
+        Rune runeWithBestTotal = null;
         foreach (Rune rune in runesToCheck)
         {
-            DeepCheck(runeDrawToCheck, rune);
+            CheckResult checkResult = DeepCheck(runeDrawToCheck, rune); // expencive!
+
+            if (checkResult.totalError < bestCheckResult.totalError)
+            {
+                bestCheckResult.totalError = checkResult.totalError;
+                runeWithBestTotal = rune;
+            }
+            if (checkResult.minError < bestCheckResult.minError)
+            {
+                bestCheckResult.minError = checkResult.minError;
+                runeWithBestVariation = rune;
+            }
+        }
+
+        if (runeWithBestTotal != null)
+        {
+            var tex = runeWithBestTotal.Preview;
+            if (tex != null) renderer.sprite = Sprite.Create(tex, new Rect(0, 0, tex.width, tex.height), new Vector2(0.5f, 0.5f));
         }
     }
 
@@ -59,9 +83,9 @@ public class RuneRecognizer : MonoBehaviour
     /// Use multithreading.
     /// </summary>
     /// <returns></returns>
-    private Errors DeepCheck(RuneDrawVariation drawVariationToCheck, Rune rune)
+    private CheckResult DeepCheck(RuneDrawVariation drawVariationToCheck, Rune rune)
     {
-        Errors errors = new() { totalError = 0, minError = Mathf.Infinity };
+        CheckResult errors = new() { totalError = 0, minError = Mathf.Infinity };
         foreach (RuneDrawVariation variation in rune.drawVariations)
         {
             float error = 0;
@@ -69,16 +93,22 @@ public class RuneRecognizer : MonoBehaviour
             {
                 error += Closest.GetSqrDistance(point, drawVariationToCheck.points);
             }
+
             errors.totalError += error;
-            if (error < errors.minError) errors.minError = error;
+            if (error < errors.minError)
+            {
+                errors.minError = error;
+                errors.bestDrawVariation = variation;
+            }
         }
 
         return errors;
     }
 
-    private struct Errors
+    private struct CheckResult
     {
         public float totalError;
         public float minError;
+        public RuneDrawVariation bestDrawVariation;
     }
 }

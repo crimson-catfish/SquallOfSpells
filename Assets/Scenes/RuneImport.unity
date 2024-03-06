@@ -282,9 +282,37 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1019817384216889639, guid: 8a27a4cdb87a44c42bfd97acea89ef90, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 81.26
+      objectReference: {fileID: 0}
+    - target: {fileID: 1019817384216889639, guid: 8a27a4cdb87a44c42bfd97acea89ef90, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 81.26
+      objectReference: {fileID: 0}
+    - target: {fileID: 1019817384216889639, guid: 8a27a4cdb87a44c42bfd97acea89ef90, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 81.26
+      objectReference: {fileID: 0}
+    - target: {fileID: 1019817384216889639, guid: 8a27a4cdb87a44c42bfd97acea89ef90, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 330
+      objectReference: {fileID: 0}
+    - target: {fileID: 1019817384216889639, guid: 8a27a4cdb87a44c42bfd97acea89ef90, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 295
+      objectReference: {fileID: 0}
+    - target: {fileID: 1019817384216889639, guid: 8a27a4cdb87a44c42bfd97acea89ef90, type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5315405636373435228, guid: 8a27a4cdb87a44c42bfd97acea89ef90, type: 3}
       propertyPath: showDrawPoints
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5524465575010520969, guid: 8a27a4cdb87a44c42bfd97acea89ef90, type: 3}
+      propertyPath: massRange
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 6613464399810632340, guid: 8a27a4cdb87a44c42bfd97acea89ef90, type: 3}
       propertyPath: m_RootOrder
