@@ -11,7 +11,7 @@ public class RuneMaker : Singleton<RuneMaker>
     [SerializeField] private RuneMakerParameters prms;
 
 
-    public void NewRune()
+    public void SaveDrawVariationToNewRune()
     {
         Rune rune = ScriptableObject.CreateInstance<Rune>();
         rune.previewPath = AssetDatabase.GenerateUniqueAssetPath("Assets/Textures/Runes/Previews/preview.asset");
@@ -19,7 +19,8 @@ public class RuneMaker : Singleton<RuneMaker>
         Debug.Log(new Texture2D(34, 34));
         AssetDatabase.CreateAsset(rune, AssetDatabase.GenerateUniqueAssetPath("Assets/Resources/Runes/rune.asset"));
         storage.runes.Add(rune.GetHashCode(), rune);
-        storage.areSortedListsUpdated = false;
+
+        AddDrawVariation(rune);
     }
 
     public void DeleteRune(Rune rune)

@@ -34,7 +34,7 @@ public class RuneMakerWindow : EditorWindow
             GUILayout.Box(rune.Preview);
 
             EditorGUILayout.BeginVertical();
-            if (GUILayout.Button("Save draw variation")) runeMaker.AddDrawVariation(rune);
+            if (GUILayout.Button("Add draw variation")) runeMaker.AddDrawVariation(rune);
             if (GUILayout.Button("Delete current rune"))
             {
                 GUILayout.Label("Base Settings", EditorStyles.boldLabel);
@@ -55,7 +55,7 @@ public class RuneMakerWindow : EditorWindow
         GUILayout.EndScrollView();
 
         EditorGUILayout.BeginHorizontal();
-        if (GUILayout.Button("New rune")) runeMaker.NewRune();
+        if (GUILayout.Button("Save draw variation to new rune")) runeMaker.SaveDrawVariationToNewRune();
         if (GUILayout.Button("Resort saved runes (may take some time)")) ResortRunes();
         EditorGUILayout.EndHorizontal();
     }
