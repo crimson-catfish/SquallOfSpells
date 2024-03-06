@@ -11,7 +11,7 @@ public class RuneMaker : Singleton<RuneMaker>
     [SerializeField] private RuneMakerParameters prms;
 
 
-    public void SaveDrawVariationToNewRune()
+    public Rune SaveDrawVariationToNewRune()
     {
         Rune rune = ScriptableObject.CreateInstance<Rune>();
         rune.previewPath = AssetDatabase.GenerateUniqueAssetPath("Assets/Textures/Runes/Previews/preview.asset");
@@ -21,6 +21,7 @@ public class RuneMaker : Singleton<RuneMaker>
         storage.runes.Add(rune.GetHashCode(), rune);
 
         AddDrawVariation(rune);
+        return rune;
     }
 
     public void DeleteRune(Rune rune)
@@ -48,6 +49,7 @@ public class RuneMaker : Singleton<RuneMaker>
             Debug.LogWarning("Too few points in rune, didn't save");
             return;
         }
+        if (rune.drawVariations.Contains(variation)) return;
 
         // update rune data
         rune.avaregeMass = (rune.avaregeMass * rune.drawVariations.Count + variation.points.Length) / (rune.drawVariations.Count + 1);

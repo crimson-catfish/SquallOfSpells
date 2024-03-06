@@ -42,7 +42,7 @@ public class RuneRecognizer : MonoBehaviour
         List<Rune> runesToCheck = new();
         foreach (int hash in selectedRuneHashes) runesToCheck.Add(storage.runes[hash]);
 
-        foreach (var v in runesToCheck) Debug.Log(v);
+        // foreach (var v in runesToCheck) Debug.Log(v);
 
         CheckResult bestCheckResult = new() { totalError = Mathf.Infinity, minError = Mathf.Infinity };
         Rune runeWithBestVariation;
