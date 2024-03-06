@@ -89,9 +89,15 @@ public class RuneRecognizer : MonoBehaviour
         foreach (RuneDrawVariation variation in rune.drawVariations)
         {
             float error = 0;
+
             foreach (Vector2 point in variation.points)
             {
                 error += Closest.GetSqrDistance(point, drawVariationToCheck.points);
+            }
+
+            foreach (Vector2 point in drawVariationToCheck.points)
+            {
+                error += Closest.GetSqrDistance(point, variation.points);
             }
 
             errors.totalError += error;
