@@ -42,28 +42,21 @@ public class RuneRecognizer : MonoBehaviour
 
         // foreach (var v in runesToCheck) Debug.Log(v);
 
-        CheckResult bestCheckResult = new() { totalError = Mathf.Infinity, minError = Mathf.Infinity };
-        Rune runeWithBestVariation;
-        Rune runeWithBestTotal = null;
+        Rune closestRune = null;
+        float minError = Mathf.Infinity;
         foreach (Rune rune in runesToCheck)
         {
-            CheckResult checkResult = DeepCheck(runeDrawToCheck, rune); // expencive!
-
-            if (checkResult.totalError < bestCheckResult.totalError)
+            float runeError = DeepCheck(runeDrawToCheck, rune); // expencive!
+            if (runeError < minError)
             {
-                bestCheckResult.totalError = checkResult.totalError;
-                runeWithBestTotal = rune;
-            }
-            if (checkResult.minError < bestCheckResult.minError)
-            {
-                bestCheckResult.minError = checkResult.minError;
-                runeWithBestVariation = rune;
+                minError = runeError;
+                closestRune = rune;
             }
         }
 
-        if (runeWithBestTotal != null)
+        if (closestRune != null)
         {
-            var tex = runeWithBestTotal.Preview;
+            var tex = closestRune.Preview;
             if (tex != null) renderer.sprite = Sprite.Create(tex, new Rect(0, 0, tex.width, tex.height), new Vector2(0.5f, 0.5f));
         }
     }
@@ -81,38 +74,26 @@ public class RuneRecognizer : MonoBehaviour
     /// Use multithreading.
     /// </summary>
     /// <returns></returns>
-    private CheckResult DeepCheck(RuneDrawVariation drawVariationToCheck, Rune rune)
+    private float DeepCheck(RuneDrawVariation drawToCheck, Rune rune)
     {
-        CheckResult errors = new() { totalError = 0, minError = Mathf.Infinity };
+        float totalRuneError = 0;
+
         foreach (RuneDrawVariation variation in rune.drawVariations)
         {
-            float error = 0;
-
-            foreach (Vector2 point in variation.points)
-            {
-                error += Closest.GetSqrDistance(point, drawVariationToCheck.points);
-            }
-
-            foreach (Vector2 point in drawVariationToCheck.points)
-            {
-                error += Closest.GetSqrDistance(point, variation.points);
-            }
-
-            errors.totalError += error;
-            if (error < errors.minError)
-            {
-                errors.minError = error;
-                errors.bestDrawVariation = variation;
-            }
+            totalRuneError += GetAverageVariationError(variation, drawToCheck);
+            totalRuneError += GetAverageVariationError(drawToCheck, variation);
         }
 
-        return errors;
+        return totalRuneError / rune.drawVariations.Count;
     }
 
-    private struct CheckResult
+    private float GetAverageVariationError(RuneDrawVariation baseVariation, RuneDrawVariation maskVariation)
     {
-        public float totalError;
-        public float minError;
-        public RuneDrawVariation bestDrawVariation;
+        float totalVariationError = 0;
+        foreach (Vector2 point in maskVariation.points)
+        {
+            totalVariationError += Closest.GetSqrDistance(point, baseVariation.points);
+        }
+        return totalVariationError / maskVariation.points.Length;
     }
 }
