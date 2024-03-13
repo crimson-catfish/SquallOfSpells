@@ -9,9 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2fec4b9708af244409018551bf952b18, type: 3}
-  m_Name: RuneMakerParameters
+  m_Script: {fileID: 11500000, guid: b88909e7ec9ebc94a8f4869f7abc61b2, type: 3}
+  m_Name: RunePreviewParameters
   m_EditorClassIdentifier: 
-  previewSize: 128
-  previewBorder: 16
-  previewPointRadius: 4
+  size: 128
+  border: 16
+  pointRadius: 4
+  pointColor: {r: 1, g: 1, b: 1, a: 0.39607844}

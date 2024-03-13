@@ -10,7 +10,6 @@ public class RuneRecognizer : MonoBehaviour
     [Header("Recognition settings")]
     [SerializeField] private float heightRange;
     [SerializeField] private float massCenterRange;
-    [SerializeField] private float massRange;
 
     private SpriteRenderer renderer;
 
@@ -37,7 +36,6 @@ public class RuneRecognizer : MonoBehaviour
         HashSet<int> selectedRuneHashes = new HashSet<int>(FindClosestRunesByParams(runeDrawToCheck.height, storage.runesHeight, heightRange));
         selectedRuneHashes.IntersectWith(FindClosestRunesByParams(runeDrawToCheck.massCenter.x, storage.runesMassCenterX, massCenterRange));
         selectedRuneHashes.IntersectWith(FindClosestRunesByParams(runeDrawToCheck.massCenter.y, storage.runesMassCenterY, massCenterRange));
-        selectedRuneHashes.IntersectWith(FindClosestRunesByParams(runeDrawToCheck.points.Length, storage.runesMass, massRange));
 
         List<Rune> runesToCheck = new();
         foreach (int hash in selectedRuneHashes) runesToCheck.Add(storage.runes[hash]);

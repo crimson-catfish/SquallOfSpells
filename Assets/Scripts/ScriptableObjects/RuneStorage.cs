@@ -10,7 +10,6 @@ public class RuneStorage : ScriptableObject
     public SortedList<float, int> runesHeight;
     public SortedList<float, int> runesMassCenterX;
     public SortedList<float, int> runesMassCenterY;
-    public SortedList<float, int> runesMass;
 
     public bool areSortedListsUpdated = false;
 
@@ -22,6 +21,5 @@ public class RuneStorage : ScriptableObject
         runesHeight = JsonConvert.DeserializeObject<SortedList<float, int>>(Resources.Load<TextAsset>("Runes/height").text);
         runesMassCenterX = JsonConvert.DeserializeObject<SortedList<float, int>>(Resources.Load<TextAsset>("Runes/massCenterX").text);
         runesMassCenterY = JsonConvert.DeserializeObject<SortedList<float, int>>(Resources.Load<TextAsset>("Runes/massCenterX").text);
-        runesMass = JsonConvert.DeserializeObject<SortedList<float, int>>(Resources.Load<TextAsset>("Runes/mass").text);
     }
 }

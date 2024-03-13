@@ -27,7 +27,6 @@ public class Rune : ScriptableObject, IComparable<Rune>
     }
 
     public float averageHeight = 0;
-    public float avaregeMass = 0;
     public Vector2 avaregeMassCenter = Vector2.zero;
     public List<RuneDrawVariation> drawVariations = new();
 

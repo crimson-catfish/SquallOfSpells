@@ -3,19 +3,30 @@ using System.IO;
 using Newtonsoft.Json;
 using Unity.Mathematics;
 using UnityEditor;
+using System.Linq;
 using UnityEngine;
 
 public class RuneMaker : Singleton<RuneMaker>
 {
     [SerializeField] private RuneStorage storage;
-    [SerializeField] private RuneMakerParameters prms;
+    [SerializeField] private RunePreviewParameters prms;
+
+    private Color[] pointColors;
+
+
+    private void OnEnable()
+    {
+        pointColors = new Color[prms.pointRadius * prms.pointRadius];
+        for (int i = 0; i < prms.pointRadius * prms.pointRadius; i++) pointColors[i] = prms.pointColor;
+        Debug.Log(pointColors.Length);
+    }
 
 
     public Rune SaveDrawVariationToNewRune()
     {
         Rune rune = ScriptableObject.CreateInstance<Rune>();
         rune.previewPath = AssetDatabase.GenerateUniqueAssetPath("Assets/Textures/Runes/Previews/preview.asset");
-        AssetDatabase.CreateAsset(new Texture2D(prms.previewSize, prms.previewSize, TextureFormat.ARGB32, false), rune.previewPath);
+        AssetDatabase.CreateAsset(new Texture2D(prms.size, prms.size, TextureFormat.ARGB32, false), rune.previewPath);
         Debug.Log(new Texture2D(34, 34));
         AssetDatabase.CreateAsset(rune, AssetDatabase.GenerateUniqueAssetPath("Assets/Resources/Runes/rune.asset"));
         storage.runes.Add(rune.GetHashCode(), rune);
@@ -52,7 +63,6 @@ public class RuneMaker : Singleton<RuneMaker>
         if (rune.drawVariations.Contains(variation)) return;
 
         // update rune data
-        rune.avaregeMass = (rune.avaregeMass * rune.drawVariations.Count + variation.points.Length) / (rune.drawVariations.Count + 1);
         rune.avaregeMassCenter = (rune.avaregeMassCenter * rune.drawVariations.Count + variation.massCenter) / (rune.drawVariations.Count + 1);
         rune.averageHeight = (rune.averageHeight * rune.drawVariations.Count + variation.height) / (rune.drawVariations.Count + 1);
         if (!rune.drawVariations.Contains(variation)) rune.drawVariations.Add(variation);
@@ -60,17 +70,21 @@ public class RuneMaker : Singleton<RuneMaker>
         // resize preview texture
         Texture2D oldPreview = new(rune.Preview.width, rune.Preview.height, TextureFormat.ARGB32, false);
         Graphics.CopyTexture(rune.Preview, oldPreview);
-        rune.Preview.Reinitialize(prms.previewSize, (int)math.max(rune.Preview.height, variation.height * prms.previewSize));
+        rune.Preview.Reinitialize(prms.size, (int)math.max(rune.Preview.height, variation.height * prms.size));
         rune.Preview.SetPixels(0, (rune.Preview.height - oldPreview.height) / 2, oldPreview.width, oldPreview.height,
             oldPreview.GetPixels(0, 0, oldPreview.width, oldPreview.height));
+
 
         // add new draw variation on preview texture
         foreach (Vector2 point in variation.points)
         {
-            int x = (int)(point.x * (rune.Preview.width - prms.previewBorder * 2)) + prms.previewBorder - prms.previewPointRadius;
-            int y = (int)(point.y / variation.height * (rune.Preview.height - prms.previewBorder * 2)) + prms.previewBorder - prms.previewPointRadius;
+            int x = (int)(point.x * (rune.Preview.width - prms.border * 2)) + prms.border - prms.pointRadius;
+            int y = (int)(point.y / variation.height * (rune.Preview.height - prms.border * 2)) + prms.border - prms.pointRadius;
 
-            rune.Preview.SetPixels(x, y, prms.previewPointRadius, prms.previewPointRadius, new Color[prms.previewSize * prms.previewSize]);
+            Color[] colors = rune.Preview.GetPixels(x, y, prms.pointRadius, prms.pointRadius);
+            for (int i = 1; i < colors.Length; ++i) colors[i] += prms.pointColor;
+            rune.Preview.SetPixels(x, y, prms.pointRadius, prms.pointRadius, colors);
+
         }
 
         // save
@@ -88,20 +102,17 @@ public class RuneMaker : Singleton<RuneMaker>
         storage.runesHeight = new();
         storage.runesMassCenterX = new();
         storage.runesMassCenterY = new();
-        storage.runesMass = new();
 
         foreach (KeyValuePair<int, Rune> rune in storage.runes)
         {
             storage.runesHeight.Add(rune.Value.averageHeight, rune.Key);
             storage.runesMassCenterX.Add(rune.Value.avaregeMassCenter.x, rune.Key);
             storage.runesMassCenterY.Add(rune.Value.avaregeMassCenter.y, rune.Key);
-            storage.runesMass.Add(rune.Value.avaregeMass, rune.Key);
         }
 
         File.WriteAllText("Assets/Resources/Runes/height.json", JsonConvert.SerializeObject(storage.runesHeight));
         File.WriteAllText("Assets/Resources/Runes/massCenterX.json", JsonConvert.SerializeObject(storage.runesMassCenterX));
         File.WriteAllText("Assets/Resources/Runes/massCenterY.json", JsonConvert.SerializeObject(storage.runesMassCenterY));
-        File.WriteAllText("Assets/Resources/Runes/mass.json", JsonConvert.SerializeObject(storage.runesMass));
 
         storage.areSortedListsUpdated = true;
     }
