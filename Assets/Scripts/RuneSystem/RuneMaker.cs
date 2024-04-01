@@ -18,7 +18,6 @@ public class RuneMaker : Singleton<RuneMaker>
     {
         pointColors = new Color[prms.pointRadius * prms.pointRadius];
         for (int i = 0; i < prms.pointRadius * prms.pointRadius; i++) pointColors[i] = prms.pointColor;
-        Debug.Log(pointColors.Length);
     }
 
 

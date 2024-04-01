@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b4ed2837904f9f4f80b11ba04f1c679, type: 3}
   m_Name: RuneDrawParameters
   m_EditorClassIdentifier: 
-  distanceBetweenPoints: 10
-  acceptableError: 0.1
-  heavyCheckStep: 10
+  distanceBetweenPoints: 0.01
+  acceptableError: 0.001
+  heavyCheckStep: 0.01

@@ -11,7 +11,7 @@ public class RuneRecognizer : MonoBehaviour
     [SerializeField] private float heightRange;
     [SerializeField] private float massCenterRange;
 
-    private SpriteRenderer renderer;
+    private new SpriteRenderer renderer;
 
     private RuneDrawManager drawManager;
 

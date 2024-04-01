@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(LineRenderer))]
+[RequireComponent(typeof(UILineRenderer))]
 public class RuneDrawManager : Singleton<RuneDrawManager>
 {
     public event Action<RuneDrawVariation> RuneDrawn;
@@ -14,17 +14,17 @@ public class RuneDrawManager : Singleton<RuneDrawManager>
 
     private InputManager inputManager;
     private Vector2 momentSum = Vector2.zero;
-    private Rect drawFrame = new();
+    private Rect drawFrame;
     private List<Vector2> drawPoints = new();
     private Vector2 lastPoint;
-    private LineRenderer lineRenderer;
+    private UILineRenderer uiLineRenderer;
     private bool wasDrawEndPerformed = true;
 
 
     private void Awake()
     {
         inputManager = InputManager.instance;
-        lineRenderer = GetComponent<LineRenderer>();
+        uiLineRenderer = GetComponent<UILineRenderer>();
     }
 
     private void OnEnable()
@@ -40,12 +40,10 @@ public class RuneDrawManager : Singleton<RuneDrawManager>
 
     private void OnDrawGizmos()
     {
-        if (showDrawPoints)
+        if (!showDrawPoints) return;
+        foreach (Vector2 point in drawPoints)
         {
-            foreach (Vector2 point in drawPoints)
-            {
-                Gizmos.DrawSphere((Vector3)point, param.distanceBetweenPoints / 2);
-            }
+            Gizmos.DrawSphere(point, param.distanceBetweenPoints / 2);
         }
     }
 
@@ -105,7 +103,7 @@ public class RuneDrawManager : Singleton<RuneDrawManager>
 
         for
         (
-            int currentStep = param.heavyCheckStep;
+            float currentStep = param.heavyCheckStep;
             currentStep <= (nextDrawPosition - pointToCheck).magnitude;
             currentStep += param.heavyCheckStep
         )
@@ -124,12 +122,10 @@ public class RuneDrawManager : Singleton<RuneDrawManager>
     }
 
 
-
-
     private void CreateNewPoint(Vector2 position)
     {
-        lineRenderer.positionCount++;
-        lineRenderer.SetPosition(lineRenderer.positionCount - 1, (Vector3)position);
+        uiLineRenderer.points.Add(position * new Vector2(Screen.width, Screen.height));
+        uiLineRenderer.SetAllDirty();
 
         lastPoint = position;
         drawPoints.Add(position);
@@ -160,6 +156,6 @@ public class RuneDrawManager : Singleton<RuneDrawManager>
 
     public void ClearDrawing()
     {
-        lineRenderer.positionCount = 0;
+        uiLineRenderer.points.Clear();
     }
 }

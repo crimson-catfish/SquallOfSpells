@@ -23,12 +23,12 @@ public class InputManager : Singleton<InputManager>
 
     private void Start()
     {
-        controls.Touch.IsDrawing.started    += (context) => OnDrawStart?.Invoke(); // somehow called only after OnNextDrawPosition
-        controls.Touch.Draw.performed       += (context) => OnNextDrawPosition?.Invoke(context.ReadValue<Vector2>());
-        controls.Touch.IsDrawing.canceled   += (context) => OnDrawEnd?.Invoke();
-        controls.Touch.Cast.performed       += (context) => OnCast?.Invoke();
+        controls.Touch.IsDrawing.started += _ => OnDrawStart?.Invoke(); // somehow called only after OnNextDrawPosition
+        controls.Touch.Draw.performed += context => OnNextDrawPosition?.Invoke(context.ReadValue<Vector2>() / new Vector2(Screen.width, Screen.height));
+        controls.Touch.IsDrawing.canceled += _ => OnDrawEnd?.Invoke();
+        controls.Touch.Cast.performed += _ => OnCast?.Invoke();
     }
-    
+
     private void OnDisable()
     {
         controls.Disable();
