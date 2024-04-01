@@ -3,21 +3,21 @@ using System.IO;
 using Newtonsoft.Json;
 using Unity.Mathematics;
 using UnityEditor;
-using System.Linq;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class RuneMaker : Singleton<RuneMaker>
 {
     [SerializeField] private RuneStorage storage;
-    [SerializeField] private RunePreviewParameters prms;
+    [SerializeField] private RunePreviewParameters param;
 
     private Color[] pointColors;
 
 
     private void OnEnable()
     {
-        pointColors = new Color[prms.pointRadius * prms.pointRadius];
-        for (int i = 0; i < prms.pointRadius * prms.pointRadius; i++) pointColors[i] = prms.pointColor;
+        pointColors = new Color[param.pointRadius * param.pointRadius];
+        for (int i = 0; i < param.pointRadius * param.pointRadius; i++) pointColors[i] = param.pointColor;
     }
 
 
@@ -25,7 +25,7 @@ public class RuneMaker : Singleton<RuneMaker>
     {
         Rune rune = ScriptableObject.CreateInstance<Rune>();
         rune.previewPath = AssetDatabase.GenerateUniqueAssetPath("Assets/Textures/Runes/Previews/preview.asset");
-        AssetDatabase.CreateAsset(new Texture2D(prms.size, prms.size, TextureFormat.ARGB32, false), rune.previewPath);
+        AssetDatabase.CreateAsset(new Texture2D(param.size, param.size, TextureFormat.ARGB32, false), rune.previewPath);
         Debug.Log(new Texture2D(34, 34));
         AssetDatabase.CreateAsset(rune, AssetDatabase.GenerateUniqueAssetPath("Assets/Resources/Runes/rune.asset"));
         storage.runes.Add(rune.GetHashCode(), rune);
@@ -69,7 +69,7 @@ public class RuneMaker : Singleton<RuneMaker>
         // resize preview texture
         Texture2D oldPreview = new(rune.Preview.width, rune.Preview.height, TextureFormat.ARGB32, false);
         Graphics.CopyTexture(rune.Preview, oldPreview);
-        rune.Preview.Reinitialize(prms.size, (int)math.max(rune.Preview.height, variation.height * prms.size));
+        rune.Preview.Reinitialize(param.size, (int)math.max(rune.Preview.height, variation.height * param.size));
         rune.Preview.SetPixels(0, (rune.Preview.height - oldPreview.height) / 2, oldPreview.width, oldPreview.height,
             oldPreview.GetPixels(0, 0, oldPreview.width, oldPreview.height));
 
@@ -77,12 +77,12 @@ public class RuneMaker : Singleton<RuneMaker>
         // add new draw variation on preview texture
         foreach (Vector2 point in variation.points)
         {
-            int x = (int)(point.x * (rune.Preview.width - prms.border * 2)) + prms.border - prms.pointRadius;
-            int y = (int)(point.y / variation.height * (rune.Preview.height - prms.border * 2)) + prms.border - prms.pointRadius;
+            int x = (int)(point.x * (rune.Preview.width - param.border * 2)) + param.border - param.pointRadius;
+            int y = (int)(point.y / variation.height * (rune.Preview.height - param.border * 2)) + param.border - param.pointRadius;
 
-            Color[] colors = rune.Preview.GetPixels(x, y, prms.pointRadius, prms.pointRadius);
-            for (int i = 1; i < colors.Length; ++i) colors[i] += prms.pointColor;
-            rune.Preview.SetPixels(x, y, prms.pointRadius, prms.pointRadius, colors);
+            Color[] colors = rune.Preview.GetPixels(x, y, param.pointRadius, param.pointRadius);
+            for (int i = 1; i < colors.Length; ++i) colors[i] += param.pointColor;
+            rune.Preview.SetPixels(x, y, param.pointRadius, param.pointRadius, colors);
 
         }
 
@@ -96,8 +96,6 @@ public class RuneMaker : Singleton<RuneMaker>
 
     public void ResortRunes()
     {
-        DuplicateKeyComparer<float> comparer = new();
-
         storage.runesHeight = new();
         storage.runesMassCenterX = new();
         storage.runesMassCenterY = new();

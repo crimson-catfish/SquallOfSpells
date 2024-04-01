@@ -1,8 +1,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.UI;
 
-[RequireComponent(typeof(SpriteRenderer))]
+[RequireComponent(typeof(Image))]
 public class RuneRecognizer : MonoBehaviour
 {
     [SerializeField] private RuneStorage storage;
@@ -11,28 +12,32 @@ public class RuneRecognizer : MonoBehaviour
     [SerializeField] private float heightRange;
     [SerializeField] private float massCenterRange;
 
-    private new SpriteRenderer renderer;
+    private Image recognizedRuneRenderer;
 
     private RuneDrawManager drawManager;
 
     private void Awake()
     {
         drawManager = RuneDrawManager.instance;
-        renderer = GetComponent<SpriteRenderer>();
+        recognizedRuneRenderer = GetComponent<Image>();
     }
 
     private void OnEnable()
     {
-        drawManager.RuneDrawn += (runeDraw) => OnRuneDrawn(runeDraw);
+        drawManager.RuneDrawn += OnRuneDrawn;
     }
 
     private void OnDisable()
     {
-        drawManager.RuneDrawn -= (runeDraw) => OnRuneDrawn(runeDraw);
+        drawManager.RuneDrawn -= OnRuneDrawn;
     }
 
     private void OnRuneDrawn(RuneDrawVariation runeDrawToCheck)
     {
+        #if UNITY_EDITOR
+            if (!storage.areSortedListsUpdated) RuneMaker.instance.ResortRunes();
+        #endif
+                
         HashSet<int> selectedRuneHashes = new HashSet<int>(FindClosestRunesByParams(runeDrawToCheck.height, storage.runesHeight, heightRange));
         selectedRuneHashes.IntersectWith(FindClosestRunesByParams(runeDrawToCheck.massCenter.x, storage.runesMassCenterX, massCenterRange));
         selectedRuneHashes.IntersectWith(FindClosestRunesByParams(runeDrawToCheck.massCenter.y, storage.runesMassCenterY, massCenterRange));
@@ -40,13 +45,11 @@ public class RuneRecognizer : MonoBehaviour
         List<Rune> runesToCheck = new();
         foreach (int hash in selectedRuneHashes) runesToCheck.Add(storage.runes[hash]);
 
-        // foreach (var v in runesToCheck) Debug.Log(v);
-
         Rune closestRune = null;
         float minError = Mathf.Infinity;
         foreach (Rune rune in runesToCheck)
         {
-            float runeError = DeepCheck(runeDrawToCheck, rune); // expencive!
+            float runeError = DeepCheck(runeDrawToCheck, rune); // expensive!
             if (runeError < minError)
             {
                 minError = runeError;
@@ -54,23 +57,26 @@ public class RuneRecognizer : MonoBehaviour
             }
         }
 
+
         if (closestRune != null)
-        {
-            var tex = closestRune.Preview;
-            if (tex != null) renderer.sprite = Sprite.Create(tex, new Rect(0, 0, tex.width, tex.height), new Vector2(0.5f, 0.5f));
+        {        
+            #if UNITY_EDITOR
+                var tex = closestRune.Preview;
+                if (tex != null) recognizedRuneRenderer.sprite = Sprite.Create(tex, new Rect(0, 0, tex.width, tex.height), new Vector2(0.5f, 0.5f));
+            #endif
         }
     }
 
     private IEnumerable<int> FindClosestRunesByParams(float runeParam, SortedList<float, int> sortedRunes, float range)
     {
-        int lowBound = Search.Binary<float>(sortedRunes.Keys, runeParam - range);
-        int topBound = Search.Binary<float>(sortedRunes.Keys, runeParam + range);
+        int lowBound = Search.Binary(sortedRunes.Keys, runeParam - range);
+        int topBound = Search.Binary(sortedRunes.Keys, runeParam + range);
 
         return sortedRunes.Values.Skip(lowBound).Take(topBound - lowBound);
     }
 
     /// <summary>
-    /// Expensive comparation O(variationsCount * pointsCount^2).
+    /// Expensive compilation O(variationsCount * pointsCount^2).
     /// Use multithreading.
     /// </summary>
     /// <returns></returns>

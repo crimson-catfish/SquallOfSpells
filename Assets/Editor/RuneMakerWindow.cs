@@ -28,8 +28,6 @@ public class RuneMakerWindow : EditorWindow
     {
         scrollPosition = GUILayout.BeginScrollView(scrollPosition, false, true);
 
-        int runeIndex = 0;
-
         foreach (Rune rune in storage.runes.Values)
         {
             EditorGUILayout.BeginHorizontal();
@@ -60,8 +58,6 @@ public class RuneMakerWindow : EditorWindow
             EditorGUILayout.EndVertical();
 
             EditorGUILayout.EndHorizontal();
-
-            runeIndex++;
         }
 
         GUILayout.EndScrollView();
@@ -93,8 +89,6 @@ public class RuneMakerWindow : EditorWindow
                         runeMaker.DeleteRune(lastRune);
                         lastRune = null;
                     }
-                    break;
-                default:
                     break;
             }
         }

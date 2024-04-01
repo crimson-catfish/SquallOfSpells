@@ -9,7 +9,8 @@ class CustomBuildProcessor : ScriptableObject, IPreprocessBuildWithReport
 {
     [SerializeField] private RuneStorage storage;
 
-    public int callbackOrder { get { return 0; } }
+    public int callbackOrder => 0;
+
     public void OnPreprocessBuild(BuildReport report)
     {
         if (!storage.areSortedListsUpdated) RuneMaker.instance.ResortRunes();
