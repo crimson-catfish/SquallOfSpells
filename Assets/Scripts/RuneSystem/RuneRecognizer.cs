@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -5,6 +6,8 @@ using UnityEngine.UI;
 
 public class RuneRecognizer : MonoBehaviour
 {
+    public Action<Rune> RuneCasted;
+    
     [SerializeField] private RuneStorage storage;
 
     [Header("Recognition settings")]
@@ -18,9 +21,6 @@ public class RuneRecognizer : MonoBehaviour
     private void Awake()
     {
         drawManager = RuneDrawManager.instance;
-        #if UNITY_EDITOR
-            recognizedRuneRenderer = GetComponent<Image>();
-        #endif
     }
 
     private void OnEnable()
@@ -35,9 +35,6 @@ public class RuneRecognizer : MonoBehaviour
 
     private void OnRuneDrawn(RuneDrawVariation runeDrawToCheck)
     {
-        #if UNITY_EDITOR
-            if (!storage.areSortedListsUpdated) RuneMaker.instance.ResortRunes();
-        #endif
                 
         HashSet<int> selectedRuneHashes = new HashSet<int>(FindClosestRunesByParams(runeDrawToCheck.height, storage.runesHeight, heightRange));
         selectedRuneHashes.IntersectWith(FindClosestRunesByParams(runeDrawToCheck.massCenter.x, storage.runesMassCenterX, massCenterRange));
@@ -61,10 +58,7 @@ public class RuneRecognizer : MonoBehaviour
 
         if (closestRune != null)
         {        
-            #if UNITY_EDITOR
-                var tex = closestRune.Preview;
-                if (tex != null) recognizedRuneRenderer.sprite = Sprite.Create(tex, new Rect(0, 0, tex.width, tex.height), new Vector2(0.5f, 0.5f));
-            #endif
+            RuneCasted?.Invoke(closestRune);
         }
     }
 

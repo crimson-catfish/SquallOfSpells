@@ -1,7 +1,5 @@
 using UnityEngine;
-#if UNITY_EDITOR
-    using UnityEditor;
-#endif
+using UnityEditor;
 
 public class RuneMakerWindow : EditorWindow
 {
@@ -10,8 +8,7 @@ public class RuneMakerWindow : EditorWindow
     private Vector2 scrollPosition;
     private RuneMaker runeMaker;
     private Rune lastRune = null;
-
-
+    
     private void OnEnable()
     {
         runeMaker = RuneMaker.instance;

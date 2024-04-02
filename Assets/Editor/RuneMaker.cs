@@ -3,9 +3,7 @@ using System.IO;
 using Newtonsoft.Json;
 using Unity.Mathematics;
 using UnityEngine;
-#if UNITY_EDITOR
-    using UnityEditor;
-#endif
+using UnityEditor;
 
 public class RuneMaker : Singleton<RuneMaker>
 {
@@ -63,7 +61,7 @@ public class RuneMaker : Singleton<RuneMaker>
         if (rune.drawVariations.Contains(variation)) return;
 
         // update rune data
-        rune.avaregeMassCenter = (rune.avaregeMassCenter * rune.drawVariations.Count + variation.massCenter) / (rune.drawVariations.Count + 1);
+        rune.averageMassCenter = (rune.averageMassCenter * rune.drawVariations.Count + variation.massCenter) / (rune.drawVariations.Count + 1);
         rune.averageHeight = (rune.averageHeight * rune.drawVariations.Count + variation.height) / (rune.drawVariations.Count + 1);
         if (!rune.drawVariations.Contains(variation)) rune.drawVariations.Add(variation);
 
@@ -104,8 +102,8 @@ public class RuneMaker : Singleton<RuneMaker>
         foreach (KeyValuePair<int, Rune> rune in storage.runes)
         {
             storage.runesHeight.Add(rune.Value.averageHeight, rune.Key);
-            storage.runesMassCenterX.Add(rune.Value.avaregeMassCenter.x, rune.Key);
-            storage.runesMassCenterY.Add(rune.Value.avaregeMassCenter.y, rune.Key);
+            storage.runesMassCenterX.Add(rune.Value.averageMassCenter.x, rune.Key);
+            storage.runesMassCenterY.Add(rune.Value.averageMassCenter.y, rune.Key);
         }
 
         File.WriteAllText("Assets/Resources/Runes/height.json", JsonConvert.SerializeObject(storage.runesHeight));

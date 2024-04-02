@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 using System;
+using UnityEngine.Serialization;
 #if UNITY_EDITOR
     using UnityEditor;
 #endif
@@ -30,7 +31,7 @@ public class Rune : ScriptableObject, IComparable<Rune>
     #endif
 
     public float averageHeight = 0;
-    public Vector2 avaregeMassCenter = Vector2.zero;
+    public Vector2 averageMassCenter = Vector2.zero;
     public List<RuneDrawVariation> drawVariations = new();
 
     public int CompareTo(Rune other)

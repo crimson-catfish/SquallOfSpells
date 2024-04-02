@@ -1,13 +1,12 @@
-#if UNITY_EDITOR
-
+using System;
 using UnityEditor.Build;
 using UnityEditor.Build.Reporting;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "MyCustomBuildProcessor", menuName = "ScriptableObjects/MyCustomBuildProcessor")]
-class CustomBuildProcessor : ScriptableObject, IPreprocessBuildWithReport
+[Serializable]
+class CustomBuildProcessor : IPreprocessBuildWithReport
 {
-    [SerializeField] private RuneStorage storage;
+    [SerializeField] public RuneStorage storage;
 
     public int callbackOrder => 0;
 
@@ -16,5 +15,3 @@ class CustomBuildProcessor : ScriptableObject, IPreprocessBuildWithReport
         if (!storage.areSortedListsUpdated) RuneMaker.instance.ResortRunes();
     }
 }
-
-#endif
