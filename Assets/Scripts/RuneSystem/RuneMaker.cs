@@ -2,9 +2,10 @@ using System.Collections.Generic;
 using System.IO;
 using Newtonsoft.Json;
 using Unity.Mathematics;
-using UnityEditor;
 using UnityEngine;
-using UnityEngine.Serialization;
+#if UNITY_EDITOR
+    using UnityEditor;
+#endif
 
 public class RuneMaker : Singleton<RuneMaker>
 {

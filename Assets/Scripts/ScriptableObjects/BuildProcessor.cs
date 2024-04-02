@@ -1,8 +1,8 @@
 #if UNITY_EDITOR
 
-using UnityEngine;
 using UnityEditor.Build;
 using UnityEditor.Build.Reporting;
+using UnityEngine;
 
 [CreateAssetMenu(fileName = "MyCustomBuildProcessor", menuName = "ScriptableObjects/MyCustomBuildProcessor")]
 class CustomBuildProcessor : ScriptableObject, IPreprocessBuildWithReport

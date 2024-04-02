@@ -1,8 +1,9 @@
 using UnityEngine;
 using System.Collections.Generic;
 using System;
-using System.IO;
-using UnityEditor;
+#if UNITY_EDITOR
+    using UnityEditor;
+#endif
 
 /// <summary>
 /// rune's width always 1, height is positive.
@@ -10,21 +11,23 @@ using UnityEditor;
 [Serializable]
 public class Rune : ScriptableObject, IComparable<Rune>
 {
-    public const float width = 1;
+    public const float Width = 1;
 
     public string previewPath;
     private Texture2D preview;
 
-    [property: SerializeField]
-    public Texture2D Preview
-    {
-        get
+    #if UNITY_EDITOR
+        [property: SerializeField]
+        public Texture2D Preview
         {
-            if (preview == null) preview = AssetDatabase.LoadAssetAtPath<Texture2D>(previewPath);
-            return preview;
+            get
+            {
+                if (preview == null) preview = AssetDatabase.LoadAssetAtPath<Texture2D>(previewPath);
+                return preview;
+            }
+            set => preview = value;
         }
-        set { preview = value; }
-    }
+    #endif
 
     public float averageHeight = 0;
     public Vector2 avaregeMassCenter = Vector2.zero;

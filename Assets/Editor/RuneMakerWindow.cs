@@ -1,6 +1,7 @@
 using UnityEngine;
-using UnityEditor;
-using Unity.VisualScripting;
+#if UNITY_EDITOR
+    using UnityEditor;
+#endif
 
 public class RuneMakerWindow : EditorWindow
 {

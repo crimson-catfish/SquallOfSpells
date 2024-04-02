@@ -3,7 +3,6 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
-[RequireComponent(typeof(Image))]
 public class RuneRecognizer : MonoBehaviour
 {
     [SerializeField] private RuneStorage storage;
@@ -19,7 +18,9 @@ public class RuneRecognizer : MonoBehaviour
     private void Awake()
     {
         drawManager = RuneDrawManager.instance;
-        recognizedRuneRenderer = GetComponent<Image>();
+        #if UNITY_EDITOR
+            recognizedRuneRenderer = GetComponent<Image>();
+        #endif
     }
 
     private void OnEnable()

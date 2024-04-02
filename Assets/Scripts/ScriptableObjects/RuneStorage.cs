@@ -1,6 +1,6 @@
-using UnityEngine;
 using System.Collections.Generic;
 using Newtonsoft.Json;
+using UnityEngine;
 
 [CreateAssetMenu(fileName = "RuneStorage", menuName = "ScriptableObjects/RuneStorage")]
 public class RuneStorage : ScriptableObject
