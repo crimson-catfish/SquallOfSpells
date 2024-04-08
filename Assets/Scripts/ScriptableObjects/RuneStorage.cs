@@ -5,15 +5,13 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "RuneStorage", menuName = "ScriptableObjects/RuneStorage")]
 public class RuneStorage : ScriptableObject
 {
-    public Dictionary<int, Rune> runes = new();
+    public readonly Dictionary<int, Rune> runes = new();
 
-    public SortedList<float, int> runesHeight;
-    public SortedList<float, int> runesMassCenterX;
-    public SortedList<float, int> runesMassCenterY;
+    public SortedList<float, int> runesHeight = new();
+    public SortedList<float, int> runesMassCenterX = new();
+    public SortedList<float, int> runesMassCenterY = new();
 
-    // public bool areSortedListsUpdated = false;
-
-
+    
     private void OnEnable()
     {
         runes.Clear();

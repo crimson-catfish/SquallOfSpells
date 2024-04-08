@@ -23,7 +23,7 @@ public class RuneMaker : MonoBehaviour
     private Rune lastRune = null;
     private Color[] pointColors;
     private Dropdown dropdown;
-    
+    private bool areRunesSorted = false;
 
     private void OnEnable()
     {
@@ -36,13 +36,16 @@ public class RuneMaker : MonoBehaviour
         dropdown = dropdownContainer.GetComponent<Dropdown>();
         foreach (Rune rune in storage.runes.Values)
         {
+            if (rune == null) print("no rune");
+            if (dropdown == null) print("no dropdown");
             dropdown.options.Add(new Dropdown.OptionData(rune.Preview));
         }
     }
 
-    
-
-    
+    private void OnDisable()
+    {
+        ResortRunes();
+    }
 
     private void OnGUI()
     {
@@ -114,13 +117,22 @@ public class RuneMaker : MonoBehaviour
     private Rune SaveDrawVariationToNewRune()
     {
         Rune rune = ScriptableObject.CreateInstance<Rune>();
-        rune.previewPath = AssetDatabase.GenerateUniqueAssetPath("Assets/Textures/Runes/Previews/preview.asset");
-        AssetDatabase.CreateAsset(new Texture2D(size, size, TextureFormat.ARGB32, false), rune.previewPath);
-        Debug.Log(new Texture2D(34, 34));
+        rune.previewPath = AssetDatabase.GenerateUniqueAssetPath("Assets/Sprites/Runes/Previews/preview.asset");
         AssetDatabase.CreateAsset(rune, AssetDatabase.GenerateUniqueAssetPath("Assets/Resources/Runes/rune.asset"));
+        AssetDatabase.CreateAsset
+        (
+            Sprite.Create
+            (
+                new Texture2D(size, size, TextureFormat.ARGB32, false),
+                new Rect(0.0f, 0.0f, size, size),
+                new Vector2(0.5f, 0.5f)
+            ),
+            rune.previewPath
+        );
         storage.runes.Add(rune.GetHashCode(), rune);
 
         AddDrawVariation(rune);
+        areRunesSorted = false;
         return rune;
     }
 
@@ -129,14 +141,11 @@ public class RuneMaker : MonoBehaviour
         storage.runes.Remove(rune.GetHashCode());
         AssetDatabase.DeleteAsset(rune.previewPath);
         AssetDatabase.DeleteAsset(AssetDatabase.GetAssetPath(rune));
-        // storage.areSortedListsUpdated = false;
+        areRunesSorted = false;
     }
 
     private void AddDrawVariation(Rune rune)
     {
-        Undo.RegisterCompleteObjectUndo(rune, "added draw variation to some rune");
-        Undo.RegisterCompleteObjectUndo(rune.Preview, "changed preview image of added rune");
-
         RuneDrawVariation variation = drawManager.drawVariation;
 
         if (variation == null)
@@ -183,18 +192,20 @@ public class RuneMaker : MonoBehaviour
         rune.Preview.texture.Apply();
         EditorUtility.SetDirty(rune.Preview);
         EditorUtility.SetDirty(rune);
-
-        // storage.areSortedListsUpdated = false;
+        
+        areRunesSorted = false;
     }
 
     private void ResortRunes()
     {
+        if (areRunesSorted) return;
+        
         EditorUtility.DisplayProgressBar("Resorting runes", "In process", 0);
 
-        storage.runesHeight = new();
-        storage.runesMassCenterX = new();
-        storage.runesMassCenterY = new();
-
+        storage.runesHeight.Clear();
+        storage.runesMassCenterX.Clear();
+        storage.runesMassCenterY.Clear();
+        
         foreach (KeyValuePair<int, Rune> rune in storage.runes)
         {
             storage.runesHeight.Add(rune.Value.averageHeight, rune.Key);
@@ -206,8 +217,8 @@ public class RuneMaker : MonoBehaviour
         File.WriteAllText("Assets/Resources/Runes/massCenterX.json", JsonConvert.SerializeObject(storage.runesMassCenterX));
         File.WriteAllText("Assets/Resources/Runes/massCenterY.json", JsonConvert.SerializeObject(storage.runesMassCenterY));
 
-        // storage.areSortedListsUpdated = true;
-
+        areRunesSorted = true;
+        
         EditorUtility.ClearProgressBar();
     }
 }

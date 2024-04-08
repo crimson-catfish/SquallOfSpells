@@ -6,13 +6,16 @@ using UnityEngine;
 public class RuneDrawManager : MonoBehaviour
 {
     public event Action<RuneDrawVariation> OnRuneDrawn;
-    public RuneDrawVariation drawVariation;
+    
+    [HideInInspector] public RuneDrawVariation drawVariation;
 
-    [Header("changing this properties doesn't affects already created runes Please recreate them to apply changes")]
+    [SerializeField] private float drawLineThickness = 0.02f;
+    [SerializeField] private bool showDrawPoints;
+
+    [Header("Doesn't affects already created runes\nplease recreate them to apply changes" )]
     [SerializeField] private float distanceBetweenPoints = 0.02f;
     [SerializeField] private float acceptableError = 0.001f;
     [SerializeField] private float heavyCheckStep = 0.005f;
-    [SerializeField] private bool showDrawPoints;
     
     private Vector2 momentSum = Vector2.zero;
     private Rect drawFrame;
@@ -21,6 +24,7 @@ public class RuneDrawManager : MonoBehaviour
     private bool wasDrawEndPerformed = true;
     private InputManager inputManager;
     private UILineRenderer lineRenderer;
+    
     private readonly float screenWidth = Screen.width; // Probably reducing amount of Screen calls is worth it idk 
 
     private void OnEnable()
@@ -33,6 +37,7 @@ public class RuneDrawManager : MonoBehaviour
     private void Awake()
     {
         lineRenderer = GetComponent<UILineRenderer>();
+        lineRenderer.thickness = drawLineThickness * Screen.width;
     }
 
     private void Start()

@@ -10,7 +10,7 @@ public class InputManager : Singleton<InputManager>
     public event Action OnCast;
 
     private Controls controls;
-    private float screenWidth = Screen.width;
+    private readonly float screenWidth = Screen.width;
 
     private void Awake()
     {
