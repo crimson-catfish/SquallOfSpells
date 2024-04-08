@@ -15,27 +15,21 @@ public class RuneRecognizer : MonoBehaviour
     [SerializeField] private float massCenterRange;
 
     private Image recognizedRuneRenderer;
-
     private RuneDrawManager drawManager;
-
-    private void Awake()
-    {
-        drawManager = RuneDrawManager.instance;
-    }
-
+    
     private void OnEnable()
     {
-        drawManager.RuneDrawn += OnRuneDrawn;
+        drawManager.OnRuneDrawn += OnRuneDrawn;
     }
 
     private void OnDisable()
     {
-        drawManager.RuneDrawn -= OnRuneDrawn;
+        drawManager.OnRuneDrawn -= OnRuneDrawn;
     }
 
+    
     private void OnRuneDrawn(RuneDrawVariation runeDrawToCheck)
     {
-                
         HashSet<int> selectedRuneHashes = new HashSet<int>(FindClosestRunesByParams(runeDrawToCheck.height, storage.runesHeight, heightRange));
         selectedRuneHashes.IntersectWith(FindClosestRunesByParams(runeDrawToCheck.massCenter.x, storage.runesMassCenterX, massCenterRange));
         selectedRuneHashes.IntersectWith(FindClosestRunesByParams(runeDrawToCheck.massCenter.y, storage.runesMassCenterY, massCenterRange));

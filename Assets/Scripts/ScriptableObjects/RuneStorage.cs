@@ -11,7 +11,7 @@ public class RuneStorage : ScriptableObject
     public SortedList<float, int> runesMassCenterX;
     public SortedList<float, int> runesMassCenterY;
 
-    public bool areSortedListsUpdated = false;
+    // public bool areSortedListsUpdated = false;
 
 
     private void OnEnable()

@@ -3,54 +3,56 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(UILineRenderer))]
-public class RuneDrawManager : Singleton<RuneDrawManager>
+public class RuneDrawManager : MonoBehaviour
 {
-    public event Action<RuneDrawVariation> RuneDrawn;
+    public event Action<RuneDrawVariation> OnRuneDrawn;
+    public RuneDrawVariation drawVariation;
 
-    [HideInInspector] public RuneDrawVariation drawVariation;
-
-    [SerializeField] private RuneDrawParameters param;
+    [Header("changing this properties doesn't affects already created runes Please recreate them to apply changes")]
+    [SerializeField] private float distanceBetweenPoints = 0.02f;
+    [SerializeField] private float acceptableError = 0.001f;
+    [SerializeField] private float heavyCheckStep = 0.005f;
     [SerializeField] private bool showDrawPoints;
-
-    private InputManager inputManager;
+    
     private Vector2 momentSum = Vector2.zero;
     private Rect drawFrame;
-    private List<Vector2> drawPoints = new();
+    private readonly List<Vector2> drawPoints = new();
     private Vector2 lastPoint;
-    private UILineRenderer uiLineRenderer;
     private bool wasDrawEndPerformed = true;
-
-
-    private void Awake()
-    {
-        inputManager = InputManager.instance;
-        uiLineRenderer = GetComponent<UILineRenderer>();
-    }
+    private InputManager inputManager;
+    private UILineRenderer lineRenderer;
+    private readonly float screenWidth = Screen.width; // Probably reducing amount of Screen calls is worth it idk 
 
     private void OnEnable()
     {
+        inputManager = InputManager.instance;
         inputManager.OnNextDrawPosition += HandleNextDrawPosition;
         inputManager.OnDrawEnd += HandleDrawEnd;
+    }
+
+    private void Awake()
+    {
+        lineRenderer = GetComponent<UILineRenderer>();
     }
 
     private void Start()
     {
         Gizmos.color = Color.green;
     }
-
+    
+    private void OnDisable()
+    {
+        inputManager.OnNextDrawPosition -= HandleNextDrawPosition;
+        inputManager.OnDrawEnd -= HandleDrawEnd;
+    }
+    
     private void OnDrawGizmos()
     {
         if (!showDrawPoints) return;
         foreach (Vector2 point in drawPoints)
         {
-            Gizmos.DrawSphere(point, param.distanceBetweenPoints / 2);
+            Gizmos.DrawSphere(point * screenWidth, distanceBetweenPoints * screenWidth / 2);
         }
-    }
-
-    private void OnDisable()
-    {
-        inputManager.OnNextDrawPosition -= HandleNextDrawPosition;
-        inputManager.OnDrawEnd += HandleDrawEnd;
     }
 
 
@@ -60,7 +62,7 @@ public class RuneDrawManager : Singleton<RuneDrawManager>
         {
             wasDrawEndPerformed = false;
 
-            ClearDrawing();
+            lineRenderer.points.Clear();
             drawPoints.Clear();
             momentSum = Vector2.zero;
             drawFrame = new Rect(nextDrawPosition.x, nextDrawPosition.y, 0, 0);
@@ -68,18 +70,18 @@ public class RuneDrawManager : Singleton<RuneDrawManager>
             return;
         }
 
-        // check for the last point firstly becouse it's likely to be too close and then we don't need to do all heavy calculations
-        if ((nextDrawPosition - lastPoint).magnitude < param.distanceBetweenPoints) return;
+        // check for the last point firstly because it's likely to be too close and then we don't need to do all heavy calculations
+        if ((nextDrawPosition - lastPoint).magnitude < distanceBetweenPoints) return;
 
-        while ((lastPoint - nextDrawPosition).magnitude >= param.distanceBetweenPoints)
+        while ((lastPoint - nextDrawPosition).magnitude >= distanceBetweenPoints)
         {
-            Vector2 pointToCheck = lastPoint + ((nextDrawPosition - lastPoint).normalized * param.distanceBetweenPoints);
+            Vector2 pointToCheck = lastPoint + ((nextDrawPosition - lastPoint).normalized * distanceBetweenPoints);
 
             Closest.PointAndDistance closest = Closest.GetPointAndDistance(pointToCheck, drawPoints);
 
 
             // check if distance is long enough
-            if (closest.sqrDistance >= (param.distanceBetweenPoints * param.distanceBetweenPoints * (1 - param.acceptableError)))
+            if (closest.sqrDistance >= (distanceBetweenPoints * distanceBetweenPoints * (1 - acceptableError)))
             {
                 CreateNewPoint(pointToCheck);
             }
@@ -93,7 +95,7 @@ public class RuneDrawManager : Singleton<RuneDrawManager>
     private void HandleDrawEnd()
     {
         PrepareRuneVariation();
-        RuneDrawn?.Invoke(drawVariation);
+        OnRuneDrawn?.Invoke(drawVariation);
         wasDrawEndPerformed = true;
     }
 
@@ -103,16 +105,16 @@ public class RuneDrawManager : Singleton<RuneDrawManager>
 
         for
         (
-            float currentStep = param.heavyCheckStep;
+            float currentStep = heavyCheckStep;
             currentStep <= (nextDrawPosition - pointToCheck).magnitude;
-            currentStep += param.heavyCheckStep
+            currentStep += heavyCheckStep
         )
         {
             pointToCheck += (pointToCheck - lastPoint).normalized * currentStep;
 
             closest = Closest.GetPointAndDistance(pointToCheck, drawPoints);
 
-            if (closest.sqrDistance >= (param.distanceBetweenPoints * param.distanceBetweenPoints * 0.99))
+            if (closest.sqrDistance >= (distanceBetweenPoints * distanceBetweenPoints * 0.99))
             {
                 CreateNewPoint(pointToCheck);
                 return;
@@ -124,9 +126,9 @@ public class RuneDrawManager : Singleton<RuneDrawManager>
 
     private void CreateNewPoint(Vector2 position)
     {
-        uiLineRenderer.points.Add(position * new Vector2(Screen.width, Screen.height));
-        uiLineRenderer.SetAllDirty();
-
+        lineRenderer.points.Add(position * screenWidth);
+        lineRenderer.SetAllDirty();
+        
         lastPoint = position;
         drawPoints.Add(position);
 
@@ -151,11 +153,5 @@ public class RuneDrawManager : Singleton<RuneDrawManager>
         {
             drawVariation.points[i] = Rect.PointToNormalized(drawFrame, drawPoints[i]) * ratioFactor;
         }
-    }
-
-
-    public void ClearDrawing()
-    {
-        uiLineRenderer.points.Clear();
     }
 }

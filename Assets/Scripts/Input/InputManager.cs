@@ -4,12 +4,13 @@ using UnityEngine;
 public class InputManager : Singleton<InputManager>
 {
     public event Action<Vector2> OnNextDrawPosition;
+    // CAREFULLY! called only after OnNextDrawPosition somehow
     public event Action OnDrawStart;
     public event Action OnDrawEnd;
     public event Action OnCast;
 
     private Controls controls;
-
+    private float screenWidth = Screen.width;
 
     private void Awake()
     {
@@ -23,8 +24,8 @@ public class InputManager : Singleton<InputManager>
 
     private void Start()
     {
-        controls.Touch.IsDrawing.started += _ => OnDrawStart?.Invoke(); // somehow called only after OnNextDrawPosition
-        controls.Touch.Draw.performed += context => OnNextDrawPosition?.Invoke(context.ReadValue<Vector2>() / new Vector2(Screen.width, Screen.height));
+        controls.Touch.IsDrawing.started += _ => OnDrawStart?.Invoke();
+        controls.Touch.Draw.performed += context => OnNextDrawPosition?.Invoke(context.ReadValue<Vector2>() / screenWidth);
         controls.Touch.IsDrawing.canceled += _ => OnDrawEnd?.Invoke();
         controls.Touch.Cast.performed += _ => OnCast?.Invoke();
     }

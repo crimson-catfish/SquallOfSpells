@@ -1,7 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
 using System;
-using UnityEngine.Serialization;
 #if UNITY_EDITOR
     using UnityEditor;
 #endif
@@ -15,15 +14,15 @@ public class Rune : ScriptableObject, IComparable<Rune>
     public const float Width = 1;
 
     public string previewPath;
-    private Texture2D preview;
+    private Sprite preview;
 
     #if UNITY_EDITOR
         [property: SerializeField]
-        public Texture2D Preview
+        public Sprite Preview
         {
             get
             {
-                if (preview == null) preview = AssetDatabase.LoadAssetAtPath<Texture2D>(previewPath);
+                if (preview == null) preview = AssetDatabase.LoadAssetAtPath<Sprite>(previewPath);
                 return preview;
             }
             set => preview = value;
