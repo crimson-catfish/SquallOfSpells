@@ -1,10 +1,10 @@
-using System;
 using System.Collections.Generic;
 using System.IO;
 using Newtonsoft.Json;
 using Unity.Mathematics;
 using UnityEngine;
 using UnityEditor;
+using TMPro;
 using UnityEngine.UI;
 
 public class RuneMaker : MonoBehaviour
@@ -14,15 +14,15 @@ public class RuneMaker : MonoBehaviour
     [SerializeField] private RuneDrawManager drawManager;
 
     [Header("changing this properties doesn't affects already created previews\nPlease recreate them to apply changes")]
-    [SerializeField] private int size;
-    [SerializeField] private int border;
-    [SerializeField] private int pointRadius;
-    [SerializeField] private Color pointColor;
+    [SerializeField] private int size = 128;
+    [SerializeField] private int border = 8;
+    [SerializeField] private int pointRadius = 4;
+    [SerializeField] private Color pointColor = Color.black;
 
     private Vector2 scrollPosition;
     private Rune lastRune = null;
     private Color[] pointColors;
-    private Dropdown dropdown;
+    private TMP_Dropdown dropdown;
     private bool areRunesSorted = false;
 
     private void OnEnable()
@@ -33,12 +33,10 @@ public class RuneMaker : MonoBehaviour
 
     private void Start()
     {
-        dropdown = dropdownContainer.GetComponent<Dropdown>();
+        dropdown = dropdownContainer.GetComponent<TMP_Dropdown>();
         foreach (Rune rune in storage.runes.Values)
         {
-            if (rune == null) print("no rune");
-            if (dropdown == null) print("no dropdown");
-            dropdown.options.Add(new Dropdown.OptionData(rune.Preview));
+            dropdown.options.Add(new TMP_Dropdown.OptionData(rune.Preview));
         }
     }
 
@@ -67,7 +65,16 @@ public class RuneMaker : MonoBehaviour
             if (GUILayout.Button("Delete current rune"))
             {
                 GUILayout.Label("Base Settings", EditorStyles.boldLabel);
-                if (EditorUtility.DisplayDialog("Deleting warning", "Delete this rune (can't undo this action)?", "OK", "cancel"))
+                if
+                (
+                    EditorUtility.DisplayDialog
+                    (
+                        "Deleting warning",
+                        "Delete this rune (can't undo this action)?",
+                        "OK",
+                        "cancel"
+                    )
+                )
                 {
                     DeleteRune(rune);
                     lastRune = null;
@@ -116,6 +123,9 @@ public class RuneMaker : MonoBehaviour
 
     private Rune SaveDrawVariationToNewRune()
     {
+        RuneDrawVariation variation = drawManager.drawVariation;
+        if(!DoesVariationHasEnoughPoints(variation)) return lastRune;
+        
         Rune rune = ScriptableObject.CreateInstance<Rune>();
         rune.previewPath = AssetDatabase.GenerateUniqueAssetPath("Assets/Sprites/Runes/Previews/preview.asset");
         AssetDatabase.CreateAsset(rune, AssetDatabase.GenerateUniqueAssetPath("Assets/Resources/Runes/rune.asset"));
@@ -144,21 +154,26 @@ public class RuneMaker : MonoBehaviour
         areRunesSorted = false;
     }
 
-    private void AddDrawVariation(Rune rune)
+    private bool DoesVariationHasEnoughPoints(RuneDrawVariation variation)
     {
-        RuneDrawVariation variation = drawManager.drawVariation;
-
         if (variation == null)
         {
             Debug.LogWarning("Draw something to save");
-            return;
+            return false;
         }
         if (variation.points.Length <= 5)
         {
             Debug.LogWarning("Too few points in rune, didn't save");
-            return;
+            return false;
         }
-        else print(variation.points.Length);
+
+        return true;
+    }
+
+    private void AddDrawVariation(Rune rune)
+    {
+        RuneDrawVariation variation = drawManager.drawVariation;
+        if (!DoesVariationHasEnoughPoints(variation)) return;
         if (rune.drawVariations.Contains(variation)) return;
 
         // update rune data
