@@ -14,15 +14,15 @@ public class Rune : ScriptableObject, IComparable<Rune>
     public const float Width = 1;
 
     public string previewPath;
-    private Sprite preview;
+    private Texture2D preview;
 
     #if UNITY_EDITOR
         [property: SerializeField]
-        public Sprite Preview
+        public Texture2D Preview
         {
             get
             {
-                if (preview == null) preview = AssetDatabase.LoadAssetAtPath<Sprite>(previewPath);
+                if (preview == null) preview = AssetDatabase.LoadAssetAtPath<Texture2D>(previewPath);
                 return preview;
             }
             set => preview = value;

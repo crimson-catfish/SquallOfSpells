@@ -36,7 +36,16 @@ public class RuneMaker : MonoBehaviour
         dropdown = dropdownContainer.GetComponent<TMP_Dropdown>();
         foreach (Rune rune in storage.runes.Values)
         {
-            dropdown.options.Add(new TMP_Dropdown.OptionData(rune.Preview));
+            dropdown.options.Add(new TMP_Dropdown.OptionData
+                (
+                    Sprite.Create
+                    (
+                        rune.Preview,
+                        new Rect(0.0f, 0.0f, rune.Preview.width, rune.Preview.height),
+                        new Vector2(0.5f, 0.5f)
+                    )
+                )
+            );
         }
     }
 
@@ -127,18 +136,9 @@ public class RuneMaker : MonoBehaviour
         if(!DoesVariationHasEnoughPoints(variation)) return lastRune;
         
         Rune rune = ScriptableObject.CreateInstance<Rune>();
-        rune.previewPath = AssetDatabase.GenerateUniqueAssetPath("Assets/Sprites/Runes/Previews/preview.asset");
+        rune.previewPath = AssetDatabase.GenerateUniqueAssetPath("Assets/Textures/Runes/Previews/preview.asset");
         AssetDatabase.CreateAsset(rune, AssetDatabase.GenerateUniqueAssetPath("Assets/Resources/Runes/rune.asset"));
-        AssetDatabase.CreateAsset
-        (
-            Sprite.Create
-            (
-                new Texture2D(size, size, TextureFormat.ARGB32, false),
-                new Rect(0.0f, 0.0f, size, size),
-                new Vector2(0.5f, 0.5f)
-            ),
-            rune.previewPath
-        );
+        AssetDatabase.CreateAsset(new Texture2D(size, size, TextureFormat.ARGB32, false), rune.previewPath);
         storage.runes.Add(rune.GetHashCode(), rune);
 
         AddDrawVariation(rune);
@@ -184,27 +184,27 @@ public class RuneMaker : MonoBehaviour
         if (!rune.drawVariations.Contains(variation)) rune.drawVariations.Add(variation);
 
         // resize preview texture
-        var texture = rune.Preview.texture;
-        Texture2D oldPreview = new(texture.width, texture.height, TextureFormat.ARGB32, false);
-        Graphics.CopyTexture(rune.Preview.texture, oldPreview);
-        texture.Reinitialize(size, (int)math.max(texture.height, variation.height * size));
-        texture.SetPixels(0, (texture.height - oldPreview.height) / 2, oldPreview.width, oldPreview.height,
+        Texture2D tex = rune.Preview;
+        Texture2D oldPreview = new(tex.width, tex.height, TextureFormat.ARGB32, false);
+        Graphics.CopyTexture(tex, oldPreview);
+        tex.Reinitialize(size, (int)math.max(tex.height, variation.height * size));
+        tex.SetPixels(0, (tex.height - oldPreview.height) / 2, oldPreview.width, oldPreview.height,
             oldPreview.GetPixels(0, 0, oldPreview.width, oldPreview.height));
 
 
         // add new draw variation on preview texture
         foreach (Vector2 point in variation.points)
         {
-            int x = (int)(point.x * (texture.width - border * 2)) + border - pointRadius;
-            int y = (int)(point.y / variation.height * (texture.height - border * 2)) + border - pointRadius;
+            int x = (int)(point.x * (tex.width - border * 2)) + border - pointRadius;
+            int y = (int)(point.y / variation.height * (tex.height - border * 2)) + border - pointRadius;
 
-            Color[] colors = texture.GetPixels(x, y, pointRadius, pointRadius);
+            Color[] colors = tex.GetPixels(x, y, pointRadius, pointRadius);
             for (int i = 1; i < colors.Length; ++i) colors[i] += pointColor;
-            texture.SetPixels(x, y, pointRadius, pointRadius, colors);
+            tex.SetPixels(x, y, pointRadius, pointRadius, colors);
         }
 
         // save
-        rune.Preview.texture.Apply();
+        rune.Preview.Apply();
         EditorUtility.SetDirty(rune.Preview);
         EditorUtility.SetDirty(rune);
         
