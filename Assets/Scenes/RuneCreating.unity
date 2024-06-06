@@ -280,12 +280,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   storage: {fileID: 11400000, guid: be54250f59b104a42828af839132ca3c, type: 2}
-  dropdownContainer: {fileID: 1301828471}
   drawManager: {fileID: 760676023}
-  size: 128
+  width: 128
   border: 8
   pointRadius: 4
-  pointColor: {r: 0, g: 0, b: 0, a: 0}
+  pointDarkness: 0.485
+  textureFormat: -127
 --- !u!4 &85134255
 Transform:
   m_ObjectHideFlags: 0
@@ -466,7 +466,7 @@ RectTransform:
   - {fileID: 760676022}
   - {fileID: 1301828472}
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -1154,6 +1154,54 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1301828471}
   m_CullTransparentMesh: 1
+--- !u!1 &1532731558
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1532731560}
+  - component: {fileID: 1532731559}
+  m_Layer: 0
+  m_Name: RuneMakerGUI
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1532731559
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1532731558}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 95c6136901d04bbab86d48bd70a7e324, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dropdownContainer: {fileID: 1301828471}
+  storage: {fileID: 11400000, guid: be54250f59b104a42828af839132ca3c, type: 2}
+  runeMaker: {fileID: 85134254}
+  drawManager: {fileID: 760676023}
+--- !u!4 &1532731560
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1532731558}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1648800138
 GameObject:
   m_ObjectHideFlags: 0
