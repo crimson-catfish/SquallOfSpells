@@ -6,7 +6,7 @@
             "id": "8180be9d-9e8f-4520-9b34-6fe273809ff1",
             "actions": [
                 {
-                    "name": "Draw",
+                    "name": "DrawPosition",
                     "type": "Value",
                     "id": "03add1ce-e451-4256-9d1c-458d0e496335",
                     "expectedControlType": "Vector2",
@@ -15,22 +15,22 @@
                     "initialStateCheck": true
                 },
                 {
-                    "name": "IsDrawing",
+                    "name": "DrawContact",
                     "type": "Button",
                     "id": "7452fa12-faa5-466c-a921-78453d0a5976",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
-                    "initialStateCheck": false
+                    "initialStateCheck": true
                 },
                 {
                     "name": "Cast",
-                    "type": "Button",
+                    "type": "Value",
                     "id": "dfd01cf6-d174-485e-9391-e10bba762f7d",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
-                    "initialStateCheck": false
+                    "initialStateCheck": true
                 }
             ],
             "bindings": [
@@ -41,7 +41,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Draw",
+                    "action": "DrawPosition",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -52,7 +52,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "IsDrawing",
+                    "action": "DrawContact",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },

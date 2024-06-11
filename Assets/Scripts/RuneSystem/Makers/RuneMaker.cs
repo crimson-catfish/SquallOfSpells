@@ -17,7 +17,7 @@ public class RuneMaker : MonoBehaviour
     [SerializeField, Range(0, 1)] private float pointDarkness = 0.3f;
     [SerializeField] private TextureFormat textureFormat;
 
-    private bool areRunesSorted = false;
+    private bool areRunesSorted;
 
 
     private void OnDisable()
@@ -25,8 +25,9 @@ public class RuneMaker : MonoBehaviour
         ResortRunes();
     }
 
-    public void SaveDrawVariationToNewRune(RuneDrawVariation variation)
+    public void SaveDrawVariationToNewRune()
     {
+        RuneDrawVariation variation = drawManager.drawVariation;
         if (!DoesVariationHasEnoughPoints(variation)) return;
 
         Rune rune = ScriptableObject.CreateInstance<Rune>();

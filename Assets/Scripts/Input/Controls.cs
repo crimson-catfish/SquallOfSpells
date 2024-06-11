@@ -28,7 +28,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
             ""id"": ""8180be9d-9e8f-4520-9b34-6fe273809ff1"",
             ""actions"": [
                 {
-                    ""name"": ""Draw"",
+                    ""name"": ""DrawPosition"",
                     ""type"": ""Value"",
                     ""id"": ""03add1ce-e451-4256-9d1c-458d0e496335"",
                     ""expectedControlType"": ""Vector2"",
@@ -37,22 +37,22 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": true
                 },
                 {
-                    ""name"": ""IsDrawing"",
+                    ""name"": ""DrawContact"",
                     ""type"": ""Button"",
                     ""id"": ""7452fa12-faa5-466c-a921-78453d0a5976"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
-                    ""initialStateCheck"": false
+                    ""initialStateCheck"": true
                 },
                 {
                     ""name"": ""Cast"",
-                    ""type"": ""Button"",
+                    ""type"": ""Value"",
                     ""id"": ""dfd01cf6-d174-485e-9391-e10bba762f7d"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
-                    ""initialStateCheck"": false
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
@@ -63,7 +63,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Draw"",
+                    ""action"": ""DrawPosition"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -74,7 +74,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""IsDrawing"",
+                    ""action"": ""DrawContact"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -96,8 +96,8 @@ public partial class @Controls: IInputActionCollection2, IDisposable
 }");
         // Touch
         m_Touch = asset.FindActionMap("Touch", throwIfNotFound: true);
-        m_Touch_Draw = m_Touch.FindAction("Draw", throwIfNotFound: true);
-        m_Touch_IsDrawing = m_Touch.FindAction("IsDrawing", throwIfNotFound: true);
+        m_Touch_DrawPosition = m_Touch.FindAction("DrawPosition", throwIfNotFound: true);
+        m_Touch_DrawContact = m_Touch.FindAction("DrawContact", throwIfNotFound: true);
         m_Touch_Cast = m_Touch.FindAction("Cast", throwIfNotFound: true);
     }
 
@@ -160,15 +160,15 @@ public partial class @Controls: IInputActionCollection2, IDisposable
     // Touch
     private readonly InputActionMap m_Touch;
     private List<ITouchActions> m_TouchActionsCallbackInterfaces = new List<ITouchActions>();
-    private readonly InputAction m_Touch_Draw;
-    private readonly InputAction m_Touch_IsDrawing;
+    private readonly InputAction m_Touch_DrawPosition;
+    private readonly InputAction m_Touch_DrawContact;
     private readonly InputAction m_Touch_Cast;
     public struct TouchActions
     {
         private @Controls m_Wrapper;
         public TouchActions(@Controls wrapper) { m_Wrapper = wrapper; }
-        public InputAction @Draw => m_Wrapper.m_Touch_Draw;
-        public InputAction @IsDrawing => m_Wrapper.m_Touch_IsDrawing;
+        public InputAction @DrawPosition => m_Wrapper.m_Touch_DrawPosition;
+        public InputAction @DrawContact => m_Wrapper.m_Touch_DrawContact;
         public InputAction @Cast => m_Wrapper.m_Touch_Cast;
         public InputActionMap Get() { return m_Wrapper.m_Touch; }
         public void Enable() { Get().Enable(); }
@@ -179,12 +179,12 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         {
             if (instance == null || m_Wrapper.m_TouchActionsCallbackInterfaces.Contains(instance)) return;
             m_Wrapper.m_TouchActionsCallbackInterfaces.Add(instance);
-            @Draw.started += instance.OnDraw;
-            @Draw.performed += instance.OnDraw;
-            @Draw.canceled += instance.OnDraw;
-            @IsDrawing.started += instance.OnIsDrawing;
-            @IsDrawing.performed += instance.OnIsDrawing;
-            @IsDrawing.canceled += instance.OnIsDrawing;
+            @DrawPosition.started += instance.OnDrawPosition;
+            @DrawPosition.performed += instance.OnDrawPosition;
+            @DrawPosition.canceled += instance.OnDrawPosition;
+            @DrawContact.started += instance.OnDrawContact;
+            @DrawContact.performed += instance.OnDrawContact;
+            @DrawContact.canceled += instance.OnDrawContact;
             @Cast.started += instance.OnCast;
             @Cast.performed += instance.OnCast;
             @Cast.canceled += instance.OnCast;
@@ -192,12 +192,12 @@ public partial class @Controls: IInputActionCollection2, IDisposable
 
         private void UnregisterCallbacks(ITouchActions instance)
         {
-            @Draw.started -= instance.OnDraw;
-            @Draw.performed -= instance.OnDraw;
-            @Draw.canceled -= instance.OnDraw;
-            @IsDrawing.started -= instance.OnIsDrawing;
-            @IsDrawing.performed -= instance.OnIsDrawing;
-            @IsDrawing.canceled -= instance.OnIsDrawing;
+            @DrawPosition.started -= instance.OnDrawPosition;
+            @DrawPosition.performed -= instance.OnDrawPosition;
+            @DrawPosition.canceled -= instance.OnDrawPosition;
+            @DrawContact.started -= instance.OnDrawContact;
+            @DrawContact.performed -= instance.OnDrawContact;
+            @DrawContact.canceled -= instance.OnDrawContact;
             @Cast.started -= instance.OnCast;
             @Cast.performed -= instance.OnCast;
             @Cast.canceled -= instance.OnCast;
@@ -220,8 +220,8 @@ public partial class @Controls: IInputActionCollection2, IDisposable
     public TouchActions @Touch => new TouchActions(this);
     public interface ITouchActions
     {
-        void OnDraw(InputAction.CallbackContext context);
-        void OnIsDrawing(InputAction.CallbackContext context);
+        void OnDrawPosition(InputAction.CallbackContext context);
+        void OnDrawContact(InputAction.CallbackContext context);
         void OnCast(InputAction.CallbackContext context);
     }
 }
