@@ -1,5 +1,6 @@
 /Assets/Resources/Runes/
 .directory
+mono_crash.mem.*.blob
 
 
 # This .gitignore file should be placed at the root of your Unity project directory
