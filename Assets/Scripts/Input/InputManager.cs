@@ -67,11 +67,9 @@ public class InputManager : Singleton<InputManager>
             pointerData = new PointerEventData(eventSystem) { position = point };
 
             GraphicRaycaster raycaster = canvas.GetComponent<GraphicRaycaster>();
+            
             raycaster.Raycast(pointerData, results);
-            foreach (RaycastResult result in results)
-            {
-                Debug.Log("Hit " + result.gameObject.name);
-            }
+
             if (results.Count > 0)
                 return true;
         }
