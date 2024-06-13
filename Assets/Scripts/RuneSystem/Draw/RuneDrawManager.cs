@@ -70,6 +70,9 @@ public class RuneDrawManager : MonoBehaviour
 
     private void HandleNextDrawPosition(Vector2 nextDrawPosition)
     {
+        lineRenderer.points.Add(nextDrawPosition * screenWidth);
+        lineRenderer.SetAllDirty();
+        
         // check for the last point firstly because it's likely to be too close and then we don't need to do all heavy calculations
         if ((nextDrawPosition - lastPoint).magnitude < distanceBetweenPoints) return;
 
@@ -127,9 +130,6 @@ public class RuneDrawManager : MonoBehaviour
 
     private void CreateNewPoint(Vector2 position)
     {
-        lineRenderer.points.Add(position * screenWidth);
-        lineRenderer.SetAllDirty();
-
         lastPoint = position;
         drawPoints.Add(position);
 
