@@ -1,0 +1,5 @@
+Undo system
+Preview (rectangle and texture format)
+Recognizer
+Shortcuts
+Prevent Toggle from unselecting
