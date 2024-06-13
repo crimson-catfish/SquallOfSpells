@@ -5,6 +5,8 @@ mono_crash.mem.*.blob
 
 #temporary
 /Assets/Textures/Runes/Previews/
+.idea/
+.vscode/
 
 # This .gitignore file should be placed at the root of your Unity project directory
 #
