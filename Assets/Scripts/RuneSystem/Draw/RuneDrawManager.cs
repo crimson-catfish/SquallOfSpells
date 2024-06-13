@@ -1,13 +1,14 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 [RequireComponent(typeof(UILineRenderer))]
 public class RuneDrawManager : MonoBehaviour
 {
     public event Action<RuneDrawVariation> OnRuneDrawn;
 
-    [HideInInspector] public RuneDrawVariation drawVariation;
+    [HideInInspector] public RuneDrawVariation currentVariation;
 
     [SerializeField] private UILineRenderer lineRenderer;
     [SerializeField] private float drawLineThickness = 0.02f;
@@ -34,7 +35,6 @@ public class RuneDrawManager : MonoBehaviour
         inputManager.OnDrawEnd += HandleDrawEnd;
     }
 
-
     private void Start()
     {
         lineRenderer.thickness = drawLineThickness * Screen.width;
@@ -47,6 +47,7 @@ public class RuneDrawManager : MonoBehaviour
         inputManager.OnDrawEnd -= HandleDrawEnd;
     }
 
+    
     private void OnDrawGizmos()
     {
         if (!showDrawPoints) return;
@@ -95,7 +96,7 @@ public class RuneDrawManager : MonoBehaviour
     {
         inputManager.OnNextDrawPosition -= HandleNextDrawPosition;
         PrepareRuneVariation();
-        OnRuneDrawn?.Invoke(drawVariation);
+        OnRuneDrawn?.Invoke(currentVariation);
     }
 
     private void HeavyCheck(Vector2 nextDrawPosition, Vector2 pointToCheck)
@@ -141,17 +142,17 @@ public class RuneDrawManager : MonoBehaviour
 
     private void PrepareRuneVariation()
     {
-        drawVariation = new()
+        currentVariation = new()
         {
             points = new Vector2[drawPoints.Count],
             height = drawFrame.height / drawFrame.width
         };
 
-        Vector2 ratioFactor = new(1, drawVariation.height);
-        drawVariation.massCenter = Rect.PointToNormalized(drawFrame, momentSum / drawPoints.Count) * ratioFactor;
+        Vector2 ratioFactor = new(1, currentVariation.height);
+        currentVariation.massCenter = Rect.PointToNormalized(drawFrame, momentSum / drawPoints.Count) * ratioFactor;
         for (int i = 0; i < drawPoints.Count; i++)
         {
-            drawVariation.points[i] = Rect.PointToNormalized(drawFrame, drawPoints[i]) * ratioFactor;
+            currentVariation.points[i] = Rect.PointToNormalized(drawFrame, drawPoints[i]) * ratioFactor;
         }
     }
 }

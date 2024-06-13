@@ -7,8 +7,11 @@ using UnityEditor;
 
 public class RuneMaker : MonoBehaviour
 {
+    [HideInInspector] public Rune currentRune;
+
     [SerializeField] private RuneStorage storage;
     [SerializeField] private RuneDrawManager drawManager;
+    [SerializeField] private RuneContainerManager containerManager;
 
     [Header("changing this properties doesn't affects already created previews\nPlease recreate them to apply changes")]
     [SerializeField] private int width = 128;
@@ -25,9 +28,9 @@ public class RuneMaker : MonoBehaviour
         ResortRunes();
     }
 
-    public void SaveDrawVariationToNewRune()
+    public void SaveCurrentVariationToNewRune()
     {
-        RuneDrawVariation variation = drawManager.drawVariation;
+        RuneDrawVariation variation = drawManager.currentVariation;
         if (!DoesVariationHasEnoughPoints(variation)) return;
 
         Rune rune = ScriptableObject.CreateInstance<Rune>();
@@ -36,15 +39,24 @@ public class RuneMaker : MonoBehaviour
         AssetDatabase.CreateAsset(new Texture2D(width, width, TextureFormat.ARGB32, false), rune.previewPath);
         storage.runes.Add(rune.GetHashCode(), rune);
 
-        AddDrawVariation(rune, variation);
+        AddCurrentVariation(rune);
+        containerManager.AddRune(rune);
         areRunesSorted = false;
     }
 
-    public void DeleteRune(Rune rune)
+    public void AddCurrentVariationToCurrentRune()
     {
-        storage.runes.Remove(rune.GetHashCode());
-        AssetDatabase.DeleteAsset(rune.previewPath);
-        AssetDatabase.DeleteAsset(AssetDatabase.GetAssetPath(rune));
+        AddCurrentVariation(currentRune);
+        containerManager.UpdateSelected(currentRune);
+    }
+
+    public void DeleteCurrentRune()
+    {
+        storage.runes.Remove(currentRune.GetHashCode());
+        AssetDatabase.DeleteAsset(currentRune.previewPath);
+        AssetDatabase.DeleteAsset(AssetDatabase.GetAssetPath(currentRune));
+        containerManager.DeleteSelected();
+        currentRune = null;
         areRunesSorted = false;
     }
 
@@ -65,9 +77,11 @@ public class RuneMaker : MonoBehaviour
         return true;
     }
 
-    public void AddDrawVariation(Rune rune, RuneDrawVariation variation)
+    private void AddCurrentVariation(Rune rune)
     {
+        RuneDrawVariation variation = drawManager.currentVariation;
         if (!DoesVariationHasEnoughPoints(variation)) return;
+        print(rune);
         if (rune.drawVariations.Contains(variation)) return;
 
         // update rune data
@@ -103,6 +117,7 @@ public class RuneMaker : MonoBehaviour
         EditorUtility.SetDirty(rune.Preview);
         EditorUtility.SetDirty(rune);
 
+        currentRune = rune;
         areRunesSorted = false;
     }
 
