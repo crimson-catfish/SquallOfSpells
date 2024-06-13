@@ -2,7 +2,7 @@
 .directory
 mono_crash.mem.*.blob
 Assets/Scripts/Test.cs
-Assets/Textures/Runes/Previews #temporary
+Assets/Textures/Runes/Previews/ #temporary
 
 # This .gitignore file should be placed at the root of your Unity project directory
 #
