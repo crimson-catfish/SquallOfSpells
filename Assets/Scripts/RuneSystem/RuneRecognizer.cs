@@ -4,18 +4,19 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
+
 public class RuneRecognizer : MonoBehaviour
 {
     public Action<Rune> RuneCasted;
     
     [SerializeField] private RuneStorage storage;
+    [SerializeField] private RuneDrawManager drawManager;
 
     [Header("Recognition settings")]
     [SerializeField] private float heightRange;
     [SerializeField] private float massCenterRange;
 
     private Image recognizedRuneRenderer;
-    private RuneDrawManager drawManager;
     
     private void OnEnable()
     {
@@ -30,12 +31,12 @@ public class RuneRecognizer : MonoBehaviour
     
     private void OnRuneDrawn(RuneDrawVariation runeDrawToCheck)
     {
-        HashSet<int> selectedRuneHashes = new HashSet<int>(FindClosestRunesByParams(runeDrawToCheck.height, storage.runesHeight, heightRange));
-        selectedRuneHashes.IntersectWith(FindClosestRunesByParams(runeDrawToCheck.massCenter.x, storage.runesMassCenterX, massCenterRange));
-        selectedRuneHashes.IntersectWith(FindClosestRunesByParams(runeDrawToCheck.massCenter.y, storage.runesMassCenterY, massCenterRange));
+        HashSet<int> selectedRuneHashes = new HashSet<int>(FindClosestRunesByParams(runeDrawToCheck.height, storage.RunesHeight, heightRange));
+        selectedRuneHashes.IntersectWith(FindClosestRunesByParams(runeDrawToCheck.massCenter.x, storage.RunesMassCenterX, massCenterRange));
+        selectedRuneHashes.IntersectWith(FindClosestRunesByParams(runeDrawToCheck.massCenter.y, storage.RunesMassCenterY, massCenterRange));
 
         List<Rune> runesToCheck = new();
-        foreach (int hash in selectedRuneHashes) runesToCheck.Add(storage.runes[hash]);
+        foreach (int hash in selectedRuneHashes) runesToCheck.Add(storage.Runes[hash]);
 
         Rune closestRune = null;
         float minError = Mathf.Infinity;

@@ -26,7 +26,7 @@ public class RuneMaker : MonoBehaviour
     private void Start()
     {
         toggleGroup = this.GetComponent<ToggleGroup>();
-        foreach (Rune rune in storage.runes.Values)
+        foreach (Rune rune in storage.Runes.Values)
             AddRuneToggleToScrollView(rune);
 
         toggleGroup.SetAllTogglesOff();
@@ -42,7 +42,7 @@ public class RuneMaker : MonoBehaviour
         rune.previewPath = AssetDatabase.GenerateUniqueAssetPath("Assets/Textures/Runes/Previews/preview.asset");
         AssetDatabase.CreateAsset(rune, AssetDatabase.GenerateUniqueAssetPath("Assets/Resources/Runes/rune.asset"));
         AssetDatabase.CreateAsset(new Texture2D(width, width, TextureFormat.ARGB32, false), rune.previewPath);
-        storage.runes.Add(rune.GetHashCode(), rune);
+        storage.AddRune(rune);
 
         AddCurrentVariationToRune(rune);
         AddRuneToggleToScrollView(rune);
@@ -113,7 +113,8 @@ public class RuneMaker : MonoBehaviour
                                  (rune.drawVariations.Count + 1);
         rune.averageHeight = (rune.averageHeight * rune.drawVariations.Count + variation.height) /
                              (rune.drawVariations.Count + 1);
-        if (!rune.drawVariations.Contains(variation)) rune.drawVariations.Add(variation);
+        if (!rune.drawVariations.Contains(variation))
+            storage.AddVariationToRune(variation, rune);
 
         // resize preview texture
         Texture2D tex = rune.Preview;
