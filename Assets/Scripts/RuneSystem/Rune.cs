@@ -14,6 +14,10 @@ public class Rune : ScriptableObject, IComparable<Rune>
     public const float Width = 1;
 
     public string previewPath;
+    public float averageHeight;
+    public Vector2 averageMassCenter = Vector2.zero;
+    public List<RuneDrawVariation> drawVariations = new();
+
     private Texture2D preview;
 
 #if UNITY_EDITOR
@@ -30,10 +34,6 @@ public class Rune : ScriptableObject, IComparable<Rune>
         set => preview = value;
     }
 #endif
-
-    public float averageHeight;
-    public Vector2 averageMassCenter = Vector2.zero;
-    public List<RuneDrawVariation> drawVariations = new();
 
     public int CompareTo(Rune other)
     {
