@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class RuneRecognizer : MonoBehaviour
 {
-    public Action<Rune> RuneCasted;
+    public Action<Rune> OnRuneRecognized;
     
     [SerializeField] private RuneStorage storage;
     [SerializeField] private RuneDrawManager drawManager;
@@ -52,7 +52,7 @@ public class RuneRecognizer : MonoBehaviour
 
         if (closestRune != null)
         {        
-            RuneCasted?.Invoke(closestRune);
+            OnRuneRecognized?.Invoke(closestRune);
         }
     }
 
