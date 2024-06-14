@@ -1,6 +1,4 @@
 using System.Collections.Generic;
-using System.IO;
-using Newtonsoft.Json;
 using UnityEditor;
 using UnityEngine;
 
@@ -8,9 +6,9 @@ using UnityEngine;
 public class RuneStorage : ScriptableObject
 {
     public Dictionary<int, Rune> Runes { get; } = new();
-    public SortedList<float, int> RunesHeight { get; private set; } = new(Comparer);
-    public SortedList<float, int> RunesMassCenterX { get; private set; } = new(Comparer);
-    public SortedList<float, int> RunesMassCenterY { get; private set; } = new(Comparer);
+    public SortedList<float, int> RunesHeight { get; } = new(Comparer);
+    public SortedList<float, int> RunesMassCenterX { get; } = new(Comparer);
+    public SortedList<float, int> RunesMassCenterY { get; } = new(Comparer);
 
     private static readonly DuplicateKeyComparer<float> Comparer = new();
     private bool areRunesSorted;
@@ -18,27 +16,14 @@ public class RuneStorage : ScriptableObject
 
     private void OnEnable()
     {
-        Runes.Clear();
-        foreach (Rune rune in Resources.LoadAll<Rune>("Runes"))
-            Runes.Add(rune.drawVariations.GetHashCode(), rune);
-
-        RunesHeight =
-            JsonConvert.DeserializeObject<SortedList<float, int>>(Resources.Load<TextAsset>("Runes/height").text);
-        RunesMassCenterX =
-            JsonConvert.DeserializeObject<SortedList<float, int>>(Resources.Load<TextAsset>("Runes/massCenterX").text);
-        RunesMassCenterY =
-            JsonConvert.DeserializeObject<SortedList<float, int>>(Resources.Load<TextAsset>("Runes/massCenterX").text);
-    }
-
-    private void Sort()
-    {
-        if (areRunesSorted) return;
-
         EditorUtility.DisplayProgressBar("Resorting runes", "In process", 0);
 
+        Runes.Clear();
         RunesHeight.Clear();
         RunesMassCenterX.Clear();
         RunesMassCenterY.Clear();
+        foreach (Rune rune in Resources.LoadAll<Rune>("Runes"))
+            Runes.Add(rune.GetHashCode(), rune);
 
         foreach (KeyValuePair<int, Rune> rune in Runes)
         {
@@ -47,25 +32,15 @@ public class RuneStorage : ScriptableObject
             RunesMassCenterY.Add(rune.Value.averageMassCenter.y, rune.Key);
         }
 
-        File.WriteAllText("Assets/Resources/Runes/height.json", JsonConvert.SerializeObject(RunesHeight));
-        File.WriteAllText("Assets/Resources/Runes/massCenterX.json",
-            JsonConvert.SerializeObject(RunesMassCenterX));
-        File.WriteAllText("Assets/Resources/Runes/massCenterY.json",
-            JsonConvert.SerializeObject(RunesMassCenterY));
-
-        areRunesSorted = true;
-
         EditorUtility.ClearProgressBar();
     }
 
 
     public void AddRune(Rune rune)
     {
-        Runes.Add(rune.drawVariations.GetHashCode(), rune);
+        Runes.Add(rune.GetHashCode(), rune);
 
         AddRuneProperties(rune);
-
-        Serialize();
     }
 
     public void AddVariationToRune(RuneDrawVariation variation, Rune rune)
@@ -75,7 +50,6 @@ public class RuneStorage : ScriptableObject
         rune.drawVariations.Add(variation);
 
         AddRuneProperties(rune);
-        Serialize();
     }
 
     public void DeleteRune(Rune rune)
@@ -83,33 +57,23 @@ public class RuneStorage : ScriptableObject
         AssetDatabase.DeleteAsset(rune.previewPath);
         AssetDatabase.DeleteAsset(AssetDatabase.GetAssetPath(rune));
 
-        Runes.Remove(rune.drawVariations.GetHashCode());
+        Runes.Remove(rune.GetHashCode());
         RemoveRuneProperties(rune);
 
         Destroy(rune);
-        Serialize();
     }
 
     private void AddRuneProperties(Rune rune)
     {
-        RunesHeight.Add(rune.averageHeight, rune.drawVariations.GetHashCode());
-        RunesMassCenterX.Add(rune.averageMassCenter.x, rune.drawVariations.GetHashCode());
-        RunesMassCenterY.Add(rune.averageMassCenter.y, rune.drawVariations.GetHashCode());
+        RunesHeight.Add(rune.averageHeight, rune.GetHashCode());
+        RunesMassCenterX.Add(rune.averageMassCenter.x, rune.GetHashCode());
+        RunesMassCenterY.Add(rune.averageMassCenter.y, rune.GetHashCode());
     }
 
     private void RemoveRuneProperties(Rune rune)
     {
-            RunesHeight.RemoveAt(RunesHeight.IndexOfValue(rune.drawVariations.GetHashCode()));
-        RunesMassCenterX.RemoveAt(RunesMassCenterX.IndexOfValue(rune.drawVariations.GetHashCode()));
-        RunesMassCenterY.RemoveAt(RunesMassCenterY.IndexOfValue(rune.drawVariations.GetHashCode()));
-    }
-
-    private void Serialize()
-    {
-        File.WriteAllText("Assets/Resources/Runes/height.json", JsonConvert.SerializeObject(RunesHeight));
-        File.WriteAllText("Assets/Resources/Runes/massCenterX.json",
-            JsonConvert.SerializeObject(RunesMassCenterX));
-        File.WriteAllText("Assets/Resources/Runes/massCenterY.json",
-            JsonConvert.SerializeObject(RunesMassCenterY));
+        RunesHeight.RemoveAt(RunesHeight.IndexOfValue(rune.GetHashCode()));
+        RunesMassCenterX.RemoveAt(RunesMassCenterX.IndexOfValue(rune.GetHashCode()));
+        RunesMassCenterY.RemoveAt(RunesMassCenterY.IndexOfValue(rune.GetHashCode()));
     }
 }
