@@ -58,6 +58,9 @@ public class RuneRecognizer : MonoBehaviour
 
     private IEnumerable<int> FindClosestRunesByParams(float runeParam, SortedList<float, int> sortedRunes, float range)
     {
+        if (sortedRunes == null)
+            return null;
+        
         int lowBound = Search.Binary(sortedRunes.Keys, runeParam - range);
         int topBound = Search.Binary(sortedRunes.Keys, runeParam + range);
 
