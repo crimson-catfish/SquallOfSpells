@@ -46,7 +46,6 @@ public class RuneRecognizer : MonoBehaviour
             float runeError = DeepCheck(drawToCheck, rune); // expensive!
             if (runeError < minError)
             {
-                print(runeError);
                 minError = runeError;
                 closestRune = rune;
             }
