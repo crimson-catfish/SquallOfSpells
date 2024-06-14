@@ -1,37 +1,42 @@
-using System.Collections.Generic;
-using System.IO;
-using Newtonsoft.Json;
 using Unity.Mathematics;
-using UnityEngine;
 using UnityEditor;
+using UnityEngine;
+using UnityEngine.UI;
 
+[RequireComponent(typeof(ToggleGroup), typeof(VerticalLayoutGroup))]
 public class RuneMaker : MonoBehaviour
 {
-    [HideInInspector] public Rune currentRune;
-
     [SerializeField] private RuneStorage storage;
     [SerializeField] private RuneDrawManager drawManager;
-    [SerializeField] private RuneContainerManager containerManager;
+    [SerializeField] private GameObject runePrefab;
 
-    [Header("changing this properties doesn't affects already created previews\nPlease recreate them to apply changes")]
-    [SerializeField] private int width = 128;
+    [SerializeField] private int minimalPointAmount = 8;
+
+    [Header("Rune preview related fields\nchanging those doesn't affects already created previews")] [SerializeField]
+    private int width = 128;
+
     [SerializeField] private int border = 8;
     [SerializeField] private int pointRadius = 4;
     [SerializeField, Range(0, 1)] private float pointDarkness = 0.3f;
     [SerializeField] private TextureFormat textureFormat;
 
-    private bool areRunesSorted;
+    private Vector2 scrollPosition;
+    private ToggleGroup toggleGroup;
 
-
-    private void OnDisable()
+    private void Start()
     {
-        ResortRunes();
+        toggleGroup = this.GetComponent<ToggleGroup>();
+        foreach (Rune rune in storage.runes.Values)
+            AddRuneToggleToScrollView(rune);
+
+        toggleGroup.SetAllTogglesOff();
     }
+
 
     public void SaveCurrentVariationToNewRune()
     {
         RuneDrawVariation variation = drawManager.currentVariation;
-        if (!DoesVariationHasEnoughPoints(variation)) return;
+        if (!DoesVariationHaveEnoughPoints(variation)) return;
 
         Rune rune = ScriptableObject.CreateInstance<Rune>();
         rune.previewPath = AssetDatabase.GenerateUniqueAssetPath("Assets/Textures/Runes/Previews/preview.asset");
@@ -39,28 +44,48 @@ public class RuneMaker : MonoBehaviour
         AssetDatabase.CreateAsset(new Texture2D(width, width, TextureFormat.ARGB32, false), rune.previewPath);
         storage.runes.Add(rune.GetHashCode(), rune);
 
-        AddCurrentVariation(rune);
-        containerManager.AddRune(rune);
-        areRunesSorted = false;
+        AddCurrentVariationToRune(rune);
+        AddRuneToggleToScrollView(rune);
     }
 
     public void AddCurrentVariationToCurrentRune()
     {
-        AddCurrentVariation(currentRune);
-        containerManager.UpdateSelected(currentRune);
+        Toggle activeToggle = toggleGroup.GetFirstActiveToggle();
+        if (activeToggle == null)
+        {
+            Debug.LogWarning("Select rune to add to.");
+            return;
+        }
+        
+        AddCurrentVariationToRune(activeToggle.gameObject.GetComponent<RuneToggle>().Rune);
     }
 
     public void DeleteCurrentRune()
     {
-        storage.runes.Remove(currentRune.GetHashCode());
-        AssetDatabase.DeleteAsset(currentRune.previewPath);
-        AssetDatabase.DeleteAsset(AssetDatabase.GetAssetPath(currentRune));
-        containerManager.DeleteSelected();
-        currentRune = null;
-        areRunesSorted = false;
+        if (toggleGroup.GetFirstActiveToggle() == null)
+        {
+            Debug.LogWarning("No rune selected. Nothing to delete.");
+            return;
+        }
+
+        storage.DeleteRune(toggleGroup.GetFirstActiveToggle().gameObject.GetComponent<RuneToggle>().Rune);
+        Destroy(toggleGroup.GetFirstActiveToggle().gameObject);
+
+        toggleGroup.SetAllTogglesOff();
     }
 
-    private bool DoesVariationHasEnoughPoints(RuneDrawVariation variation)
+    private void AddRuneToggleToScrollView(Rune rune)
+    {
+        GameObject runeToggleObject = Instantiate(runePrefab, this.transform);
+
+        if (runeToggleObject.TryGetComponent(out Toggle toggle))
+            toggle.group = toggleGroup;
+
+        if (runeToggleObject.TryGetComponent(out RuneToggle runeToggle))
+            runeToggle.Rune = rune;
+    }
+
+    private bool DoesVariationHaveEnoughPoints(RuneDrawVariation variation)
     {
         if (variation == null)
         {
@@ -68,7 +93,7 @@ public class RuneMaker : MonoBehaviour
             return false;
         }
 
-        if (variation.points.Length <= 5)
+        if (variation.points.Length <= minimalPointAmount)
         {
             Debug.LogWarning("Too few points in rune, didn't save");
             return false;
@@ -77,11 +102,10 @@ public class RuneMaker : MonoBehaviour
         return true;
     }
 
-    private void AddCurrentVariation(Rune rune)
+    private void AddCurrentVariationToRune(Rune rune)
     {
         RuneDrawVariation variation = drawManager.currentVariation;
-        if (!DoesVariationHasEnoughPoints(variation)) return;
-        print(rune);
+        if (!DoesVariationHaveEnoughPoints(variation)) return;
         if (rune.drawVariations.Contains(variation)) return;
 
         // update rune data
@@ -116,36 +140,5 @@ public class RuneMaker : MonoBehaviour
         rune.Preview.Apply();
         EditorUtility.SetDirty(rune.Preview);
         EditorUtility.SetDirty(rune);
-
-        currentRune = rune;
-        areRunesSorted = false;
-    }
-
-    public void ResortRunes()
-    {
-        if (areRunesSorted) return;
-
-        EditorUtility.DisplayProgressBar("Resorting runes", "In process", 0);
-
-        storage.runesHeight.Clear();
-        storage.runesMassCenterX.Clear();
-        storage.runesMassCenterY.Clear();
-
-        foreach (KeyValuePair<int, Rune> rune in storage.runes)
-        {
-            storage.runesHeight.Add(rune.Value.averageHeight, rune.Key);
-            storage.runesMassCenterX.Add(rune.Value.averageMassCenter.x, rune.Key);
-            storage.runesMassCenterY.Add(rune.Value.averageMassCenter.y, rune.Key);
-        }
-
-        File.WriteAllText("Assets/Resources/Runes/height.json", JsonConvert.SerializeObject(storage.runesHeight));
-        File.WriteAllText("Assets/Resources/Runes/massCenterX.json",
-            JsonConvert.SerializeObject(storage.runesMassCenterX));
-        File.WriteAllText("Assets/Resources/Runes/massCenterY.json",
-            JsonConvert.SerializeObject(storage.runesMassCenterY));
-
-        areRunesSorted = true;
-
-        EditorUtility.ClearProgressBar();
     }
 }

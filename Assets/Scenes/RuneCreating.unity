@@ -207,25 +207,13 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 85134254}
+      - m_Target: {fileID: 1473150033}
         m_TargetAssemblyTypeName: RuneMaker, Assembly-CSharp
         m_MethodName: AddCurrentVariationToCurrentRune
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 1473150029}
-        m_TargetAssemblyTypeName: RuneMaker, Assembly-CSharp
-        m_MethodName: 
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -269,122 +257,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 14734471}
   m_CullTransparentMesh: 1
---- !u!1 &85134253
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 85134255}
-  - component: {fileID: 85134254}
-  - component: {fileID: 85134256}
-  - component: {fileID: 85134258}
-  - component: {fileID: 85134257}
-  m_Layer: 0
-  m_Name: Rune Maker
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &85134254
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 85134253}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 11526dfac76e24a4bb28427dbe1cedb0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  currentRune: {fileID: 0}
-  storage: {fileID: 11400000, guid: be54250f59b104a42828af839132ca3c, type: 2}
-  drawManager: {fileID: 760676023}
-  containerManager: {fileID: 1473150033}
-  width: 128
-  border: 8
-  pointRadius: 4
-  pointDarkness: 0.485
-  textureFormat: -127
---- !u!224 &85134255
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 85134253}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 100, y: 100}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &85134256
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 85134253}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 95c6136901d04bbab86d48bd70a7e324, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  runePrefab: {fileID: 6491440029119343913, guid: 5a21be4bfd67e22e4a9c59e658c7f1a5, type: 3}
-  storage: {fileID: 11400000, guid: be54250f59b104a42828af839132ca3c, type: 2}
-  runeMaker: {fileID: 85134254}
-  drawManager: {fileID: 760676023}
---- !u!114 &85134257
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 85134253}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 59f8146938fff824cb5fd77236b75775, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Padding:
-    m_Left: 0
-    m_Right: 0
-    m_Top: 0
-    m_Bottom: 0
-  m_ChildAlignment: 0
-  m_Spacing: 0
-  m_ChildForceExpandWidth: 1
-  m_ChildForceExpandHeight: 1
-  m_ChildControlWidth: 0
-  m_ChildControlHeight: 0
-  m_ChildScaleWidth: 0
-  m_ChildScaleHeight: 0
-  m_ReverseArrangement: 0
---- !u!114 &85134258
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 85134253}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2fafe2cfe61f6974895a912c3755e8f1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_AllowSwitchOff: 0
 --- !u!1 &119722403
 GameObject:
   m_ObjectHideFlags: 0
@@ -536,7 +408,7 @@ RectTransform:
   - {fileID: 438530119}
   - {fileID: 573286850}
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -1609,7 +1481,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 85134254}
+      - m_Target: {fileID: 1473150033}
         m_TargetAssemblyTypeName: RuneMaker, Assembly-CSharp
         m_MethodName: DeleteCurrentRune
         m_Mode: 1
@@ -1743,7 +1615,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 85134254}
+      - m_Target: {fileID: 1473150033}
         m_TargetAssemblyTypeName: RuneMaker, Assembly-CSharp
         m_MethodName: SaveCurrentVariationToNewRune
         m_Mode: 1
@@ -1882,13 +1754,18 @@ MonoBehaviour:
   m_GameObject: {fileID: 1473150029}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 95c6136901d04bbab86d48bd70a7e324, type: 3}
+  m_Script: {fileID: 11500000, guid: 11526dfac76e24a4bb28427dbe1cedb0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  runePrefab: {fileID: 6491440029119343913, guid: 5a21be4bfd67e22e4a9c59e658c7f1a5, type: 3}
   storage: {fileID: 11400000, guid: be54250f59b104a42828af839132ca3c, type: 2}
-  runeMaker: {fileID: 85134254}
   drawManager: {fileID: 760676023}
+  runePrefab: {fileID: 6491440029119343913, guid: 5a21be4bfd67e22e4a9c59e658c7f1a5, type: 3}
+  minimalPointAmount: 8
+  width: 128
+  border: 8
+  pointRadius: 4
+  pointDarkness: 0.3
+  textureFormat: 0
 --- !u!114 &1473150034
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1901,7 +1778,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2fafe2cfe61f6974895a912c3755e8f1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_AllowSwitchOff: 0
+  m_AllowSwitchOff: 1
 --- !u!1 &1748650517
 GameObject:
   m_ObjectHideFlags: 0
@@ -1974,7 +1851,7 @@ RectTransform:
   m_Children:
   - {fileID: 760676022}
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
