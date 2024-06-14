@@ -75,6 +75,7 @@ public class RuneStorage : ScriptableObject
         rune.drawVariations.Add(variation);
 
         AddRuneProperties(rune);
+        Serialize();
     }
 
     public void DeleteRune(Rune rune)
