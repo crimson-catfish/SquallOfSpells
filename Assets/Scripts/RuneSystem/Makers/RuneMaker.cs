@@ -28,8 +28,6 @@ public class RuneMaker : MonoBehaviour
         toggleGroup = this.GetComponent<ToggleGroup>();
         foreach (Rune rune in storage.Runes.Values)
             AddRuneToggleToScrollView(rune);
-
-        toggleGroup.SetAllTogglesOff();
     }
 
 
