@@ -1,10 +1,11 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-[RequireComponent(typeof(RawImage), typeof(Toggle))]
+[RequireComponent(typeof(Toggle))]
 public class RuneToggle : MonoBehaviour
 {
-    [HideInInspector] public Rune Rune
+    [HideInInspector]
+    public Rune Rune
     {
         get => rune;
         set
@@ -14,11 +15,7 @@ public class RuneToggle : MonoBehaviour
         }
     }
 
-    private Rune rune;
-    private RawImage rawImage;
+    [SerializeField] private RawImage rawImage;
 
-    private void OnEnable()
-    {
-        rawImage = GetComponent<RawImage>();
-    }
+    private Rune rune;
 }
