@@ -14,8 +14,6 @@ public class RuneRecognizer : MonoBehaviour
     [Header("Recognition settings")]
     [SerializeField] private float heightRange;
     [SerializeField] private float massCenterRange;
-
-    private Image recognizedRuneRenderer;
     
     private void OnEnable()
     {
