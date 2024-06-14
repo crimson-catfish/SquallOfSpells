@@ -11,11 +11,12 @@ public class RuneRecognizer : MonoBehaviour
     [SerializeField] private RuneStorage storage;
     [SerializeField] private RuneDrawManager drawManager;
 
-    [Header("Recognition settings")]
-    [SerializeField] private float heightRange = 0.3f;
+    [Header("Recognition settings")] [SerializeField]
+    private float heightRange = 0.3f;
+
     [SerializeField] private float massCenterRange = 0.2f;
     [SerializeField] private float acceptableError = 0.05f;
-    
+
     private void OnEnable()
     {
         drawManager.OnRuneDrawn += OnRuneDrawn;
@@ -37,7 +38,8 @@ public class RuneRecognizer : MonoBehaviour
             massCenterRange));
 
         List<Rune> runesToCheck = new();
-        foreach (int hash in selectedRuneHashes) runesToCheck.Add(storage.Runes[hash]);
+        foreach (int hash in selectedRuneHashes)
+            runesToCheck.Add(storage.Runes[hash]);
 
         Rune closestRune = null;
         float minError = acceptableError;
