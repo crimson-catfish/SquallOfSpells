@@ -7,13 +7,14 @@ using UnityEngine;
 public class RuneRecognizer : MonoBehaviour
 {
     public Action<Rune> OnRuneRecognized;
-    
+
     [SerializeField] private RuneStorage storage;
     [SerializeField] private RuneDrawManager drawManager;
 
     [Header("Recognition settings")]
-    [SerializeField] private float heightRange;
-    [SerializeField] private float massCenterRange;
+    [SerializeField] private float heightRange = 0.3f;
+    [SerializeField] private float massCenterRange = 0.2f;
+    [SerializeField] private float acceptableError = 0.05f;
     
     private void OnEnable()
     {
@@ -25,40 +26,40 @@ public class RuneRecognizer : MonoBehaviour
         drawManager.OnRuneDrawn -= OnRuneDrawn;
     }
 
-    
+
     private void OnRuneDrawn(RuneDrawVariation drawToCheck)
     {
-        HashSet<int> selectedRuneHashes = new HashSet<int>(FindClosestRunesByParams(drawToCheck.height, storage.RunesHeight, heightRange));
-        selectedRuneHashes.IntersectWith(FindClosestRunesByParams(drawToCheck.massCenter.x, storage.RunesMassCenterX, massCenterRange));
-        selectedRuneHashes.IntersectWith(FindClosestRunesByParams(drawToCheck.massCenter.y, storage.RunesMassCenterY, massCenterRange));
+        HashSet<int> selectedRuneHashes =
+            new HashSet<int>(FindClosestRunesByParams(drawToCheck.height, storage.RunesHeight, heightRange));
+        selectedRuneHashes.IntersectWith(FindClosestRunesByParams(drawToCheck.massCenter.x, storage.RunesMassCenterX,
+            massCenterRange));
+        selectedRuneHashes.IntersectWith(FindClosestRunesByParams(drawToCheck.massCenter.y, storage.RunesMassCenterY,
+            massCenterRange));
 
         List<Rune> runesToCheck = new();
         foreach (int hash in selectedRuneHashes) runesToCheck.Add(storage.Runes[hash]);
 
         Rune closestRune = null;
-        float minError = Mathf.Infinity;
+        float minError = acceptableError;
         foreach (Rune rune in runesToCheck)
         {
             float runeError = DeepCheck(drawToCheck, rune); // expensive!
             if (runeError < minError)
             {
+                print(runeError);
                 minError = runeError;
                 closestRune = rune;
             }
         }
 
-
-        if (closestRune != null)
-        {        
-            OnRuneRecognized?.Invoke(closestRune);
-        }
+        OnRuneRecognized?.Invoke(closestRune != null ? closestRune : null);
     }
 
     private IEnumerable<int> FindClosestRunesByParams(float runeParam, SortedList<float, int> sortedRunes, float range)
     {
         if (sortedRunes == null)
             return null;
-        
+
         int lowBound = Search.Binary(sortedRunes.Keys, runeParam - range);
         int topBound = Search.Binary(sortedRunes.Keys, runeParam + range);
 
@@ -90,6 +91,7 @@ public class RuneRecognizer : MonoBehaviour
         {
             totalVariationError += Closest.GetSqrDistance(point, baseVariation.points);
         }
+
         return totalVariationError / maskVariation.points.Length;
     }
 }
