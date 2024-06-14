@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using UnityEngine.UI;
 
 
 public class RuneRecognizer : MonoBehaviour
@@ -29,11 +28,11 @@ public class RuneRecognizer : MonoBehaviour
     }
 
     
-    private void OnRuneDrawn(RuneDrawVariation runeDrawToCheck)
+    private void OnRuneDrawn(RuneDrawVariation drawToCheck)
     {
-        HashSet<int> selectedRuneHashes = new HashSet<int>(FindClosestRunesByParams(runeDrawToCheck.height, storage.RunesHeight, heightRange));
-        selectedRuneHashes.IntersectWith(FindClosestRunesByParams(runeDrawToCheck.massCenter.x, storage.RunesMassCenterX, massCenterRange));
-        selectedRuneHashes.IntersectWith(FindClosestRunesByParams(runeDrawToCheck.massCenter.y, storage.RunesMassCenterY, massCenterRange));
+        HashSet<int> selectedRuneHashes = new HashSet<int>(FindClosestRunesByParams(drawToCheck.height, storage.RunesHeight, heightRange));
+        selectedRuneHashes.IntersectWith(FindClosestRunesByParams(drawToCheck.massCenter.x, storage.RunesMassCenterX, massCenterRange));
+        selectedRuneHashes.IntersectWith(FindClosestRunesByParams(drawToCheck.massCenter.y, storage.RunesMassCenterY, massCenterRange));
 
         List<Rune> runesToCheck = new();
         foreach (int hash in selectedRuneHashes) runesToCheck.Add(storage.Runes[hash]);
@@ -42,7 +41,7 @@ public class RuneRecognizer : MonoBehaviour
         float minError = Mathf.Infinity;
         foreach (Rune rune in runesToCheck)
         {
-            float runeError = DeepCheck(runeDrawToCheck, rune); // expensive!
+            float runeError = DeepCheck(drawToCheck, rune); // expensive!
             if (runeError < minError)
             {
                 minError = runeError;
