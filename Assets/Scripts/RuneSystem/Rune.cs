@@ -37,8 +37,8 @@ public class Rune : ScriptableObject, IComparable<Rune>
 
     public int CompareTo(Rune other)
     {
-        if (this.GetHashCode() < other.GetHashCode()) return -1;
-        if (this.GetHashCode() > other.GetHashCode()) return 1;
+        if (this.drawVariations.GetHashCode() < other.drawVariations.GetHashCode()) return -1;
+        if (this.drawVariations.GetHashCode() > other.drawVariations.GetHashCode()) return 1;
         return 0;
     }
 }

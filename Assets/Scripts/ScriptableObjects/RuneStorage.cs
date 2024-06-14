@@ -20,7 +20,7 @@ public class RuneStorage : ScriptableObject
     {
         Runes.Clear();
         foreach (Rune rune in Resources.LoadAll<Rune>("Runes"))
-            Runes.Add(rune.GetHashCode(), rune);
+            Runes.Add(rune.drawVariations.GetHashCode(), rune);
 
         RunesHeight =
             JsonConvert.DeserializeObject<SortedList<float, int>>(Resources.Load<TextAsset>("Runes/height").text);
@@ -61,7 +61,7 @@ public class RuneStorage : ScriptableObject
 
     public void AddRune(Rune rune)
     {
-        Runes.Add(rune.GetHashCode(), rune);
+        Runes.Add(rune.drawVariations.GetHashCode(), rune);
 
         AddRuneProperties(rune);
 
@@ -83,7 +83,7 @@ public class RuneStorage : ScriptableObject
         AssetDatabase.DeleteAsset(rune.previewPath);
         AssetDatabase.DeleteAsset(AssetDatabase.GetAssetPath(rune));
 
-        Runes.Remove(rune.GetHashCode());
+        Runes.Remove(rune.drawVariations.GetHashCode());
         RemoveRuneProperties(rune);
 
         Destroy(rune);
@@ -92,16 +92,16 @@ public class RuneStorage : ScriptableObject
 
     private void AddRuneProperties(Rune rune)
     {
-        RunesHeight.Add(rune.averageHeight, rune.GetHashCode());
-        RunesMassCenterX.Add(rune.averageMassCenter.x, rune.GetHashCode());
-        RunesMassCenterY.Add(rune.averageMassCenter.y, rune.GetHashCode());
+        RunesHeight.Add(rune.averageHeight, rune.drawVariations.GetHashCode());
+        RunesMassCenterX.Add(rune.averageMassCenter.x, rune.drawVariations.GetHashCode());
+        RunesMassCenterY.Add(rune.averageMassCenter.y, rune.drawVariations.GetHashCode());
     }
 
     private void RemoveRuneProperties(Rune rune)
     {
-            RunesHeight.RemoveAt(RunesHeight.IndexOfValue(rune.GetHashCode()));
-        RunesMassCenterX.RemoveAt(RunesMassCenterX.IndexOfValue(rune.GetHashCode()));
-        RunesMassCenterY.RemoveAt(RunesMassCenterY.IndexOfValue(rune.GetHashCode()));
+            RunesHeight.RemoveAt(RunesHeight.IndexOfValue(rune.drawVariations.GetHashCode()));
+        RunesMassCenterX.RemoveAt(RunesMassCenterX.IndexOfValue(rune.drawVariations.GetHashCode()));
+        RunesMassCenterY.RemoveAt(RunesMassCenterY.IndexOfValue(rune.drawVariations.GetHashCode()));
     }
 
     private void Serialize()
