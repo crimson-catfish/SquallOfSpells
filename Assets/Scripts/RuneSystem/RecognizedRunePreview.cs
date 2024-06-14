@@ -8,7 +8,7 @@ public class RecognizedRunePreview : MonoBehaviour
     [SerializeField] private RuneRecognizer recognizer;
 
     private RawImage image;
-    
+
     private void OnEnable()
     {
         recognizer.OnRuneRecognized += HandleRuneRecognition;
@@ -26,6 +26,6 @@ public class RecognizedRunePreview : MonoBehaviour
 
     private void HandleRuneRecognition(Rune rune)
     {
-        image.texture = rune.Preview;
+        image.texture = rune == null ? null : rune.Preview;
     }
 }
