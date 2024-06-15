@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Unity.Mathematics;
 using UnityEditor;
 using UnityEngine;
@@ -8,6 +9,8 @@ public class RuneMaker : MonoBehaviour
 {
     [SerializeField] private RuneStorage storage;
     [SerializeField] private RuneDrawManager drawManager;
+    [SerializeField] private RuneRecognizer recognizer;
+
     [SerializeField] private GameObject runePrefab;
 
     [SerializeField] private int minimalPointAmount = 8;
@@ -22,12 +25,26 @@ public class RuneMaker : MonoBehaviour
 
     private Vector2 scrollPosition;
     private ToggleGroup toggleGroup;
+    [SerializeField] private Dictionary<int, Toggle> toggles = new();
+    [SerializeField] private Rune currentRecognized;
+
+
+    private void OnEnable()
+    {
+        recognizer.OnRuneRecognized += rune => currentRecognized = rune;
+    }
+
 
     private void Start()
     {
         toggleGroup = this.GetComponent<ToggleGroup>();
         foreach (Rune rune in storage.Runes.Values)
             AddRuneToggleToScrollView(rune);
+    }
+
+    private void OnDisable()
+    {
+        recognizer.OnRuneRecognized -= rune => currentRecognized = rune;
     }
 
 
@@ -54,22 +71,36 @@ public class RuneMaker : MonoBehaviour
             Debug.LogWarning("Select rune to add to.");
             return;
         }
-        
-        AddCurrentVariationToRune(activeToggle.gameObject.GetComponent<RuneToggle>().Rune);
+
+        Rune rune = activeToggle.gameObject.GetComponent<RuneToggle>().Rune;
+        toggles.Remove(rune.drawVariations.GetHashCode());
+        AddCurrentVariationToRune(rune);
+        toggles.Add(rune.drawVariations.GetHashCode(), activeToggle);
     }
 
     public void DeleteCurrentRune()
     {
-        if (toggleGroup.GetFirstActiveToggle() == null)
+        Toggle activeToggle = toggleGroup.GetFirstActiveToggle();
+        if (activeToggle == null)
         {
             Debug.LogWarning("No rune selected. Nothing to delete.");
             return;
         }
 
-        storage.DeleteRune(toggleGroup.GetFirstActiveToggle().gameObject.GetComponent<RuneToggle>().Rune);
-        Destroy(toggleGroup.GetFirstActiveToggle().gameObject);
+        storage.DeleteRune(activeToggle.gameObject.GetComponent<RuneToggle>().Rune);
+        Destroy(activeToggle.gameObject);
 
+        toggles.Remove(activeToggle.gameObject.GetComponent<RuneToggle>().Rune.drawVariations.GetHashCode());
         toggleGroup.SetAllTogglesOff();
+    }
+
+    public void SelectRecognizedRune()
+    {
+        if (currentRecognized == null)
+            return;
+
+        if (toggles.TryGetValue(currentRecognized.drawVariations.GetHashCode(), out Toggle toggle))
+            toggle.isOn = true;
     }
 
     private Toggle AddRuneToggleToScrollView(Rune rune)
@@ -81,6 +112,8 @@ public class RuneMaker : MonoBehaviour
 
         if (runeToggleObject.TryGetComponent(out RuneToggle runeToggle))
             runeToggle.Rune = rune;
+
+        toggles.Add(rune.drawVariations.GetHashCode(), toggle);
 
         return runeToggleObject.GetComponent<Toggle>();
     }
