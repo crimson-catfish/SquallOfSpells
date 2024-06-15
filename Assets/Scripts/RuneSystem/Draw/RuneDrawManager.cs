@@ -66,6 +66,7 @@ public class RuneDrawManager : MonoBehaviour
         momentSum = Vector2.zero;
         drawFrame = new Rect(nextDrawPosition.x, nextDrawPosition.y, 0, 0);
         CreateNewPoint(nextDrawPosition);
+        lineRenderer.SetAllDirty();
     }
 
     private void HandleNextDrawPosition(Vector2 nextDrawPosition)
