@@ -112,7 +112,11 @@ public class RuneMaker : MonoBehaviour
         if (runeToggleObject.TryGetComponent(out RuneToggle runeToggle))
             runeToggle.Rune = rune;
 
+        if (runeToggleObject.TryGetComponent(out AspectRatioFitter ratioFitter))
+            ratioFitter.aspectRatio = (float)rune.Preview.width / (float)rune.Preview.height;
+
         toggles.Add(rune.drawVariations.GetHashCode(), toggle);
+
 
         return runeToggleObject.GetComponent<Toggle>();
     }
@@ -150,11 +154,13 @@ public class RuneMaker : MonoBehaviour
 
         // resize preview texture
         Texture2D tex = rune.Preview;
-        Texture2D oldPreview = new(tex.width, tex.height, TextureFormat.ARGB32, false);
+        Texture2D oldPreview = new(tex.width, tex.height, textureFormat, false);
         Graphics.CopyTexture(tex, oldPreview);
         tex.Reinitialize(width, (int)math.max(tex.height, variation.height * width));
         tex.SetPixels(0, (tex.height - oldPreview.height) / 2, oldPreview.width, oldPreview.height,
             oldPreview.GetPixels(0, 0, oldPreview.width, oldPreview.height));
+        if (toggles.TryGetValue(rune.drawVariations.GetHashCode(), out Toggle toggle))
+            toggle.GetComponent<RuneToggle>().ratioFitter.aspectRatio = tex.height / tex.width;
 
 
         // add new draw variation on preview texture
