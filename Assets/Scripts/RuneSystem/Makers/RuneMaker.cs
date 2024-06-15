@@ -43,7 +43,7 @@ public class RuneMaker : MonoBehaviour
         storage.AddRune(rune);
 
         AddCurrentVariationToRune(rune);
-        AddRuneToggleToScrollView(rune);
+        AddRuneToggleToScrollView(rune).isOn = true;
     }
 
     public void AddCurrentVariationToCurrentRune()
@@ -72,7 +72,7 @@ public class RuneMaker : MonoBehaviour
         toggleGroup.SetAllTogglesOff();
     }
 
-    private void AddRuneToggleToScrollView(Rune rune)
+    private Toggle AddRuneToggleToScrollView(Rune rune)
     {
         GameObject runeToggleObject = Instantiate(runePrefab, this.transform);
 
@@ -81,6 +81,8 @@ public class RuneMaker : MonoBehaviour
 
         if (runeToggleObject.TryGetComponent(out RuneToggle runeToggle))
             runeToggle.Rune = rune;
+
+        return runeToggleObject.GetComponent<Toggle>();
     }
 
     private bool DoesVariationHaveEnoughPoints(RuneDrawVariation variation)
