@@ -10,7 +10,6 @@ public class RuneMaker : MonoBehaviour
     [SerializeField] private RuneStorage storage;
     [SerializeField] private RuneDrawManager drawManager;
     [SerializeField] private RuneRecognizer recognizer;
-
     [SerializeField] private GameObject runePrefab;
 
     [SerializeField] private int minimalPointAmount = 8;
@@ -25,8 +24,8 @@ public class RuneMaker : MonoBehaviour
 
     private Vector2 scrollPosition;
     private ToggleGroup toggleGroup;
-    [SerializeField] private Dictionary<int, Toggle> toggles = new();
-    [SerializeField] private Rune currentRecognized;
+    private readonly Dictionary<int, Toggle> toggles = new();
+    private Rune currentRecognized;
 
 
     private void OnEnable()
