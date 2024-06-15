@@ -55,7 +55,7 @@ public class RuneMaker : MonoBehaviour
         Rune rune = ScriptableObject.CreateInstance<Rune>();
         rune.previewPath = AssetDatabase.GenerateUniqueAssetPath("Assets/Textures/Runes/Previews/preview.asset");
         AssetDatabase.CreateAsset(rune, AssetDatabase.GenerateUniqueAssetPath("Assets/Resources/Runes/rune.asset"));
-        AssetDatabase.CreateAsset(new Texture2D(width, width, TextureFormat.ARGB32, false), rune.previewPath);
+        AssetDatabase.CreateAsset(new Texture2D(width, width, textureFormat, false), rune.previewPath);
         storage.AddRune(rune);
 
         AddCurrentVariationToRune(rune);

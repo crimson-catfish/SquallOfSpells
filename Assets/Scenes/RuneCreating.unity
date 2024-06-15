@@ -1960,7 +1960,7 @@ MonoBehaviour:
   border: 8
   pointRadius: 4
   pointDarkness: 0.3
-  textureFormat: 0
+  textureFormat: 1
 --- !u!114 &1473150034
 MonoBehaviour:
   m_ObjectHideFlags: 0
