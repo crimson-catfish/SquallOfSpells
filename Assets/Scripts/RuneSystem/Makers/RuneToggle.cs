@@ -1,7 +1,8 @@
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
-[RequireComponent(typeof(Toggle))]
+[RequireComponent(typeof(Toggle), typeof(RectTransform))]
 public class RuneToggle : MonoBehaviour
 {
     [HideInInspector]
@@ -19,21 +20,27 @@ public class RuneToggle : MonoBehaviour
     [SerializeField] private Toggle toggle;
     [SerializeField] private Outline outline;
 
+    [SerializeField] private float scrollSpeed = 5f;
+    
 
-    [Header("Transition color settings")] [SerializeField]
-    private Color normalColor = new(1f, 1f, 1f, 0.75f);
-
+    [Header("Transition color settings")]
+    [SerializeField] private Color normalColor = new(1f, 1f, 1f, 0.75f);
     [SerializeField] private Color selectedColor = new(0.74f, 0.74f, 0.74f);
-    [SerializeField] private Color outlineColorSelected = new Color(0f, 0f, 0f, 0.82f);
-
+    [SerializeField] private Color outlineColorSelected = new(0f, 0f, 0f, 0.82f);
 
     private Rune rune;
+    private ScrollRect scrollRect;
+    private RectTransform rectTransform;
+
 
     private void OnEnable()
     {
+        rectTransform = GetComponent<RectTransform>();
         rawImage.color = normalColor;
         outline.effectColor = Color.clear;
         toggle.onValueChanged.AddListener(HandleValueChange);
+        if (this.transform.parent.parent.parent.TryGetComponent(out ScrollRect scroll))
+            scrollRect = scroll;
     }
 
     private void HandleValueChange(bool value)
@@ -42,6 +49,9 @@ public class RuneToggle : MonoBehaviour
         {
             rawImage.color = selectedColor;
             outline.effectColor = outlineColorSelected;
+            print(scrollRect);
+            print(rectTransform);
+            StartCoroutine(scrollRect.FocusOnItemCoroutine(rectTransform, scrollSpeed));
         }
         else
         {

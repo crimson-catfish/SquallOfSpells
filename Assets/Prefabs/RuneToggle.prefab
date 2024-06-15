@@ -144,6 +144,7 @@ MonoBehaviour:
   rawImage: {fileID: 7665052204080770345}
   toggle: {fileID: 5827533803468175710}
   outline: {fileID: 4956715675357494433}
+  scrollSpeed: 5
   normalColor: {r: 1, g: 1, b: 1, a: 0.9372549}
   selectedColor: {r: 1, g: 1, b: 1, a: 1}
   outlineColorSelected: {r: 0, g: 0, b: 0, a: 0.82}
