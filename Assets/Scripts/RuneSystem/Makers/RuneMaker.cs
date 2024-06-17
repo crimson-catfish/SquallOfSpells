@@ -53,13 +53,17 @@ public class RuneMaker : MonoBehaviour
         if (!DoesVariationHaveEnoughPoints(variation)) return;
 
         Rune rune = ScriptableObject.CreateInstance<Rune>();
-        rune.previewPath = AssetDatabase.GenerateUniqueAssetPath("Assets/Textures/Runes/Previews/preview.asset");
         AssetDatabase.CreateAsset(rune, AssetDatabase.GenerateUniqueAssetPath("Assets/Resources/Runes/rune.asset"));
-        AssetDatabase.CreateAsset(new Texture2D(width, width, textureFormat, false), rune.previewPath);
-        storage.AddRune(rune);
 
+        rune.Preview = new Texture2D(width, width, textureFormat, false);
+        rune.previewPath = AssetDatabase.GenerateUniqueAssetPath("Assets/Textures/Runes/Previews/preview.asset");
+        AssetDatabase.CreateAsset(rune.Preview, rune.previewPath);
         AddCurrentVariationToRune(rune);
-        AddRuneToggleToScrollView(rune).isOn = true;
+
+        Toggle toggle = AddRuneToggleToScrollView(rune);
+        toggle.isOn = true;
+
+        storage.AddRune(rune);
     }
 
     public void AddCurrentVariationToCurrentRune()
@@ -72,9 +76,14 @@ public class RuneMaker : MonoBehaviour
         }
 
         Rune rune = activeToggle.gameObject.GetComponent<RuneToggle>().Rune;
-        toggles.Remove(rune.drawVariations.GetHashCode());
+
+        Undo.IncrementCurrentGroup();
+
+        Undo.RecordObject(rune, "add draw variation");
+        Undo.RecordObject(rune.Preview, "update preview");
         AddCurrentVariationToRune(rune);
-        toggles.Add(rune.drawVariations.GetHashCode(), activeToggle);
+
+        Undo.SetCurrentGroupName("add draw variation to " + rune.name);
     }
 
     public void DeleteCurrentRune()
@@ -86,11 +95,24 @@ public class RuneMaker : MonoBehaviour
             return;
         }
 
-        storage.DeleteRune(activeToggle.gameObject.GetComponent<RuneToggle>().Rune);
-        Destroy(activeToggle.gameObject);
+        Rune rune = activeToggle.gameObject.GetComponent<RuneToggle>().Rune;
 
-        toggles.Remove(activeToggle.gameObject.GetComponent<RuneToggle>().Rune.drawVariations.GetHashCode());
+        Undo.IncrementCurrentGroup();
+
+        Undo.RecordObject(storage, "delete rune from storage");
+        storage.DeleteRune(rune);
+
+        Undo.RegisterFullObjectHierarchyUndo(this, "remove toggle");
+        toggles.Remove(rune.GetHashCode());
         toggleGroup.SetAllTogglesOff();
+
+        Undo.DestroyObjectImmediate(activeToggle.gameObject);
+
+        Undo.DestroyObjectImmediate(rune.Preview);
+
+        Undo.DestroyObjectImmediate(rune);
+
+        Undo.SetCurrentGroupName("delete rune");
     }
 
     public void SelectRecognizedRune()
@@ -98,7 +120,7 @@ public class RuneMaker : MonoBehaviour
         if (currentRecognized == null)
             return;
 
-        if (toggles.TryGetValue(currentRecognized.drawVariations.GetHashCode(), out Toggle toggle))
+        if (toggles.TryGetValue(currentRecognized.GetHashCode(), out Toggle toggle))
             toggle.isOn = true;
     }
 
@@ -115,7 +137,7 @@ public class RuneMaker : MonoBehaviour
         if (runeToggleObject.TryGetComponent(out AspectRatioFitter ratioFitter))
             ratioFitter.aspectRatio = (float)rune.Preview.width / (float)rune.Preview.height;
 
-        toggles.Add(rune.drawVariations.GetHashCode(), toggle);
+        toggles.Add(rune.GetHashCode(), toggle);
 
 
         return runeToggleObject.GetComponent<Toggle>();
@@ -150,7 +172,7 @@ public class RuneMaker : MonoBehaviour
         rune.averageHeight = (rune.averageHeight * rune.drawVariations.Count + variation.height) /
                              (rune.drawVariations.Count + 1);
         if (!rune.drawVariations.Contains(variation))
-            storage.AddVariationToRune(variation, rune);
+            rune.drawVariations.Add(variation);
 
         // resize preview texture
         Texture2D tex = rune.Preview;
@@ -159,7 +181,7 @@ public class RuneMaker : MonoBehaviour
         tex.Reinitialize(width, (int)math.max(tex.height, variation.height * width));
         tex.SetPixels(0, (tex.height - oldPreview.height) / 2, oldPreview.width, oldPreview.height,
             oldPreview.GetPixels(0, 0, oldPreview.width, oldPreview.height));
-        if (toggles.TryGetValue(rune.drawVariations.GetHashCode(), out Toggle toggle))
+        if (toggles.TryGetValue(rune.GetHashCode(), out Toggle toggle))
             toggle.GetComponent<RuneToggle>().ratioFitter.aspectRatio = tex.height / tex.width;
 
 

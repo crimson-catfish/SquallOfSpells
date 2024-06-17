@@ -22,6 +22,7 @@ public class RuneStorage : ScriptableObject
         RunesHeight.Clear();
         RunesMassCenterX.Clear();
         RunesMassCenterY.Clear();
+        
         foreach (Rune rune in Resources.LoadAll<Rune>("Runes"))
             Runes.Add(rune.GetHashCode(), rune);
 
@@ -54,13 +55,8 @@ public class RuneStorage : ScriptableObject
 
     public void DeleteRune(Rune rune)
     {
-        AssetDatabase.DeleteAsset(rune.previewPath);
-        AssetDatabase.DeleteAsset(AssetDatabase.GetAssetPath(rune));
-
         Runes.Remove(rune.GetHashCode());
         RemoveRuneProperties(rune);
-
-        Destroy(rune);
     }
 
     private void AddRuneProperties(Rune rune)
