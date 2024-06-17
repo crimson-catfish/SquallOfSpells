@@ -4,7 +4,6 @@ using UnityEngine.UI;
 [RequireComponent(typeof(Toggle), typeof(RectTransform), typeof(AspectRatioFitter))]
 public class RuneToggle : MonoBehaviour
 {
-    [HideInInspector]
     public Rune Rune
     {
         get => rune;
@@ -33,11 +32,9 @@ public class RuneToggle : MonoBehaviour
 
     private Rune rune;
     private ScrollRect scrollRect;
-    private RectTransform rectTransform;
 
     private void OnEnable()
     {
-        rectTransform = GetComponent<RectTransform>();
         rawImage.color = normalColor;
         outline.effectColor = Color.clear;
         ratioFitter = GetComponent<AspectRatioFitter>();
@@ -54,7 +51,7 @@ public class RuneToggle : MonoBehaviour
         {
             rawImage.color = selectedColor;
             outline.effectColor = outlineColorSelected;
-            StartCoroutine(scrollRect.FocusOnItemCoroutine(rectTransform, scrollSpeed));
+            StartCoroutine(scrollRect.FocusOnItemCoroutine(this.GetComponent<RectTransform>(), scrollSpeed));
         }
         else
         {

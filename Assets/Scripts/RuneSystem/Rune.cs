@@ -1,5 +1,5 @@
-using System.Collections.Generic;
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 #if UNITY_EDITOR
 using UnityEditor;
@@ -21,7 +21,6 @@ public class Rune : ScriptableObject, IComparable<Rune>
     private Texture2D preview;
 
 #if UNITY_EDITOR
-    [property: SerializeField]
     public Texture2D Preview
     {
         get
