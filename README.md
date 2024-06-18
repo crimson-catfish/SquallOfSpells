@@ -6,10 +6,12 @@ The spell system is ideologically similar to Magic: majority of the “runes” 
 
 ## Instalation:
 1. Copy project via ```git clone```
-2. In _Assets/Scenes_ open _RuneCreation_ scene
-3. Open to _Window_ -> _Analysis_ -> _Input debugger_
-4. Enable _Options_ -> _Simulate Touch Input From Mouse Or Pen_
-5. Create your own runes and see them recognized :)
+2. Open _Window_ -> _Analysis_ -> _Input debugger_
+3. Enable _Options_ -> _Simulate Touch Input From Mouse Or Pen_
+ 
+
+> Create your own runes and see them recognized in RuneCreation scene
+
 
 ### Hotkeys for rune recognition scene:
 
