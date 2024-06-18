@@ -11,15 +11,14 @@ public class RuneToggle : MonoBehaviour
         {
             rune = value;
             rawImage.texture = rune.Preview;
+            ratioFitter.aspectRatio = (float)rawImage.texture.height / (float)rawImage.texture.width;
         }
     }
 
-    public AspectRatioFitter ratioFitter;
-
+    [SerializeField] private AspectRatioFitter ratioFitter;
     [SerializeField] private RawImage rawImage;
     [SerializeField] private Toggle toggle;
     [SerializeField] private Outline outline;
-
 
     [SerializeField] private float scrollSpeed = 5f;
 

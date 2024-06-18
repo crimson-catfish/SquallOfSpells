@@ -1,16 +1,16 @@
-using System.Collections.Generic;
 using Unity.Mathematics;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 
-[RequireComponent(typeof(ToggleGroup), typeof(VerticalLayoutGroup))]
 public class RuneMaker : MonoBehaviour
 {
     [SerializeField] private RuneStorage storage;
     [SerializeField] private RuneDrawManager drawManager;
-    [SerializeField] private RuneRecognizer recognizer;
-    [SerializeField] private GameObject runePrefab;
+    [SerializeField] private RuneTogglesContainer togglesContainer;
+    [SerializeField] private ToggleGroup toggleGroup;
+    [SerializeField] private RuneLimbo limbo;
+
 
     [SerializeField] private int minimalPointAmount = 8;
 
@@ -22,30 +22,16 @@ public class RuneMaker : MonoBehaviour
     [SerializeField, Range(0, 1)] private float pointDarkness = 0.3f;
     [SerializeField] private TextureFormat textureFormat;
 
-    private Vector2 scrollPosition;
-    private ToggleGroup toggleGroup;
-    private readonly Dictionary<int, Toggle> toggles = new();
-    private Rune currentRecognized;
-
-
-    private void OnEnable()
-    {
-        recognizer.OnRuneRecognized += rune => currentRecognized = rune;
-    }
-
-
-    private void Start()
-    {
-        toggleGroup = this.GetComponent<ToggleGroup>();
-        foreach (Rune rune in storage.Runes.Values)
-            AddRuneToggleToScrollView(rune);
-    }
-
     private void OnDisable()
     {
-        recognizer.OnRuneRecognized -= rune => currentRecognized = rune;
+        while (limbo.runesToDelete.Count > 0)
+        {
+            Rune rune = limbo.runesToDelete[0];
+            AssetDatabase.DeleteAsset(rune.previewPath);
+            AssetDatabase.DeleteAsset(AssetDatabase.GetAssetPath(rune));
+            limbo.runesToDelete.RemoveAt(0);
+        }
     }
-
 
     public void SaveCurrentVariationToNewRune()
     {
@@ -60,8 +46,7 @@ public class RuneMaker : MonoBehaviour
         AssetDatabase.CreateAsset(rune.Preview, rune.previewPath);
         AddCurrentVariationToRune(rune);
 
-        Toggle toggle = AddRuneToggleToScrollView(rune);
-        toggle.isOn = true;
+        togglesContainer.AddNewToggle(rune);
 
         storage.AddRune(rune);
     }
@@ -102,45 +87,24 @@ public class RuneMaker : MonoBehaviour
         Undo.RecordObject(storage, "delete rune from storage");
         storage.DeleteRune(rune);
 
-        Undo.RegisterFullObjectHierarchyUndo(this, "remove toggle");
-        toggles.Remove(rune.GetHashCode());
-        toggleGroup.SetAllTogglesOff();
+        Undo.RegisterFullObjectHierarchyUndo(togglesContainer, "remove toggle from container");
+        Undo.RecordObject(toggleGroup.GetFirstActiveToggle().gameObject, "disable toggle object");
+        togglesContainer.RemoveToggle(rune);
 
-        Undo.DestroyObjectImmediate(activeToggle.gameObject);
+        Undo.RecordObject(limbo, "add rune to limbo");
+        limbo.runesToDelete.Add(rune);
+        // EditorUtility.SetDirty(limbo);
 
-        Undo.DestroyObjectImmediate(rune.Preview);
+        // Undo.RecordObject(activeToggle.gameObject, "delete toggle");
+        // Undo.DestroyObjectImmediate(activeToggle.gameObject);
 
-        Undo.DestroyObjectImmediate(rune);
+        // Undo.RecordObject(rune.Preview, "delete preview");
+        // Undo.DestroyObjectImmediate(rune.Preview);
+        //
+        // Undo.RecordObject(rune, "delete rune");
+        // Undo.DestroyObjectImmediate(rune);
 
         Undo.SetCurrentGroupName("delete rune");
-    }
-
-    public void SelectRecognizedRune()
-    {
-        if (currentRecognized == null)
-            return;
-
-        if (toggles.TryGetValue(currentRecognized.GetHashCode(), out Toggle toggle))
-            toggle.isOn = true;
-    }
-
-    private Toggle AddRuneToggleToScrollView(Rune rune)
-    {
-        GameObject runeToggleObject = Instantiate(runePrefab, this.transform);
-
-        if (runeToggleObject.TryGetComponent(out Toggle toggle))
-            toggle.group = toggleGroup;
-
-        if (runeToggleObject.TryGetComponent(out RuneToggle runeToggle))
-            runeToggle.Rune = rune;
-
-        if (runeToggleObject.TryGetComponent(out AspectRatioFitter ratioFitter))
-            ratioFitter.aspectRatio = (float)rune.Preview.width / (float)rune.Preview.height;
-
-        toggles.Add(rune.GetHashCode(), toggle);
-
-
-        return runeToggleObject.GetComponent<Toggle>();
     }
 
     private bool DoesVariationHaveEnoughPoints(RuneDrawVariation variation)
@@ -181,8 +145,6 @@ public class RuneMaker : MonoBehaviour
         tex.Reinitialize(width, (int)math.max(tex.height, variation.height * width));
         tex.SetPixels(0, (tex.height - oldPreview.height) / 2, oldPreview.width, oldPreview.height,
             oldPreview.GetPixels(0, 0, oldPreview.width, oldPreview.height));
-        if (toggles.TryGetValue(rune.GetHashCode(), out Toggle toggle))
-            toggle.GetComponent<RuneToggle>().ratioFitter.aspectRatio = tex.height / tex.width;
 
 
         // add new draw variation on preview texture

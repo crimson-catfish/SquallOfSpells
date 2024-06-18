@@ -207,7 +207,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1473150033}
+      - m_Target: {fileID: 17444486}
         m_TargetAssemblyTypeName: RuneMaker, Assembly-CSharp
         m_MethodName: AddCurrentVariationToCurrentRune
         m_Mode: 1
@@ -257,6 +257,61 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 14734471}
   m_CullTransparentMesh: 1
+--- !u!1 &17444485
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 17444487}
+  - component: {fileID: 17444486}
+  m_Layer: 0
+  m_Name: Rune Maker
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &17444486
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 17444485}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 11526dfac76e24a4bb28427dbe1cedb0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  storage: {fileID: 11400000, guid: be54250f59b104a42828af839132ca3c, type: 2}
+  drawManager: {fileID: 760676023}
+  togglesContainer: {fileID: 1473150035}
+  toggleGroup: {fileID: 1473150034}
+  limbo: {fileID: 1471832736}
+  minimalPointAmount: 8
+  width: 128
+  border: 8
+  pointRadius: 4
+  pointDarkness: 0.3
+  textureFormat: 1
+--- !u!4 &17444487
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 17444485}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 283.5, y: 287.5, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &119722403
 GameObject:
   m_ObjectHideFlags: 0
@@ -1531,7 +1586,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1473150033}
+      - m_Target: {fileID: 17444486}
         m_TargetAssemblyTypeName: RuneMaker, Assembly-CSharp
         m_MethodName: DeleteCurrentRune
         m_Mode: 1
@@ -1713,8 +1768,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1473150033}
-        m_TargetAssemblyTypeName: RuneMaker, Assembly-CSharp
+      - m_Target: {fileID: 1473150035}
+        m_TargetAssemblyTypeName: RuneTogglesContainer, Assembly-CSharp
         m_MethodName: SelectRecognizedRune
         m_Mode: 1
         m_Arguments:
@@ -1809,7 +1864,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1473150033}
+      - m_Target: {fileID: 17444486}
         m_TargetAssemblyTypeName: RuneMaker, Assembly-CSharp
         m_MethodName: SaveCurrentVariationToNewRune
         m_Mode: 1
@@ -1859,6 +1914,50 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1342443016}
   m_CullTransparentMesh: 1
+--- !u!1 &1471832735
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1471832737}
+  - component: {fileID: 1471832736}
+  m_Layer: 0
+  m_Name: Rune Limbo
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1471832736
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1471832735}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a3de7ed433b74e6eb51dd974e0d5526c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &1471832737
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1471832735}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 283.5, y: 287.5, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1473150029
 GameObject:
   m_ObjectHideFlags: 0
@@ -1868,7 +1967,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1473150030}
-  - component: {fileID: 1473150033}
+  - component: {fileID: 1473150035}
   - component: {fileID: 1473150031}
   - component: {fileID: 1473150032}
   - component: {fileID: 1473150034}
@@ -1939,28 +2038,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_HorizontalFit: 2
   m_VerticalFit: 2
---- !u!114 &1473150033
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1473150029}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 11526dfac76e24a4bb28427dbe1cedb0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  storage: {fileID: 11400000, guid: be54250f59b104a42828af839132ca3c, type: 2}
-  drawManager: {fileID: 760676023}
-  recognizer: {fileID: 147558140}
-  runePrefab: {fileID: 6491440029119343913, guid: 5a21be4bfd67e22e4a9c59e658c7f1a5, type: 3}
-  minimalPointAmount: 8
-  width: 128
-  border: 8
-  pointRadius: 4
-  pointDarkness: 0.3
-  textureFormat: 1
 --- !u!114 &1473150034
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1974,6 +2051,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_AllowSwitchOff: 1
+--- !u!114 &1473150035
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1473150029}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3c9ea59210524e50a85be6b0a1f410b2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  recognizer: {fileID: 147558140}
+  runeTogglePrefab: {fileID: 6491440029119343913, guid: 5a21be4bfd67e22e4a9c59e658c7f1a5, type: 3}
+  storage: {fileID: 11400000, guid: be54250f59b104a42828af839132ca3c, type: 2}
+  toggleGroup: {fileID: 1473150034}
 --- !u!1 &1748650517
 GameObject:
   m_ObjectHideFlags: 0
