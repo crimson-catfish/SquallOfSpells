@@ -1,3 +1,2 @@
-Shortcuts
 test git clone
 build scene

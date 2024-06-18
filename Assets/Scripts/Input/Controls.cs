@@ -90,6 +90,94 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""RuneCreatingUI"",
+            ""id"": ""70420c8d-d3f9-448f-8958-45cc3dab5a28"",
+            ""actions"": [
+                {
+                    ""name"": ""DeleteRune"",
+                    ""type"": ""Button"",
+                    ""id"": ""8ccd02ad-9358-40c5-8942-090c9ba0c56f"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""NewRune"",
+                    ""type"": ""Button"",
+                    ""id"": ""a66a0e3a-9d37-4740-bae6-476a81c901cf"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""AddVariation"",
+                    ""type"": ""Button"",
+                    ""id"": ""b75e1a35-3f7a-4f89-a3b5-fb126f773ec2"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""SelectRecognized"",
+                    ""type"": ""Button"",
+                    ""id"": ""474c8e53-f27c-47f0-9536-8afa738bea6b"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""3b6d1181-9c7f-4cb1-9f5b-518a3e913739"",
+                    ""path"": ""<Keyboard>/delete"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""DeleteRune"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""90de0f14-f3c7-43f1-936f-b5a9c01846b6"",
+                    ""path"": ""<Keyboard>/n"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""NewRune"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b31a5166-9116-43ef-8cf6-e0cc96d25b3a"",
+                    ""path"": ""<Keyboard>/space"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""AddVariation"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""87718150-44f6-4e8f-9a14-56b0f5503ca4"",
+                    ""path"": ""<Keyboard>/r"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SelectRecognized"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": []
@@ -99,6 +187,12 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         m_Touch_DrawPosition = m_Touch.FindAction("DrawPosition", throwIfNotFound: true);
         m_Touch_DrawContact = m_Touch.FindAction("DrawContact", throwIfNotFound: true);
         m_Touch_Cast = m_Touch.FindAction("Cast", throwIfNotFound: true);
+        // RuneCreatingUI
+        m_RuneCreatingUI = asset.FindActionMap("RuneCreatingUI", throwIfNotFound: true);
+        m_RuneCreatingUI_DeleteRune = m_RuneCreatingUI.FindAction("DeleteRune", throwIfNotFound: true);
+        m_RuneCreatingUI_NewRune = m_RuneCreatingUI.FindAction("NewRune", throwIfNotFound: true);
+        m_RuneCreatingUI_AddVariation = m_RuneCreatingUI.FindAction("AddVariation", throwIfNotFound: true);
+        m_RuneCreatingUI_SelectRecognized = m_RuneCreatingUI.FindAction("SelectRecognized", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -218,10 +312,87 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         }
     }
     public TouchActions @Touch => new TouchActions(this);
+
+    // RuneCreatingUI
+    private readonly InputActionMap m_RuneCreatingUI;
+    private List<IRuneCreatingUIActions> m_RuneCreatingUIActionsCallbackInterfaces = new List<IRuneCreatingUIActions>();
+    private readonly InputAction m_RuneCreatingUI_DeleteRune;
+    private readonly InputAction m_RuneCreatingUI_NewRune;
+    private readonly InputAction m_RuneCreatingUI_AddVariation;
+    private readonly InputAction m_RuneCreatingUI_SelectRecognized;
+    public struct RuneCreatingUIActions
+    {
+        private @Controls m_Wrapper;
+        public RuneCreatingUIActions(@Controls wrapper) { m_Wrapper = wrapper; }
+        public InputAction @DeleteRune => m_Wrapper.m_RuneCreatingUI_DeleteRune;
+        public InputAction @NewRune => m_Wrapper.m_RuneCreatingUI_NewRune;
+        public InputAction @AddVariation => m_Wrapper.m_RuneCreatingUI_AddVariation;
+        public InputAction @SelectRecognized => m_Wrapper.m_RuneCreatingUI_SelectRecognized;
+        public InputActionMap Get() { return m_Wrapper.m_RuneCreatingUI; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(RuneCreatingUIActions set) { return set.Get(); }
+        public void AddCallbacks(IRuneCreatingUIActions instance)
+        {
+            if (instance == null || m_Wrapper.m_RuneCreatingUIActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_RuneCreatingUIActionsCallbackInterfaces.Add(instance);
+            @DeleteRune.started += instance.OnDeleteRune;
+            @DeleteRune.performed += instance.OnDeleteRune;
+            @DeleteRune.canceled += instance.OnDeleteRune;
+            @NewRune.started += instance.OnNewRune;
+            @NewRune.performed += instance.OnNewRune;
+            @NewRune.canceled += instance.OnNewRune;
+            @AddVariation.started += instance.OnAddVariation;
+            @AddVariation.performed += instance.OnAddVariation;
+            @AddVariation.canceled += instance.OnAddVariation;
+            @SelectRecognized.started += instance.OnSelectRecognized;
+            @SelectRecognized.performed += instance.OnSelectRecognized;
+            @SelectRecognized.canceled += instance.OnSelectRecognized;
+        }
+
+        private void UnregisterCallbacks(IRuneCreatingUIActions instance)
+        {
+            @DeleteRune.started -= instance.OnDeleteRune;
+            @DeleteRune.performed -= instance.OnDeleteRune;
+            @DeleteRune.canceled -= instance.OnDeleteRune;
+            @NewRune.started -= instance.OnNewRune;
+            @NewRune.performed -= instance.OnNewRune;
+            @NewRune.canceled -= instance.OnNewRune;
+            @AddVariation.started -= instance.OnAddVariation;
+            @AddVariation.performed -= instance.OnAddVariation;
+            @AddVariation.canceled -= instance.OnAddVariation;
+            @SelectRecognized.started -= instance.OnSelectRecognized;
+            @SelectRecognized.performed -= instance.OnSelectRecognized;
+            @SelectRecognized.canceled -= instance.OnSelectRecognized;
+        }
+
+        public void RemoveCallbacks(IRuneCreatingUIActions instance)
+        {
+            if (m_Wrapper.m_RuneCreatingUIActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        public void SetCallbacks(IRuneCreatingUIActions instance)
+        {
+            foreach (var item in m_Wrapper.m_RuneCreatingUIActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_RuneCreatingUIActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    public RuneCreatingUIActions @RuneCreatingUI => new RuneCreatingUIActions(this);
     public interface ITouchActions
     {
         void OnDrawPosition(InputAction.CallbackContext context);
         void OnDrawContact(InputAction.CallbackContext context);
         void OnCast(InputAction.CallbackContext context);
+    }
+    public interface IRuneCreatingUIActions
+    {
+        void OnDeleteRune(InputAction.CallbackContext context);
+        void OnNewRune(InputAction.CallbackContext context);
+        void OnAddVariation(InputAction.CallbackContext context);
+        void OnSelectRecognized(InputAction.CallbackContext context);
     }
 }

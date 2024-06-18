@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 public class InputManager : Singleton<InputManager>
@@ -10,10 +11,15 @@ public class InputManager : Singleton<InputManager>
     public event Action<Vector2> OnDrawStart;
     public event Action OnDrawEnd;
 
+    public event Action OnDeleteRune;
+    public event Action OnNewRune;
+    public event Action OnAddVariation;
+    public event Action OnSelectRecognized;
+
     private EventSystem eventSystem;
     private Controls controls;
     private readonly float screenWidth = Screen.width;
-    private List<Canvas> enabledCanvases = new();
+    private readonly List<Canvas> enabledCanvases = new();
     private Canvas[] allCanvases;
 
     private void Awake()
@@ -31,18 +37,9 @@ public class InputManager : Singleton<InputManager>
                 enabledCanvases.Add(canvas);
         }
 
-        controls.Touch.DrawContact.started += _ =>
-        {
-            Vector2 startPositionPixels = controls.Touch.DrawPosition.ReadValue<Vector2>();
-            if (IsOverAnyUI(startPositionPixels) == false)
-                OnDrawStart?.Invoke(startPositionPixels / screenWidth);
-        };
-
-        controls.Touch.DrawPosition.performed += context =>
-            OnNextDrawPosition?.Invoke(context.ReadValue<Vector2>() / screenWidth);
-
-        controls.Touch.DrawContact.canceled += _ =>
-            OnDrawEnd?.Invoke();
+        SetTouchActions();
+        
+        SetRuneCreatingUIActions();
     }
 
     private void OnEnable()
@@ -67,7 +64,7 @@ public class InputManager : Singleton<InputManager>
             pointerData = new PointerEventData(eventSystem) { position = point };
 
             GraphicRaycaster raycaster = canvas.GetComponent<GraphicRaycaster>();
-            
+
             raycaster.Raycast(pointerData, results);
 
             if (results.Count > 0)
@@ -75,5 +72,35 @@ public class InputManager : Singleton<InputManager>
         }
 
         return false;
+    }
+
+    private void SetTouchActions()
+    {
+        Controls.TouchActions actions = controls.Touch;
+
+        actions.DrawContact.started += HandleDrawContactStart;
+
+        actions.DrawPosition.performed += context =>
+            OnNextDrawPosition?.Invoke(context.ReadValue<Vector2>() / screenWidth);
+
+        actions.DrawContact.canceled += _ =>
+            OnDrawEnd?.Invoke();
+    }
+
+    private void SetRuneCreatingUIActions()
+    {
+        Controls.RuneCreatingUIActions actions = controls.RuneCreatingUI;
+
+        actions.DeleteRune.performed += _ => OnDeleteRune?.Invoke();
+        actions.NewRune.performed += _ => OnNewRune?.Invoke();
+        actions.AddVariation.performed += _ => OnAddVariation?.Invoke();
+        actions.SelectRecognized.performed += _ => OnSelectRecognized?.Invoke();
+    }
+
+    private void HandleDrawContactStart(InputAction.CallbackContext _)
+    {
+        Vector2 startPositionPixels = controls.Touch.DrawPosition.ReadValue<Vector2>();
+        if (IsOverAnyUI(startPositionPixels) == false)
+            OnDrawStart?.Invoke(startPositionPixels / screenWidth);
     }
 }

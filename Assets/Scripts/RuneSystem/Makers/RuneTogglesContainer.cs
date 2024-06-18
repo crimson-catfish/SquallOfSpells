@@ -10,13 +10,16 @@ public class RuneTogglesContainer : MonoBehaviour
     [SerializeField] private ToggleGroup toggleGroup;
 
 
+    private InputManager inputManager;
     private Vector2 scrollPosition;
     private readonly Dictionary<int, Toggle> toggles = new();
     private Rune currentRecognized;
 
     private void OnEnable()
     {
+        inputManager = InputManager.instance;
         recognizer.OnRuneRecognized += rune => currentRecognized = rune;
+        inputManager.OnSelectRecognized += SelectRecognizedRune;
     }
 
 
@@ -30,6 +33,7 @@ public class RuneTogglesContainer : MonoBehaviour
     private void OnDisable()
     {
         recognizer.OnRuneRecognized -= rune => currentRecognized = rune;
+        inputManager.OnSelectRecognized -= SelectRecognizedRune;
     }
 
     public void AddNewToggle(Rune rune)

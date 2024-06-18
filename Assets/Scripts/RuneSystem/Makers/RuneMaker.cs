@@ -11,7 +11,6 @@ public class RuneMaker : MonoBehaviour
     [SerializeField] private ToggleGroup toggleGroup;
     [SerializeField] private RuneLimbo limbo;
 
-
     [SerializeField] private int minimalPointAmount = 8;
 
     [Header("Rune preview related fields\nchanging those doesn't affects already created previews")] [SerializeField]
@@ -22,6 +21,17 @@ public class RuneMaker : MonoBehaviour
     [SerializeField, Range(0, 1)] private float pointDarkness = 0.3f;
     [SerializeField] private TextureFormat textureFormat;
 
+    private InputManager inputManager;
+
+    private void OnEnable()
+    {
+        inputManager = InputManager.instance;
+
+        inputManager.OnAddVariation += AddCurrentVariationToCurrentRune;
+        inputManager.OnNewRune += SaveCurrentVariationToNewRune;
+        inputManager.OnDeleteRune += DeleteCurrentRune;
+    }
+
     private void OnDisable()
     {
         while (limbo.runesToDelete.Count > 0)
@@ -31,6 +41,10 @@ public class RuneMaker : MonoBehaviour
             AssetDatabase.DeleteAsset(AssetDatabase.GetAssetPath(rune));
             limbo.runesToDelete.RemoveAt(0);
         }
+        
+        inputManager.OnAddVariation -= AddCurrentVariationToCurrentRune;
+        inputManager.OnNewRune -= SaveCurrentVariationToNewRune;
+        inputManager.OnDeleteRune -= DeleteCurrentRune;
     }
 
     public void SaveCurrentVariationToNewRune()

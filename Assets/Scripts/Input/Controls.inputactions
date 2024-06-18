@@ -68,6 +68,94 @@
                     "isPartOfComposite": false
                 }
             ]
+        },
+        {
+            "name": "RuneCreatingUI",
+            "id": "70420c8d-d3f9-448f-8958-45cc3dab5a28",
+            "actions": [
+                {
+                    "name": "DeleteRune",
+                    "type": "Button",
+                    "id": "8ccd02ad-9358-40c5-8942-090c9ba0c56f",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "NewRune",
+                    "type": "Button",
+                    "id": "a66a0e3a-9d37-4740-bae6-476a81c901cf",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "AddVariation",
+                    "type": "Button",
+                    "id": "b75e1a35-3f7a-4f89-a3b5-fb126f773ec2",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "SelectRecognized",
+                    "type": "Button",
+                    "id": "474c8e53-f27c-47f0-9536-8afa738bea6b",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "3b6d1181-9c7f-4cb1-9f5b-518a3e913739",
+                    "path": "<Keyboard>/delete",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "DeleteRune",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "90de0f14-f3c7-43f1-936f-b5a9c01846b6",
+                    "path": "<Keyboard>/n",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "NewRune",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "b31a5166-9116-43ef-8cf6-e0cc96d25b3a",
+                    "path": "<Keyboard>/space",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "AddVariation",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "87718150-44f6-4e8f-9a14-56b0f5503ca4",
+                    "path": "<Keyboard>/r",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "SelectRecognized",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
         }
     ],
     "controlSchemes": []
