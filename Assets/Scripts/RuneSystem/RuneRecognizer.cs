@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-
 public class RuneRecognizer : MonoBehaviour
 {
-    public Action<Rune> OnRuneRecognized;
+    public event Action<Rune> OnRuneRecognized;
 
     [SerializeField] private RuneStorage storage;
     [SerializeField] private RuneDrawManager drawManager;
+    [SerializeField] private bool printRecognized = false;
+    
 
     [Header("Recognition settings")] [SerializeField]
     private float heightRange = 0.3f;
@@ -54,6 +55,9 @@ public class RuneRecognizer : MonoBehaviour
         }
 
         OnRuneRecognized?.Invoke(closestRune != null ? closestRune : null);
+
+        if (printRecognized && closestRune != null)
+            Debug.Log("Recognized as " + closestRune.name);
     }
 
     private IEnumerable<int> FindClosestRunesByParams(float runeParam, SortedList<float, int> sortedRunes, float range)

@@ -1,1 +1,2 @@
-build scene
+fix preview of less height
+check build scene
