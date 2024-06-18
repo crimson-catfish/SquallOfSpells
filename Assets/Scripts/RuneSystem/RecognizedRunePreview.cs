@@ -1,13 +1,12 @@
-using System;
 using UnityEngine;
 using UnityEngine.UI;
 
-[RequireComponent(typeof(Button), typeof(RawImage))]
+[RequireComponent(typeof(RawImage))]
 public class RecognizedRunePreview : MonoBehaviour
 {
     [SerializeField] private RuneRecognizer recognizer;
-    
-    
+
+
     private RawImage image;
 
     private void OnEnable()
@@ -24,7 +23,6 @@ public class RecognizedRunePreview : MonoBehaviour
     {
         recognizer.OnRuneRecognized -= HandleRuneRecognition;
     }
-
 
 
     private void HandleRuneRecognition(Rune rune)
