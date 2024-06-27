@@ -25,9 +25,18 @@
                 },
                 {
                     "name": "Cast",
-                    "type": "Value",
-                    "id": "dfd01cf6-d174-485e-9391-e10bba762f7d",
+                    "type": "Button",
+                    "id": "f90f29fc-1878-4d40-ab20-2054ad876cb7",
                     "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Move",
+                    "type": "Value",
+                    "id": "e486d752-65a6-442d-8bbe-a96cd8fba261",
+                    "expectedControlType": "Vector2",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
@@ -58,12 +67,23 @@
                 },
                 {
                     "name": "",
-                    "id": "19a2503d-b8d5-4a2a-bf5c-df9148dd4b68",
+                    "id": "5791efc3-0db6-406d-9d69-43a789ac5f31",
                     "path": "<Touchscreen>/primaryTouch/tap",
-                    "interactions": "Tap",
+                    "interactions": "MultiTap",
                     "processors": "",
                     "groups": "",
                     "action": "Cast",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "46d78789-252b-4e84-a9ff-6ac3f85cd28e",
+                    "path": "<Joystick>/stick",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Move",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

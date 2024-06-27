@@ -7,6 +7,8 @@ using UnityEngine.UI;
 
 public class InputManager : Singleton<InputManager>
 {
+    public event Action<Vector2> OnMove;
+
     public event Action<Vector2> OnNextDrawPosition;
     public event Action<Vector2> OnDrawStart;
     public event Action OnDrawEnd;
@@ -38,7 +40,7 @@ public class InputManager : Singleton<InputManager>
         }
 
         SetTouchActions();
-        
+
         SetRuneCreatingUIActions();
     }
 
@@ -77,6 +79,12 @@ public class InputManager : Singleton<InputManager>
     private void SetTouchActions()
     {
         Controls.TouchActions actions = controls.Touch;
+
+        actions.Move.performed += context =>
+            OnMove?.Invoke(context.ReadValue<Vector2>());
+
+        actions.Move.canceled += _ =>
+            OnMove?.Invoke(Vector2.zero);
 
         actions.DrawContact.started += HandleDrawContactStart;
 

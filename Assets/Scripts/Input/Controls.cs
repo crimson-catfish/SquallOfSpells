@@ -47,9 +47,18 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": ""Cast"",
-                    ""type"": ""Value"",
-                    ""id"": ""dfd01cf6-d174-485e-9391-e10bba762f7d"",
+                    ""type"": ""Button"",
+                    ""id"": ""f90f29fc-1878-4d40-ab20-2054ad876cb7"",
                     ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Move"",
+                    ""type"": ""Value"",
+                    ""id"": ""e486d752-65a6-442d-8bbe-a96cd8fba261"",
+                    ""expectedControlType"": ""Vector2"",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
@@ -80,12 +89,23 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""19a2503d-b8d5-4a2a-bf5c-df9148dd4b68"",
+                    ""id"": ""5791efc3-0db6-406d-9d69-43a789ac5f31"",
                     ""path"": ""<Touchscreen>/primaryTouch/tap"",
-                    ""interactions"": ""Tap"",
+                    ""interactions"": ""MultiTap"",
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Cast"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""46d78789-252b-4e84-a9ff-6ac3f85cd28e"",
+                    ""path"": ""<Joystick>/stick"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Move"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -187,6 +207,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         m_Touch_DrawPosition = m_Touch.FindAction("DrawPosition", throwIfNotFound: true);
         m_Touch_DrawContact = m_Touch.FindAction("DrawContact", throwIfNotFound: true);
         m_Touch_Cast = m_Touch.FindAction("Cast", throwIfNotFound: true);
+        m_Touch_Move = m_Touch.FindAction("Move", throwIfNotFound: true);
         // RuneCreatingUI
         m_RuneCreatingUI = asset.FindActionMap("RuneCreatingUI", throwIfNotFound: true);
         m_RuneCreatingUI_DeleteRune = m_RuneCreatingUI.FindAction("DeleteRune", throwIfNotFound: true);
@@ -257,6 +278,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
     private readonly InputAction m_Touch_DrawPosition;
     private readonly InputAction m_Touch_DrawContact;
     private readonly InputAction m_Touch_Cast;
+    private readonly InputAction m_Touch_Move;
     public struct TouchActions
     {
         private @Controls m_Wrapper;
@@ -264,6 +286,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         public InputAction @DrawPosition => m_Wrapper.m_Touch_DrawPosition;
         public InputAction @DrawContact => m_Wrapper.m_Touch_DrawContact;
         public InputAction @Cast => m_Wrapper.m_Touch_Cast;
+        public InputAction @Move => m_Wrapper.m_Touch_Move;
         public InputActionMap Get() { return m_Wrapper.m_Touch; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -282,6 +305,9 @@ public partial class @Controls: IInputActionCollection2, IDisposable
             @Cast.started += instance.OnCast;
             @Cast.performed += instance.OnCast;
             @Cast.canceled += instance.OnCast;
+            @Move.started += instance.OnMove;
+            @Move.performed += instance.OnMove;
+            @Move.canceled += instance.OnMove;
         }
 
         private void UnregisterCallbacks(ITouchActions instance)
@@ -295,6 +321,9 @@ public partial class @Controls: IInputActionCollection2, IDisposable
             @Cast.started -= instance.OnCast;
             @Cast.performed -= instance.OnCast;
             @Cast.canceled -= instance.OnCast;
+            @Move.started -= instance.OnMove;
+            @Move.performed -= instance.OnMove;
+            @Move.canceled -= instance.OnMove;
         }
 
         public void RemoveCallbacks(ITouchActions instance)
@@ -387,6 +416,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         void OnDrawPosition(InputAction.CallbackContext context);
         void OnDrawContact(InputAction.CallbackContext context);
         void OnCast(InputAction.CallbackContext context);
+        void OnMove(InputAction.CallbackContext context);
     }
     public interface IRuneCreatingUIActions
     {
