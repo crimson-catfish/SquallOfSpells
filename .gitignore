@@ -3,6 +3,9 @@
 mono_crash.mem.*.blob
 /Assets/Scripts/Test.cs
 
+/Launch.sh
+/nohup.out
+
 #temporary
 /Assets/Textures/Runes/Previews/
 .idea/
