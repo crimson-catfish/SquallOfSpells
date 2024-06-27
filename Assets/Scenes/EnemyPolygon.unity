@@ -312,6 +312,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startHealth: 10
+  speed: 3
 --- !u!4 &998838612
 Transform:
   m_ObjectHideFlags: 0
