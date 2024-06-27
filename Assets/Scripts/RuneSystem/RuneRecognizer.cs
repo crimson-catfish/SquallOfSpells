@@ -10,12 +10,12 @@ public class RuneRecognizer : MonoBehaviour
     [SerializeField] private RuneStorage storage;
     [SerializeField] private RuneDrawManager drawManager;
     [SerializeField] private bool printRecognized = false;
-    
+
 
     [Header("Recognition settings")] [SerializeField]
-    private float heightRange = 0.3f;
+    private float acceptableHeightDifferencePercent = 30f;
 
-    [SerializeField] private float massCenterRange = 0.2f;
+    [SerializeField] private float acceptableMassCenterDifferencePercent = 20f;
     [SerializeField] private float acceptableError = 0.05f;
 
     private void OnEnable()
@@ -32,11 +32,12 @@ public class RuneRecognizer : MonoBehaviour
     private void OnRuneDrawn(RuneDrawVariation drawToCheck)
     {
         HashSet<int> selectedRuneHashes =
-            new HashSet<int>(FindClosestRunesByParams(drawToCheck.height, storage.RunesHeight, heightRange));
+            new HashSet<int>(FindClosestRunesByParams(drawToCheck.height, storage.RunesHeight,
+                acceptableHeightDifferencePercent));
         selectedRuneHashes.IntersectWith(FindClosestRunesByParams(drawToCheck.massCenter.x, storage.RunesMassCenterX,
-            massCenterRange));
+            acceptableMassCenterDifferencePercent));
         selectedRuneHashes.IntersectWith(FindClosestRunesByParams(drawToCheck.massCenter.y, storage.RunesMassCenterY,
-            massCenterRange));
+            acceptableMassCenterDifferencePercent));
 
         List<Rune> runesToCheck = new();
         foreach (int hash in selectedRuneHashes)
@@ -60,13 +61,13 @@ public class RuneRecognizer : MonoBehaviour
             Debug.Log("Recognized as " + closestRune.name);
     }
 
-    private IEnumerable<int> FindClosestRunesByParams(float runeParam, SortedList<float, int> sortedRunes, float range)
+    private IEnumerable<int> FindClosestRunesByParams(float runeParam, SortedList<float, int> sortedRunes, float acceptableDifferencePercent)
     {
         if (sortedRunes.Count == 0)
             return Enumerable.Empty<int>();
 
-        int lowBound = Search.Binary(sortedRunes.Keys, runeParam - range);
-        int topBound = Search.Binary(sortedRunes.Keys, runeParam + range);
+        int lowBound = Search.Binary(sortedRunes.Keys, runeParam - (1 + acceptableDifferencePercent / 100f));
+        int topBound = Search.Binary(sortedRunes.Keys, runeParam + (1 + acceptableDifferencePercent / 100f));
 
         return sortedRunes.Values.Skip(lowBound).Take(topBound - lowBound);
     }
