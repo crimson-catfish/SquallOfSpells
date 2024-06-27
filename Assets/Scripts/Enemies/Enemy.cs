@@ -11,8 +11,9 @@ public abstract class Enemy : MonoBehaviour, IDamageable
 
     private float health;
 
-    private void OnEnable()
+    protected virtual void OnEnable()
     {
+        health = startHealth;
         player = GameObject.FindGameObjectWithTag("Player");
     }
 
