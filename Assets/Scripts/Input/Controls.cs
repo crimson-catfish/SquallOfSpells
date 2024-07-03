@@ -254,6 +254,34 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""Swing"",
+            ""id"": ""0e4dd5a9-0596-4958-858a-930817ae8404"",
+            ""actions"": [
+                {
+                    ""name"": ""Direction"",
+                    ""type"": ""Value"",
+                    ""id"": ""3fe8d924-6c4e-4b06-b620-8991b7e77972"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""2fc436a5-22c2-48f3-8f3e-2b7de1ee7f15"",
+                    ""path"": ""<Touchscreen>/position"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Direction"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": []
@@ -276,6 +304,9 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         m_Aim_Point = m_Aim.FindAction("Point", throwIfNotFound: true);
         m_Aim_StartPosition = m_Aim.FindAction("StartPosition", throwIfNotFound: true);
         m_Aim_Direction = m_Aim.FindAction("Direction", throwIfNotFound: true);
+        // Swing
+        m_Swing = asset.FindActionMap("Swing", throwIfNotFound: true);
+        m_Swing_Direction = m_Swing.FindAction("Direction", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -565,6 +596,52 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         }
     }
     public AimActions @Aim => new AimActions(this);
+
+    // Swing
+    private readonly InputActionMap m_Swing;
+    private List<ISwingActions> m_SwingActionsCallbackInterfaces = new List<ISwingActions>();
+    private readonly InputAction m_Swing_Direction;
+    public struct SwingActions
+    {
+        private @Controls m_Wrapper;
+        public SwingActions(@Controls wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Direction => m_Wrapper.m_Swing_Direction;
+        public InputActionMap Get() { return m_Wrapper.m_Swing; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(SwingActions set) { return set.Get(); }
+        public void AddCallbacks(ISwingActions instance)
+        {
+            if (instance == null || m_Wrapper.m_SwingActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_SwingActionsCallbackInterfaces.Add(instance);
+            @Direction.started += instance.OnDirection;
+            @Direction.performed += instance.OnDirection;
+            @Direction.canceled += instance.OnDirection;
+        }
+
+        private void UnregisterCallbacks(ISwingActions instance)
+        {
+            @Direction.started -= instance.OnDirection;
+            @Direction.performed -= instance.OnDirection;
+            @Direction.canceled -= instance.OnDirection;
+        }
+
+        public void RemoveCallbacks(ISwingActions instance)
+        {
+            if (m_Wrapper.m_SwingActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        public void SetCallbacks(ISwingActions instance)
+        {
+            foreach (var item in m_Wrapper.m_SwingActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_SwingActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    public SwingActions @Swing => new SwingActions(this);
     public interface IRuneCreatingUIActions
     {
         void OnDeleteRune(InputAction.CallbackContext context);
@@ -585,6 +662,10 @@ public partial class @Controls: IInputActionCollection2, IDisposable
     {
         void OnPoint(InputAction.CallbackContext context);
         void OnStartPosition(InputAction.CallbackContext context);
+        void OnDirection(InputAction.CallbackContext context);
+    }
+    public interface ISwingActions
+    {
         void OnDirection(InputAction.CallbackContext context);
     }
 }
