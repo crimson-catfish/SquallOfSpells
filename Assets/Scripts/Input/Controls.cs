@@ -217,6 +217,15 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Contact"",
+                    ""type"": ""Button"",
+                    ""id"": ""e75f59a8-fd81-4005-8462-7a953ef7a520"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
@@ -250,6 +259,17 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""StartPosition"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""5e355618-4ce9-4dce-a24d-776b9fb1fdff"",
+                    ""path"": ""<Touchscreen>/primaryTouch/press"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Contact"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -304,6 +324,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         m_Aim_Point = m_Aim.FindAction("Point", throwIfNotFound: true);
         m_Aim_StartPosition = m_Aim.FindAction("StartPosition", throwIfNotFound: true);
         m_Aim_Direction = m_Aim.FindAction("Direction", throwIfNotFound: true);
+        m_Aim_Contact = m_Aim.FindAction("Contact", throwIfNotFound: true);
         // Swing
         m_Swing = asset.FindActionMap("Swing", throwIfNotFound: true);
         m_Swing_Direction = m_Swing.FindAction("Direction", throwIfNotFound: true);
@@ -541,6 +562,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
     private readonly InputAction m_Aim_Point;
     private readonly InputAction m_Aim_StartPosition;
     private readonly InputAction m_Aim_Direction;
+    private readonly InputAction m_Aim_Contact;
     public struct AimActions
     {
         private @Controls m_Wrapper;
@@ -548,6 +570,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         public InputAction @Point => m_Wrapper.m_Aim_Point;
         public InputAction @StartPosition => m_Wrapper.m_Aim_StartPosition;
         public InputAction @Direction => m_Wrapper.m_Aim_Direction;
+        public InputAction @Contact => m_Wrapper.m_Aim_Contact;
         public InputActionMap Get() { return m_Wrapper.m_Aim; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -566,6 +589,9 @@ public partial class @Controls: IInputActionCollection2, IDisposable
             @Direction.started += instance.OnDirection;
             @Direction.performed += instance.OnDirection;
             @Direction.canceled += instance.OnDirection;
+            @Contact.started += instance.OnContact;
+            @Contact.performed += instance.OnContact;
+            @Contact.canceled += instance.OnContact;
         }
 
         private void UnregisterCallbacks(IAimActions instance)
@@ -579,6 +605,9 @@ public partial class @Controls: IInputActionCollection2, IDisposable
             @Direction.started -= instance.OnDirection;
             @Direction.performed -= instance.OnDirection;
             @Direction.canceled -= instance.OnDirection;
+            @Contact.started -= instance.OnContact;
+            @Contact.performed -= instance.OnContact;
+            @Contact.canceled -= instance.OnContact;
         }
 
         public void RemoveCallbacks(IAimActions instance)
@@ -663,6 +692,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         void OnPoint(InputAction.CallbackContext context);
         void OnStartPosition(InputAction.CallbackContext context);
         void OnDirection(InputAction.CallbackContext context);
+        void OnContact(InputAction.CallbackContext context);
     }
     public interface ISwingActions
     {

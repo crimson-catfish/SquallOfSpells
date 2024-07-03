@@ -18,6 +18,7 @@ public class Player : MonoBehaviour
         inputManager = InputManager.instance;
 
         inputManager.OnMove += HandleNewMoveDirection;
+        inputManager.OnAimDirection += HandleAimDirection;
     }
 
     private void Update()
@@ -35,23 +36,10 @@ public class Player : MonoBehaviour
         moveDirection = direction * moveSpeed;
     }
 
-    private void HandleRuneRecognition(Rune rune)
+    private void HandleAimDirection(Vector2 direction)
     {
-        if (rune == null)
-            return;
-
-        // Spells spell = spellContainer.spells[rune];
-        //
-        // switch (spell)
-        // {
-        //     case Spells.Fireball:
-        //         
-        //         break;
-        //     case Spells.Shield:
-        //         break;
-        //     default:
-        //         throw new ArgumentOutOfRangeException();
-        // }
+        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+        transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle));
     }
 
     private void CastFireball()

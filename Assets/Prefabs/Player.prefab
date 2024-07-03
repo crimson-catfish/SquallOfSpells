@@ -44,6 +44,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 978128a17f5146ffa3dea841958001a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  player: {fileID: 4230735849268552375}
+  fireballProjectile: {fileID: 8882211435051311793, guid: f238592a388ff567abd2785f9e3f4e50, type: 3}
 --- !u!1 &1249050672756384944
 GameObject:
   m_ObjectHideFlags: 0
@@ -135,7 +137,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   recognizer: {fileID: 0}
-  spellContainer: {fileID: 0}
+  spellContainer: {fileID: 3189088438561247743}
   moveSpeed: 3
 --- !u!212 &1157572424319928881
 SpriteRenderer:

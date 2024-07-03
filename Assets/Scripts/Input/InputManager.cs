@@ -7,22 +7,30 @@ using UnityEngine.UI;
 
 public class InputManager : Singleton<InputManager>
 {
-    public event Action<Vector2> OnMove;
-
-    public event Action<Vector2> OnNextDrawPosition;
-    public event Action<Vector2> OnDrawStart;
-    public event Action OnDrawEnd;
-
+    // RuneCreationGUI
     public event Action OnDeleteRune;
     public event Action OnNewRune;
     public event Action OnAddVariation;
     public event Action OnSelectRecognized;
+
+    // Move
+    public event Action<Vector2> OnMove;
+
+    // Draw
+    public event Action<Vector2> OnNextDrawPosition;
+    public event Action<Vector2> OnDrawStart;
+    public event Action OnDrawEnd;
+
+    // Aim
+    public event Action OnAimCast;
+    public event Action<Vector2> OnAimDirection;
 
     private EventSystem eventSystem;
     private readonly float screenWidth = Screen.width;
     private readonly List<Canvas> enabledCanvases = new();
     private Canvas[] allCanvases;
     private InputActionMap currentMap;
+    private Vector2 aimStartPosition;
 
     public Controls Controls { get; private set; }
 
@@ -51,11 +59,12 @@ public class InputManager : Singleton<InputManager>
                 enabledCanvases.Add(canvas);
         }
 
-        SetMoveActions();
-        SetDrawActions();
 #if UNITY_EDITOR
         SetRuneCreatingUIActions();
 #endif
+        SetMoveActions();
+        SetDrawActions();
+        SetAimActions();
     }
 
     private void OnDisable()
@@ -96,6 +105,16 @@ public class InputManager : Singleton<InputManager>
         return false;
     }
 
+    private void SetRuneCreatingUIActions()
+    {
+        Controls.RuneCreatingUIActions actions = Controls.RuneCreatingUI;
+
+        actions.DeleteRune.performed += _ => OnDeleteRune?.Invoke();
+        actions.NewRune.performed += _ => OnNewRune?.Invoke();
+        actions.AddVariation.performed += _ => OnAddVariation?.Invoke();
+        actions.SelectRecognized.performed += _ => OnSelectRecognized?.Invoke();
+    }
+
     private void SetMoveActions()
     {
         Controls.MoveActions actions = Controls.Move;
@@ -120,14 +139,24 @@ public class InputManager : Singleton<InputManager>
             OnDrawEnd?.Invoke();
     }
 
-    private void SetRuneCreatingUIActions()
+    private void SetAimActions()
     {
-        Controls.RuneCreatingUIActions actions = Controls.RuneCreatingUI;
+        Controls.AimActions actions = Controls.Aim;
 
-        actions.DeleteRune.performed += _ => OnDeleteRune?.Invoke();
-        actions.NewRune.performed += _ => OnNewRune?.Invoke();
-        actions.AddVariation.performed += _ => OnAddVariation?.Invoke();
-        actions.SelectRecognized.performed += _ => OnSelectRecognized?.Invoke();
+        actions.Point.performed += context =>
+        {
+            OnAimDirection?.Invoke(context.ReadValue<Vector2>());
+            OnAimCast?.Invoke();
+        };
+
+        actions.StartPosition.started += context =>
+            aimStartPosition = context.ReadValue<Vector2>();
+
+        actions.Direction.performed += context =>
+            OnAimDirection?.Invoke(context.ReadValue<Vector2>() - aimStartPosition);
+
+        actions.Contact.canceled += _ =>
+            OnAimCast?.Invoke();
     }
 
     private void HandleDrawContactStart(InputAction.CallbackContext _)
