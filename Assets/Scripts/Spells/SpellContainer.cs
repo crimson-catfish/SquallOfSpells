@@ -20,9 +20,12 @@ public class SpellContainer : MonoBehaviour
 
         ICastable spell = spells[rune].GetComponent<ICastable>();
 
-        // if (spell is IAimable)
-                        // inputManager.c
+        if (spell is IAimable)
+            inputManager.SwitchToActionMap(inputManager.Controls.Aim);
+        else if (spell is ISwingable)
+            inputManager.SwitchToActionMap(inputManager.Controls.Swing);
 
-            spell.Cast();
+
+        spell.Cast();
     }
 }
