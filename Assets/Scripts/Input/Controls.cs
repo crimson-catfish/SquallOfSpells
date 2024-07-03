@@ -198,6 +198,74 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""Aim"",
+            ""id"": ""8e65c0ed-8c57-427d-abf3-117dc72e6565"",
+            ""actions"": [
+                {
+                    ""name"": ""Point"",
+                    ""type"": ""Value"",
+                    ""id"": ""73022bb0-c78a-48bc-a9e1-1e0ca349bc1a"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""StartPosition"",
+                    ""type"": ""Value"",
+                    ""id"": ""ddef8523-b2d3-49d4-9cd8-b9c9cf4b71c1"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Direction"",
+                    ""type"": ""Value"",
+                    ""id"": ""3f734fce-d8f1-44c0-8e9b-6e250165294d"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""f9c51968-697b-4700-92d3-723752fd9691"",
+                    ""path"": ""<Touchscreen>/touch0/position"",
+                    ""interactions"": ""Tap"",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Point"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f1ff5918-d48e-4057-96fb-2dc191e6b422"",
+                    ""path"": ""<Touchscreen>/position"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Direction"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""3eee57f1-ae2c-45e4-9fae-d4aa6b6181ab"",
+                    ""path"": ""<Touchscreen>/primaryTouch/startPosition"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""StartPosition"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": []
@@ -214,6 +282,11 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         m_RuneCreatingUI_NewRune = m_RuneCreatingUI.FindAction("NewRune", throwIfNotFound: true);
         m_RuneCreatingUI_AddVariation = m_RuneCreatingUI.FindAction("AddVariation", throwIfNotFound: true);
         m_RuneCreatingUI_SelectRecognized = m_RuneCreatingUI.FindAction("SelectRecognized", throwIfNotFound: true);
+        // Aim
+        m_Aim = asset.FindActionMap("Aim", throwIfNotFound: true);
+        m_Aim_Point = m_Aim.FindAction("Point", throwIfNotFound: true);
+        m_Aim_StartPosition = m_Aim.FindAction("StartPosition", throwIfNotFound: true);
+        m_Aim_Direction = m_Aim.FindAction("Direction", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -411,6 +484,68 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         }
     }
     public RuneCreatingUIActions @RuneCreatingUI => new RuneCreatingUIActions(this);
+
+    // Aim
+    private readonly InputActionMap m_Aim;
+    private List<IAimActions> m_AimActionsCallbackInterfaces = new List<IAimActions>();
+    private readonly InputAction m_Aim_Point;
+    private readonly InputAction m_Aim_StartPosition;
+    private readonly InputAction m_Aim_Direction;
+    public struct AimActions
+    {
+        private @Controls m_Wrapper;
+        public AimActions(@Controls wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Point => m_Wrapper.m_Aim_Point;
+        public InputAction @StartPosition => m_Wrapper.m_Aim_StartPosition;
+        public InputAction @Direction => m_Wrapper.m_Aim_Direction;
+        public InputActionMap Get() { return m_Wrapper.m_Aim; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(AimActions set) { return set.Get(); }
+        public void AddCallbacks(IAimActions instance)
+        {
+            if (instance == null || m_Wrapper.m_AimActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_AimActionsCallbackInterfaces.Add(instance);
+            @Point.started += instance.OnPoint;
+            @Point.performed += instance.OnPoint;
+            @Point.canceled += instance.OnPoint;
+            @StartPosition.started += instance.OnStartPosition;
+            @StartPosition.performed += instance.OnStartPosition;
+            @StartPosition.canceled += instance.OnStartPosition;
+            @Direction.started += instance.OnDirection;
+            @Direction.performed += instance.OnDirection;
+            @Direction.canceled += instance.OnDirection;
+        }
+
+        private void UnregisterCallbacks(IAimActions instance)
+        {
+            @Point.started -= instance.OnPoint;
+            @Point.performed -= instance.OnPoint;
+            @Point.canceled -= instance.OnPoint;
+            @StartPosition.started -= instance.OnStartPosition;
+            @StartPosition.performed -= instance.OnStartPosition;
+            @StartPosition.canceled -= instance.OnStartPosition;
+            @Direction.started -= instance.OnDirection;
+            @Direction.performed -= instance.OnDirection;
+            @Direction.canceled -= instance.OnDirection;
+        }
+
+        public void RemoveCallbacks(IAimActions instance)
+        {
+            if (m_Wrapper.m_AimActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        public void SetCallbacks(IAimActions instance)
+        {
+            foreach (var item in m_Wrapper.m_AimActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_AimActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    public AimActions @Aim => new AimActions(this);
     public interface ITouchActions
     {
         void OnDrawPosition(InputAction.CallbackContext context);
@@ -424,5 +559,11 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         void OnNewRune(InputAction.CallbackContext context);
         void OnAddVariation(InputAction.CallbackContext context);
         void OnSelectRecognized(InputAction.CallbackContext context);
+    }
+    public interface IAimActions
+    {
+        void OnPoint(InputAction.CallbackContext context);
+        void OnStartPosition(InputAction.CallbackContext context);
+        void OnDirection(InputAction.CallbackContext context);
     }
 }

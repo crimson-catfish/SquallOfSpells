@@ -12,6 +12,7 @@ public class InputManager : Singleton<InputManager>
     public event Action<Vector2> OnNextDrawPosition;
     public event Action<Vector2> OnDrawStart;
     public event Action OnDrawEnd;
+    public event Action OnCast;
 
     public event Action OnDeleteRune;
     public event Action OnNewRune;
@@ -93,6 +94,9 @@ public class InputManager : Singleton<InputManager>
 
         actions.DrawContact.canceled += _ =>
             OnDrawEnd?.Invoke();
+
+        actions.Cast.performed += _ =>
+            OnCast?.Invoke();
     }
 
     private void SetRuneCreatingUIActions()

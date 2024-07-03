@@ -2,11 +2,16 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    [SerializeField] private RuneRecognizer recognizer;
+    [SerializeField] private SpellContainer spellContainer;
+
+
     [SerializeField] private float moveSpeed = 2f;
 
 
     private InputManager inputManager;
     private Vector3 moveDirection;
+    private Rune lastRecognized;
 
     private void OnEnable()
     {
@@ -28,6 +33,32 @@ public class Player : MonoBehaviour
     private void HandleNewMoveDirection(Vector2 direction)
     {
         moveDirection = direction * moveSpeed;
-        print(moveDirection);
+    }
+
+    private void HandleRuneRecognition(Rune rune)
+    {
+        if (rune == null)
+            return;
+
+        // Spells spell = spellContainer.spells[rune];
+        //
+        // switch (spell)
+        // {
+        //     case Spells.Fireball:
+        //         
+        //         break;
+        //     case Spells.Shield:
+        //         break;
+        //     default:
+        //         throw new ArgumentOutOfRangeException();
+        // }
+    }
+
+    private void CastFireball()
+    {
+    }
+
+    private void CastShield()
+    {
     }
 }
