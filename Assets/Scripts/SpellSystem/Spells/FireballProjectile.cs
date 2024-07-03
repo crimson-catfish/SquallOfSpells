@@ -13,6 +13,6 @@ public class FireballProjectile : MonoBehaviour
 
     private void Move()
     {
-        GetComponent<Rigidbody2D>().velocity = transform.forward * speed;
+        GetComponent<Rigidbody2D>().velocity = transform.right * speed;
     }
 }
