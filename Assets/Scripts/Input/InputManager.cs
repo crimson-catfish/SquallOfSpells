@@ -19,24 +19,26 @@ public class InputManager : Singleton<InputManager>
     public event Action OnSelectRecognized;
 
     private EventSystem eventSystem;
-    private Controls controls;
     private readonly float screenWidth = Screen.width;
     private readonly List<Canvas> enabledCanvases = new();
     private Canvas[] allCanvases;
+    private InputActionMap currentMap;
 
+    public Controls Controls { get; private set; }
 
     private void Awake()
     {
-        controls = new Controls();
+        Controls = new Controls();
     }
 
     private void OnEnable()
     {
 #if UNITY_EDITOR
-        controls.RuneCreatingUI.Enable();
+        Controls.RuneCreatingUI.Enable();
 #endif
-        controls.Move.Enable();
-        controls.Draw.Enable();
+        Controls.Move.Enable();
+        Controls.Draw.Enable();
+        currentMap = Controls.Draw;
     }
 
     void Start()
@@ -59,17 +61,18 @@ public class InputManager : Singleton<InputManager>
     private void OnDisable()
     {
 #if UNITY_EDITOR
-        controls.RuneCreatingUI.Disable();
+        Controls.RuneCreatingUI.Disable();
 #endif
-        controls.Move.Enable();
-        controls.Draw.Disable();
+        Controls.Move.Enable();
+        Controls.Draw.Disable();
     }
 
-        // public void SetControlsMap(InputActionMap map)
-        // {
-        //     controls.Touch.Disable();
-        //     map.Enable();
-        // }
+    public void SwitchToActionMap(InputActionMap map)
+    {
+        currentMap.Disable();
+        map.Enable();
+        currentMap = map;
+    }
 
     private bool IsOverAnyUI(Vector2 point)
     {
@@ -95,7 +98,7 @@ public class InputManager : Singleton<InputManager>
 
     private void SetMoveActions()
     {
-        Controls.MoveActions actions = controls.Move;
+        Controls.MoveActions actions = Controls.Move;
 
         actions.Direction.performed += context =>
             OnMove?.Invoke(context.ReadValue<Vector2>());
@@ -106,7 +109,7 @@ public class InputManager : Singleton<InputManager>
 
     private void SetDrawActions()
     {
-        Controls.DrawActions actions = controls.Draw;
+        Controls.DrawActions actions = Controls.Draw;
 
         actions.Contact.started += HandleDrawContactStart;
 
@@ -119,7 +122,7 @@ public class InputManager : Singleton<InputManager>
 
     private void SetRuneCreatingUIActions()
     {
-        Controls.RuneCreatingUIActions actions = controls.RuneCreatingUI;
+        Controls.RuneCreatingUIActions actions = Controls.RuneCreatingUI;
 
         actions.DeleteRune.performed += _ => OnDeleteRune?.Invoke();
         actions.NewRune.performed += _ => OnNewRune?.Invoke();
@@ -129,7 +132,7 @@ public class InputManager : Singleton<InputManager>
 
     private void HandleDrawContactStart(InputAction.CallbackContext _)
     {
-        Vector2 startPositionPixels = controls.Draw.Position.ReadValue<Vector2>();
+        Vector2 startPositionPixels = Controls.Draw.Position.ReadValue<Vector2>();
         if (IsOverAnyUI(startPositionPixels) == false)
             OnDrawStart?.Invoke(startPositionPixels / screenWidth);
     }
