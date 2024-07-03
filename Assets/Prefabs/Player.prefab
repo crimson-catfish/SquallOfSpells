@@ -44,6 +44,50 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 978128a17f5146ffa3dea841958001a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &1249050672756384944
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4682836145491360453}
+  - component: {fileID: 6016403546346654529}
+  m_Layer: 0
+  m_Name: Shield
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4682836145491360453
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1249050672756384944}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7609157800152524842}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6016403546346654529
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1249050672756384944}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b920c495af434d1683efad695e5a22fa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4230735849268552375
 GameObject:
   m_ObjectHideFlags: 0
@@ -175,6 +219,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1410970518694068453}
+  - {fileID: 4682836145491360453}
   m_Father: {fileID: 2719285077934940273}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -190,7 +235,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dde3acfe421e433985a61976d36d4c21, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  recognizer: {fileID: 0}
   spells:
     _serializedList:
     - Key: {fileID: 11400000, guid: ebc68e16701b8d53b9182a8e297aa170, type: 2}
       Value: {fileID: 302212288128168322}
+    - Key: {fileID: 11400000, guid: 167e473a7023f74d4a0965e0d39bac11, type: 2}
+      Value: {fileID: 1249050672756384944}
