@@ -2,94 +2,6 @@
     "name": "Controls",
     "maps": [
         {
-            "name": "Touch",
-            "id": "8180be9d-9e8f-4520-9b34-6fe273809ff1",
-            "actions": [
-                {
-                    "name": "DrawPosition",
-                    "type": "Value",
-                    "id": "03add1ce-e451-4256-9d1c-458d0e496335",
-                    "expectedControlType": "Vector2",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": true
-                },
-                {
-                    "name": "DrawContact",
-                    "type": "Button",
-                    "id": "7452fa12-faa5-466c-a921-78453d0a5976",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": true
-                },
-                {
-                    "name": "Cast",
-                    "type": "Button",
-                    "id": "f90f29fc-1878-4d40-ab20-2054ad876cb7",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "Move",
-                    "type": "Value",
-                    "id": "e486d752-65a6-442d-8bbe-a96cd8fba261",
-                    "expectedControlType": "Vector2",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": true
-                }
-            ],
-            "bindings": [
-                {
-                    "name": "",
-                    "id": "94787778-87a4-4178-9976-1ab7126ef9d9",
-                    "path": "<Touchscreen>/primaryTouch/position",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "DrawPosition",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "528ebb1c-0209-488a-8723-1e34f407391f",
-                    "path": "<Touchscreen>/primaryTouch/press",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "DrawContact",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "5791efc3-0db6-406d-9d69-43a789ac5f31",
-                    "path": "<Touchscreen>/primaryTouch/tap",
-                    "interactions": "MultiTap",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Cast",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "46d78789-252b-4e84-a9ff-6ac3f85cd28e",
-                    "path": "<Joystick>/stick",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Move",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                }
-            ]
-        },
-        {
             "name": "RuneCreatingUI",
             "id": "70420c8d-d3f9-448f-8958-45cc3dab5a28",
             "actions": [
@@ -172,6 +84,82 @@
                     "processors": "",
                     "groups": "",
                     "action": "SelectRecognized",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        },
+        {
+            "name": "Move",
+            "id": "b247404a-9fcf-4bf3-a0c2-2ea73f69ce4d",
+            "actions": [
+                {
+                    "name": "Direction",
+                    "type": "Value",
+                    "id": "61dcbc09-655d-46da-9e83-ef90cfa56d5b",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "4271fd62-f102-4561-af8e-78397c95c3ce",
+                    "path": "<Joystick>/stick",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Direction",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        },
+        {
+            "name": "Draw",
+            "id": "8180be9d-9e8f-4520-9b34-6fe273809ff1",
+            "actions": [
+                {
+                    "name": "Position",
+                    "type": "Value",
+                    "id": "03add1ce-e451-4256-9d1c-458d0e496335",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "Contact",
+                    "type": "Button",
+                    "id": "7452fa12-faa5-466c-a921-78453d0a5976",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "94787778-87a4-4178-9976-1ab7126ef9d9",
+                    "path": "<Touchscreen>/primaryTouch/position",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Position",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "528ebb1c-0209-488a-8723-1e34f407391f",
+                    "path": "<Touchscreen>/primaryTouch/press",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Contact",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

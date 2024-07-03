@@ -24,94 +24,6 @@ public partial class @Controls: IInputActionCollection2, IDisposable
     ""name"": ""Controls"",
     ""maps"": [
         {
-            ""name"": ""Touch"",
-            ""id"": ""8180be9d-9e8f-4520-9b34-6fe273809ff1"",
-            ""actions"": [
-                {
-                    ""name"": ""DrawPosition"",
-                    ""type"": ""Value"",
-                    ""id"": ""03add1ce-e451-4256-9d1c-458d0e496335"",
-                    ""expectedControlType"": ""Vector2"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": true
-                },
-                {
-                    ""name"": ""DrawContact"",
-                    ""type"": ""Button"",
-                    ""id"": ""7452fa12-faa5-466c-a921-78453d0a5976"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": true
-                },
-                {
-                    ""name"": ""Cast"",
-                    ""type"": ""Button"",
-                    ""id"": ""f90f29fc-1878-4d40-ab20-2054ad876cb7"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""Move"",
-                    ""type"": ""Value"",
-                    ""id"": ""e486d752-65a6-442d-8bbe-a96cd8fba261"",
-                    ""expectedControlType"": ""Vector2"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": true
-                }
-            ],
-            ""bindings"": [
-                {
-                    ""name"": """",
-                    ""id"": ""94787778-87a4-4178-9976-1ab7126ef9d9"",
-                    ""path"": ""<Touchscreen>/primaryTouch/position"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""DrawPosition"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""528ebb1c-0209-488a-8723-1e34f407391f"",
-                    ""path"": ""<Touchscreen>/primaryTouch/press"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""DrawContact"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""5791efc3-0db6-406d-9d69-43a789ac5f31"",
-                    ""path"": ""<Touchscreen>/primaryTouch/tap"",
-                    ""interactions"": ""MultiTap"",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Cast"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""46d78789-252b-4e84-a9ff-6ac3f85cd28e"",
-                    ""path"": ""<Joystick>/stick"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Move"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                }
-            ]
-        },
-        {
             ""name"": ""RuneCreatingUI"",
             ""id"": ""70420c8d-d3f9-448f-8958-45cc3dab5a28"",
             ""actions"": [
@@ -200,6 +112,82 @@ public partial class @Controls: IInputActionCollection2, IDisposable
             ]
         },
         {
+            ""name"": ""Move"",
+            ""id"": ""b247404a-9fcf-4bf3-a0c2-2ea73f69ce4d"",
+            ""actions"": [
+                {
+                    ""name"": ""Direction"",
+                    ""type"": ""Value"",
+                    ""id"": ""61dcbc09-655d-46da-9e83-ef90cfa56d5b"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""4271fd62-f102-4561-af8e-78397c95c3ce"",
+                    ""path"": ""<Joystick>/stick"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Direction"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
+        },
+        {
+            ""name"": ""Draw"",
+            ""id"": ""8180be9d-9e8f-4520-9b34-6fe273809ff1"",
+            ""actions"": [
+                {
+                    ""name"": ""Position"",
+                    ""type"": ""Value"",
+                    ""id"": ""03add1ce-e451-4256-9d1c-458d0e496335"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Contact"",
+                    ""type"": ""Button"",
+                    ""id"": ""7452fa12-faa5-466c-a921-78453d0a5976"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""94787778-87a4-4178-9976-1ab7126ef9d9"",
+                    ""path"": ""<Touchscreen>/primaryTouch/position"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Position"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""528ebb1c-0209-488a-8723-1e34f407391f"",
+                    ""path"": ""<Touchscreen>/primaryTouch/press"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Contact"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
+        },
+        {
             ""name"": ""Aim"",
             ""id"": ""8e65c0ed-8c57-427d-abf3-117dc72e6565"",
             ""actions"": [
@@ -270,18 +258,19 @@ public partial class @Controls: IInputActionCollection2, IDisposable
     ],
     ""controlSchemes"": []
 }");
-        // Touch
-        m_Touch = asset.FindActionMap("Touch", throwIfNotFound: true);
-        m_Touch_DrawPosition = m_Touch.FindAction("DrawPosition", throwIfNotFound: true);
-        m_Touch_DrawContact = m_Touch.FindAction("DrawContact", throwIfNotFound: true);
-        m_Touch_Cast = m_Touch.FindAction("Cast", throwIfNotFound: true);
-        m_Touch_Move = m_Touch.FindAction("Move", throwIfNotFound: true);
         // RuneCreatingUI
         m_RuneCreatingUI = asset.FindActionMap("RuneCreatingUI", throwIfNotFound: true);
         m_RuneCreatingUI_DeleteRune = m_RuneCreatingUI.FindAction("DeleteRune", throwIfNotFound: true);
         m_RuneCreatingUI_NewRune = m_RuneCreatingUI.FindAction("NewRune", throwIfNotFound: true);
         m_RuneCreatingUI_AddVariation = m_RuneCreatingUI.FindAction("AddVariation", throwIfNotFound: true);
         m_RuneCreatingUI_SelectRecognized = m_RuneCreatingUI.FindAction("SelectRecognized", throwIfNotFound: true);
+        // Move
+        m_Move = asset.FindActionMap("Move", throwIfNotFound: true);
+        m_Move_Direction = m_Move.FindAction("Direction", throwIfNotFound: true);
+        // Draw
+        m_Draw = asset.FindActionMap("Draw", throwIfNotFound: true);
+        m_Draw_Position = m_Draw.FindAction("Position", throwIfNotFound: true);
+        m_Draw_Contact = m_Draw.FindAction("Contact", throwIfNotFound: true);
         // Aim
         m_Aim = asset.FindActionMap("Aim", throwIfNotFound: true);
         m_Aim_Point = m_Aim.FindAction("Point", throwIfNotFound: true);
@@ -344,76 +333,6 @@ public partial class @Controls: IInputActionCollection2, IDisposable
     {
         return asset.FindBinding(bindingMask, out action);
     }
-
-    // Touch
-    private readonly InputActionMap m_Touch;
-    private List<ITouchActions> m_TouchActionsCallbackInterfaces = new List<ITouchActions>();
-    private readonly InputAction m_Touch_DrawPosition;
-    private readonly InputAction m_Touch_DrawContact;
-    private readonly InputAction m_Touch_Cast;
-    private readonly InputAction m_Touch_Move;
-    public struct TouchActions
-    {
-        private @Controls m_Wrapper;
-        public TouchActions(@Controls wrapper) { m_Wrapper = wrapper; }
-        public InputAction @DrawPosition => m_Wrapper.m_Touch_DrawPosition;
-        public InputAction @DrawContact => m_Wrapper.m_Touch_DrawContact;
-        public InputAction @Cast => m_Wrapper.m_Touch_Cast;
-        public InputAction @Move => m_Wrapper.m_Touch_Move;
-        public InputActionMap Get() { return m_Wrapper.m_Touch; }
-        public void Enable() { Get().Enable(); }
-        public void Disable() { Get().Disable(); }
-        public bool enabled => Get().enabled;
-        public static implicit operator InputActionMap(TouchActions set) { return set.Get(); }
-        public void AddCallbacks(ITouchActions instance)
-        {
-            if (instance == null || m_Wrapper.m_TouchActionsCallbackInterfaces.Contains(instance)) return;
-            m_Wrapper.m_TouchActionsCallbackInterfaces.Add(instance);
-            @DrawPosition.started += instance.OnDrawPosition;
-            @DrawPosition.performed += instance.OnDrawPosition;
-            @DrawPosition.canceled += instance.OnDrawPosition;
-            @DrawContact.started += instance.OnDrawContact;
-            @DrawContact.performed += instance.OnDrawContact;
-            @DrawContact.canceled += instance.OnDrawContact;
-            @Cast.started += instance.OnCast;
-            @Cast.performed += instance.OnCast;
-            @Cast.canceled += instance.OnCast;
-            @Move.started += instance.OnMove;
-            @Move.performed += instance.OnMove;
-            @Move.canceled += instance.OnMove;
-        }
-
-        private void UnregisterCallbacks(ITouchActions instance)
-        {
-            @DrawPosition.started -= instance.OnDrawPosition;
-            @DrawPosition.performed -= instance.OnDrawPosition;
-            @DrawPosition.canceled -= instance.OnDrawPosition;
-            @DrawContact.started -= instance.OnDrawContact;
-            @DrawContact.performed -= instance.OnDrawContact;
-            @DrawContact.canceled -= instance.OnDrawContact;
-            @Cast.started -= instance.OnCast;
-            @Cast.performed -= instance.OnCast;
-            @Cast.canceled -= instance.OnCast;
-            @Move.started -= instance.OnMove;
-            @Move.performed -= instance.OnMove;
-            @Move.canceled -= instance.OnMove;
-        }
-
-        public void RemoveCallbacks(ITouchActions instance)
-        {
-            if (m_Wrapper.m_TouchActionsCallbackInterfaces.Remove(instance))
-                UnregisterCallbacks(instance);
-        }
-
-        public void SetCallbacks(ITouchActions instance)
-        {
-            foreach (var item in m_Wrapper.m_TouchActionsCallbackInterfaces)
-                UnregisterCallbacks(item);
-            m_Wrapper.m_TouchActionsCallbackInterfaces.Clear();
-            AddCallbacks(instance);
-        }
-    }
-    public TouchActions @Touch => new TouchActions(this);
 
     // RuneCreatingUI
     private readonly InputActionMap m_RuneCreatingUI;
@@ -485,6 +404,106 @@ public partial class @Controls: IInputActionCollection2, IDisposable
     }
     public RuneCreatingUIActions @RuneCreatingUI => new RuneCreatingUIActions(this);
 
+    // Move
+    private readonly InputActionMap m_Move;
+    private List<IMoveActions> m_MoveActionsCallbackInterfaces = new List<IMoveActions>();
+    private readonly InputAction m_Move_Direction;
+    public struct MoveActions
+    {
+        private @Controls m_Wrapper;
+        public MoveActions(@Controls wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Direction => m_Wrapper.m_Move_Direction;
+        public InputActionMap Get() { return m_Wrapper.m_Move; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(MoveActions set) { return set.Get(); }
+        public void AddCallbacks(IMoveActions instance)
+        {
+            if (instance == null || m_Wrapper.m_MoveActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_MoveActionsCallbackInterfaces.Add(instance);
+            @Direction.started += instance.OnDirection;
+            @Direction.performed += instance.OnDirection;
+            @Direction.canceled += instance.OnDirection;
+        }
+
+        private void UnregisterCallbacks(IMoveActions instance)
+        {
+            @Direction.started -= instance.OnDirection;
+            @Direction.performed -= instance.OnDirection;
+            @Direction.canceled -= instance.OnDirection;
+        }
+
+        public void RemoveCallbacks(IMoveActions instance)
+        {
+            if (m_Wrapper.m_MoveActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        public void SetCallbacks(IMoveActions instance)
+        {
+            foreach (var item in m_Wrapper.m_MoveActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_MoveActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    public MoveActions @Move => new MoveActions(this);
+
+    // Draw
+    private readonly InputActionMap m_Draw;
+    private List<IDrawActions> m_DrawActionsCallbackInterfaces = new List<IDrawActions>();
+    private readonly InputAction m_Draw_Position;
+    private readonly InputAction m_Draw_Contact;
+    public struct DrawActions
+    {
+        private @Controls m_Wrapper;
+        public DrawActions(@Controls wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Position => m_Wrapper.m_Draw_Position;
+        public InputAction @Contact => m_Wrapper.m_Draw_Contact;
+        public InputActionMap Get() { return m_Wrapper.m_Draw; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(DrawActions set) { return set.Get(); }
+        public void AddCallbacks(IDrawActions instance)
+        {
+            if (instance == null || m_Wrapper.m_DrawActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_DrawActionsCallbackInterfaces.Add(instance);
+            @Position.started += instance.OnPosition;
+            @Position.performed += instance.OnPosition;
+            @Position.canceled += instance.OnPosition;
+            @Contact.started += instance.OnContact;
+            @Contact.performed += instance.OnContact;
+            @Contact.canceled += instance.OnContact;
+        }
+
+        private void UnregisterCallbacks(IDrawActions instance)
+        {
+            @Position.started -= instance.OnPosition;
+            @Position.performed -= instance.OnPosition;
+            @Position.canceled -= instance.OnPosition;
+            @Contact.started -= instance.OnContact;
+            @Contact.performed -= instance.OnContact;
+            @Contact.canceled -= instance.OnContact;
+        }
+
+        public void RemoveCallbacks(IDrawActions instance)
+        {
+            if (m_Wrapper.m_DrawActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        public void SetCallbacks(IDrawActions instance)
+        {
+            foreach (var item in m_Wrapper.m_DrawActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_DrawActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    public DrawActions @Draw => new DrawActions(this);
+
     // Aim
     private readonly InputActionMap m_Aim;
     private List<IAimActions> m_AimActionsCallbackInterfaces = new List<IAimActions>();
@@ -546,19 +565,21 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         }
     }
     public AimActions @Aim => new AimActions(this);
-    public interface ITouchActions
-    {
-        void OnDrawPosition(InputAction.CallbackContext context);
-        void OnDrawContact(InputAction.CallbackContext context);
-        void OnCast(InputAction.CallbackContext context);
-        void OnMove(InputAction.CallbackContext context);
-    }
     public interface IRuneCreatingUIActions
     {
         void OnDeleteRune(InputAction.CallbackContext context);
         void OnNewRune(InputAction.CallbackContext context);
         void OnAddVariation(InputAction.CallbackContext context);
         void OnSelectRecognized(InputAction.CallbackContext context);
+    }
+    public interface IMoveActions
+    {
+        void OnDirection(InputAction.CallbackContext context);
+    }
+    public interface IDrawActions
+    {
+        void OnPosition(InputAction.CallbackContext context);
+        void OnContact(InputAction.CallbackContext context);
     }
     public interface IAimActions
     {

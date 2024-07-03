@@ -5,9 +5,12 @@ public class SpellContainer : MonoBehaviour
     [SerializeField] private RuneRecognizer recognizer;
     [SerializeField] private AYellowpaper.SerializedCollections.SerializedDictionary<Rune, GameObject> spells = new();
 
+    private InputManager inputManager;
+
     private void OnEnable()
     {
         recognizer.OnRuneRecognized += HandleRuneRecognized;
+        inputManager = InputManager.instance;
     }
 
     private void HandleRuneRecognized(Rune rune)
@@ -17,6 +20,9 @@ public class SpellContainer : MonoBehaviour
 
         ICastable spell = spells[rune].GetComponent<ICastable>();
 
-        spell.Cast();
+        // if (spell is IAimable)
+                        // inputManager.c
+
+            spell.Cast();
     }
 }
