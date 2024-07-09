@@ -18,13 +18,13 @@ public class Player : MonoBehaviour
         inputManager = InputManager.instance;
 
         inputManager.OnMove += HandleNewMoveDirection;
-        inputManager.OnAimDirection += HandleAimDirection;
+        inputManager.OnAimDirectionChange += HandleAimDirectionChange;
     }
 
     private void Update()
     {
         Move();
-            }
+    }
 
     private void Move()
     {
@@ -36,7 +36,7 @@ public class Player : MonoBehaviour
         moveDirection = direction * moveSpeed;
     }
 
-    private void HandleAimDirection(Vector2 direction)
+    private void HandleAimDirectionChange(Vector2 direction)
     {
         float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
         transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle));
