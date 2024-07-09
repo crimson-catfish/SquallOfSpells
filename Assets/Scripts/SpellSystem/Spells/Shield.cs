@@ -1,6 +1,4 @@
-using UnityEngine;
-
-public class Shield : MonoBehaviour, ISwingable
+public class Shield : Spell, ISwingable
 {
     public void Cast()
     {

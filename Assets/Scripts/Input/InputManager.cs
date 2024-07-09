@@ -17,20 +17,20 @@ public class InputManager : Singleton<InputManager>
     public event Action<Vector2> OnMove;
 
     // Draw
-    public event Action<Vector2> OnNextDrawPosition;
     public event Action<Vector2> OnDrawStart;
+    public event Action<Vector2> OnNextDrawPosition;
     public event Action OnDrawEnd;
 
     // Aim
-    public event Action OnAimCast;
-    public event Action<Vector2> OnAimDirection;
+    public event Action<Vector2> OnAimStart;
+    public event Action<Vector2> OnAimDirectionChange;
+    public event Action<Vector2> OnAimCast;
 
     private EventSystem eventSystem;
     private readonly float screenWidth = Screen.width;
     private readonly List<Canvas> enabledCanvases = new();
     private Canvas[] allCanvases;
     private InputActionMap currentMap;
-    private Vector2 aimStartPosition;
 
     public Controls Controls { get; private set; }
 
@@ -143,20 +143,26 @@ public class InputManager : Singleton<InputManager>
     {
         Controls.AimActions actions = Controls.Aim;
 
-        actions.Point.performed += context =>
-        {
-            OnAimDirection?.Invoke(context.ReadValue<Vector2>());
-            OnAimCast?.Invoke();
-        };
+        actions.Point.performed += HandleAimPointPerformed;
 
-        actions.StartPosition.started += context =>
-            aimStartPosition = context.ReadValue<Vector2>();
+        actions.Contact.started += HandleAimContactStart;
 
-        actions.Direction.performed += context =>
-            OnAimDirection?.Invoke(context.ReadValue<Vector2>() - aimStartPosition);
+        actions.Position.performed += context =>
+            OnAimDirectionChange?.Invoke(context.ReadValue<Vector2>());
 
-        actions.Contact.canceled += _ =>
-            OnAimCast?.Invoke();
+        actions.Contact.canceled += HandleAimContactCancelled;
+    }
+
+    private void HandleAimContactCancelled(InputAction.CallbackContext _)
+    {
+        OnAimCast?.Invoke(Controls.Aim.Position.ReadValue<Vector2>());
+        SwitchToActionMap(Controls.Draw);
+    }
+
+    private void HandleAimPointPerformed(InputAction.CallbackContext _)
+    {
+        OnAimCast?.Invoke(Controls.Aim.Position.ReadValue<Vector2>());
+        SwitchToActionMap(Controls.Draw);
     }
 
     private void HandleDrawContactStart(InputAction.CallbackContext _)
@@ -164,5 +170,12 @@ public class InputManager : Singleton<InputManager>
         Vector2 startPositionPixels = Controls.Draw.Position.ReadValue<Vector2>();
         if (IsOverAnyUI(startPositionPixels) == false)
             OnDrawStart?.Invoke(startPositionPixels / screenWidth);
+    }
+
+    private void HandleAimContactStart(InputAction.CallbackContext _)
+    {
+        Vector2 startPositionPixels = Controls.Aim.Position.ReadValue<Vector2>();
+        if (IsOverAnyUI(startPositionPixels) == false)
+            OnAimStart?.Invoke(startPositionPixels);
     }
 }

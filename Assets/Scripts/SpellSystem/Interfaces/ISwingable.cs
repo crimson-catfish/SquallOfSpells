@@ -1,3 +1,3 @@
-public interface ISwingable : ICastable
+public interface ISwingable
 {
 }

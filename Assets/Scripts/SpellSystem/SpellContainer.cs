@@ -22,15 +22,12 @@ public class SpellContainer : MonoBehaviour
         if (!spells.TryGetValue(rune, out spellObject))
             return;
 
-        var spell = spellObject.GetComponent<ICastable>();
-
-        if (spell is IAimable)
-
+        if (spellObject.TryGetComponent<IAimable>(out var aimableSpell))
         {
             inputManager.SwitchToActionMap(inputManager.Controls.Aim);
-            inputManager.OnAimCast += spell.Cast;
+            inputManager.OnAimCast += aimableSpell.Cast;
         }
-        else if (spell is ISwingable)
+        else if (spellObject.TryGetComponent<ISwingable>(out var swingableSpell))
         {
             inputManager.SwitchToActionMap(inputManager.Controls.Swing);
             // inputManager.On
