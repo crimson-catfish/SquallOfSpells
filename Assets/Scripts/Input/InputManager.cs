@@ -167,10 +167,6 @@ public class InputManager : Singleton<InputManager>
         if (IsOverAnyUI(startPositionPixels))
             return;
 
-        GameObject player = GameObject.FindWithTag("Player");
-        if (Camera.main == null || player == null)
-            return;
-
         aimStartPosition = startPositionPixels;
 
         Controls.Aim.Position.performed += HandleAimPosition;
@@ -178,10 +174,6 @@ public class InputManager : Singleton<InputManager>
 
     private void HandleAimPosition(InputAction.CallbackContext context)
     {
-        GameObject player = GameObject.FindWithTag("Player");
-        if (Camera.main == null || player == null)
-            return;
-
         Vector2 position = context.ReadValue<Vector2>();
 
         if ((position - aimStartPosition).sqrMagnitude > math.pow(aimStickDeadzone * screenWidth, 2))
@@ -212,26 +204,17 @@ public class InputManager : Singleton<InputManager>
 
     private void HandleAimDirectionChange(InputAction.CallbackContext context)
     {
-        GameObject player = GameObject.FindWithTag("Player");
-        if (Camera.main == null || player == null)
-            return;
-
-        Vector2 newDirection = context.ReadValue<Vector2>() -
-                               aimStartPosition;
+        Vector2 newDirection = context.ReadValue<Vector2>() - aimStartPosition;
 
         OnAimDirectionChange?.Invoke(newDirection);
     }
 
     private void HandleAimDirectionUnleash(InputAction.CallbackContext _)
     {
-        GameObject player = GameObject.FindWithTag("Player");
-        if (Camera.main == null || player == null)
-            return;
-
         OnAimCast?.Invoke(Controls.Aim.Position.ReadValue<Vector2>() - aimStartPosition);
 
         Controls.Aim.Position.performed -= HandleAimDirectionChange;
-            Controls.Aim.Contact.canceled -= HandleAimDirectionUnleash;
+        Controls.Aim.Contact.canceled -= HandleAimDirectionUnleash;
         Controls.Aim.Contact.canceled += HandleAimPress;
 
         SwitchToActionMap(Controls.Draw);
