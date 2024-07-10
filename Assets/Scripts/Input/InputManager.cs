@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
@@ -7,7 +8,7 @@ using UnityEngine.UI;
 
 public class InputManager : Singleton<InputManager>
 {
-    [SerializeField] private float aimStickDeadzone;
+    private float aimStickDeadzone = 0.4f;
 
 
     // RuneCreationGUI
@@ -187,11 +188,11 @@ public class InputManager : Singleton<InputManager>
 
         Vector2 position = context.ReadValue<Vector2>();
 
-        if ((position - aimStartPosition).sqrMagnitude > aimStickDeadzone * screenWidth)
+        if ((position - aimStartPosition).sqrMagnitude > math.pow(aimStickDeadzone * screenWidth, 2))
         {
             Controls.Aim.Position.performed -= HandleAimPosition;
             Controls.Aim.Position.performed += HandleAimDirectionChange;
-            Controls.Aim.Contact.canceled -= HandleAimPress;        
+            Controls.Aim.Contact.canceled -= HandleAimPress;
             Controls.Aim.Contact.canceled += HandleAimDirectionUnleash;
         }
     }
