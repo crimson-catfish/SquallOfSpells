@@ -163,8 +163,6 @@ public class InputManager : Singleton<InputManager>
 
     private void HandleAimContactStart(InputAction.CallbackContext _)
     {
-        print("start");
-
         Vector2 startPositionPixels = Controls.Aim.Position.ReadValue<Vector2>();
         if (IsOverAnyUI(startPositionPixels))
             return;
@@ -180,8 +178,6 @@ public class InputManager : Singleton<InputManager>
 
     private void HandleAimPosition(InputAction.CallbackContext context)
     {
-        print("position");
-
         GameObject player = GameObject.FindWithTag("Player");
         if (Camera.main == null || player == null)
             return;
@@ -201,8 +197,6 @@ public class InputManager : Singleton<InputManager>
 
     private void HandleAimPress(InputAction.CallbackContext context)
     {
-        print("press");
-
         GameObject player = GameObject.FindWithTag("Player");
         if (Camera.main == null || player == null)
             return;
@@ -218,8 +212,6 @@ public class InputManager : Singleton<InputManager>
 
     private void HandleAimDirectionChange(InputAction.CallbackContext context)
     {
-        print("direction");
-
         GameObject player = GameObject.FindWithTag("Player");
         if (Camera.main == null || player == null)
             return;
@@ -232,8 +224,6 @@ public class InputManager : Singleton<InputManager>
 
     private void HandleAimDirectionUnleash(InputAction.CallbackContext _)
     {
-        print("unleash");
-
         GameObject player = GameObject.FindWithTag("Player");
         if (Camera.main == null || player == null)
             return;
