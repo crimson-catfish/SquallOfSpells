@@ -241,7 +241,8 @@ public class InputManager : Singleton<InputManager>
         OnAimCast?.Invoke(Controls.Aim.Position.ReadValue<Vector2>() - aimStartPosition);
 
         Controls.Aim.Position.performed -= HandleAimDirectionChange;
-        Controls.Aim.Contact.canceled -= HandleAimDirectionUnleash;
+            Controls.Aim.Contact.canceled -= HandleAimDirectionUnleash;
+        Controls.Aim.Contact.canceled += HandleAimPress;
 
         SwitchToActionMap(Controls.Draw);
     }
