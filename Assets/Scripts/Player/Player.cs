@@ -34,6 +34,10 @@ public class Player : MonoBehaviour
 
     private void Move()
     {
+        if (moveDirection.sqrMagnitude == 0f)
+            return;
+        
+        LookTo(moveDirection);
         transform.position += moveDirection * Time.deltaTime;
     }
 
