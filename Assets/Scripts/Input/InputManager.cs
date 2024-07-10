@@ -146,10 +146,7 @@ public class InputManager : Singleton<InputManager>
 
     private void SetAimActions()
     {
-        Controls.AimActions actions = Controls.Aim;
-
-        actions.Contact.started += HandleAimContactStart;
-        actions.Contact.canceled += HandleAimPress;
+        Controls.Aim.Contact.started += HandleAimContactStart;
     }
 
     private void HandleDrawContactStart(InputAction.CallbackContext _)
@@ -170,6 +167,7 @@ public class InputManager : Singleton<InputManager>
         aimStartPosition = startPositionPixels;
 
         Controls.Aim.Position.performed += HandleAimPosition;
+        Controls.Aim.Contact.canceled += HandleAimPressed;
     }
 
     private void HandleAimPosition(InputAction.CallbackContext context)
@@ -182,12 +180,12 @@ public class InputManager : Singleton<InputManager>
             OnAimDirectionChange?.Invoke(position);
             Controls.Aim.Position.performed -= HandleAimPosition;
             Controls.Aim.Position.performed += HandleAimDirectionChange;
-            Controls.Aim.Contact.canceled -= HandleAimPress;
+            Controls.Aim.Contact.canceled -= HandleAimPressed;
             Controls.Aim.Contact.canceled += HandleAimDirectionUnleash;
         }
     }
 
-    private void HandleAimPress(InputAction.CallbackContext context)
+    private void HandleAimPressed(InputAction.CallbackContext context)
     {
         GameObject player = GameObject.FindWithTag("Player");
         if (Camera.main == null || player == null)
@@ -215,7 +213,6 @@ public class InputManager : Singleton<InputManager>
 
         Controls.Aim.Position.performed -= HandleAimDirectionChange;
         Controls.Aim.Contact.canceled -= HandleAimDirectionUnleash;
-        Controls.Aim.Contact.canceled += HandleAimPress;
 
         SwitchToActionMap(Controls.Draw);
     }
