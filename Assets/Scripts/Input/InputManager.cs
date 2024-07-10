@@ -194,7 +194,6 @@ public class InputManager : Singleton<InputManager>
         OnAimCast?.Invoke(Controls.Aim.Position.ReadValue<Vector2>() -
                           (Vector2)Camera.main.WorldToScreenPoint(player.transform.position));
 
-
         Controls.Aim.Position.performed -= HandleAimPosition;
 
         SwitchToActionMap(Controls.Draw);
