@@ -192,15 +192,6 @@ public partial class @Controls: IInputActionCollection2, IDisposable
             ""id"": ""8e65c0ed-8c57-427d-abf3-117dc72e6565"",
             ""actions"": [
                 {
-                    ""name"": ""Tap"",
-                    ""type"": ""Value"",
-                    ""id"": ""73022bb0-c78a-48bc-a9e1-1e0ca349bc1a"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": true
-                },
-                {
                     ""name"": ""Position"",
                     ""type"": ""Value"",
                     ""id"": ""3f734fce-d8f1-44c0-8e9b-6e250165294d"",
@@ -241,39 +232,6 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                     ""action"": ""Contact"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": ""TapPosition"",
-                    ""id"": ""7deace66-17dc-4aea-8287-277758f3786b"",
-                    ""path"": ""OneModifier"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Tap"",
-                    ""isComposite"": true,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": ""modifier"",
-                    ""id"": ""e6c430a6-d24f-4244-a25d-1ca204958056"",
-                    ""path"": ""<Touchscreen>/primaryTouch/tap"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Tap"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""binding"",
-                    ""id"": ""f84ddb90-e6c4-4587-becb-2049f37894ae"",
-                    ""path"": ""<Touchscreen>/position"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Tap"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
                 }
             ]
         },
@@ -323,7 +281,6 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         m_Draw_Contact = m_Draw.FindAction("Contact", throwIfNotFound: true);
         // Aim
         m_Aim = asset.FindActionMap("Aim", throwIfNotFound: true);
-        m_Aim_Tap = m_Aim.FindAction("Tap", throwIfNotFound: true);
         m_Aim_Position = m_Aim.FindAction("Position", throwIfNotFound: true);
         m_Aim_Contact = m_Aim.FindAction("Contact", throwIfNotFound: true);
         // Swing
@@ -560,14 +517,12 @@ public partial class @Controls: IInputActionCollection2, IDisposable
     // Aim
     private readonly InputActionMap m_Aim;
     private List<IAimActions> m_AimActionsCallbackInterfaces = new List<IAimActions>();
-    private readonly InputAction m_Aim_Tap;
     private readonly InputAction m_Aim_Position;
     private readonly InputAction m_Aim_Contact;
     public struct AimActions
     {
         private @Controls m_Wrapper;
         public AimActions(@Controls wrapper) { m_Wrapper = wrapper; }
-        public InputAction @Tap => m_Wrapper.m_Aim_Tap;
         public InputAction @Position => m_Wrapper.m_Aim_Position;
         public InputAction @Contact => m_Wrapper.m_Aim_Contact;
         public InputActionMap Get() { return m_Wrapper.m_Aim; }
@@ -579,9 +534,6 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         {
             if (instance == null || m_Wrapper.m_AimActionsCallbackInterfaces.Contains(instance)) return;
             m_Wrapper.m_AimActionsCallbackInterfaces.Add(instance);
-            @Tap.started += instance.OnTap;
-            @Tap.performed += instance.OnTap;
-            @Tap.canceled += instance.OnTap;
             @Position.started += instance.OnPosition;
             @Position.performed += instance.OnPosition;
             @Position.canceled += instance.OnPosition;
@@ -592,9 +544,6 @@ public partial class @Controls: IInputActionCollection2, IDisposable
 
         private void UnregisterCallbacks(IAimActions instance)
         {
-            @Tap.started -= instance.OnTap;
-            @Tap.performed -= instance.OnTap;
-            @Tap.canceled -= instance.OnTap;
             @Position.started -= instance.OnPosition;
             @Position.performed -= instance.OnPosition;
             @Position.canceled -= instance.OnPosition;
@@ -682,7 +631,6 @@ public partial class @Controls: IInputActionCollection2, IDisposable
     }
     public interface IAimActions
     {
-        void OnTap(InputAction.CallbackContext context);
         void OnPosition(InputAction.CallbackContext context);
         void OnContact(InputAction.CallbackContext context);
     }
