@@ -192,7 +192,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
             ""id"": ""8e65c0ed-8c57-427d-abf3-117dc72e6565"",
             ""actions"": [
                 {
-                    ""name"": ""Point"",
+                    ""name"": ""Tap"",
                     ""type"": ""Button"",
                     ""id"": ""73022bb0-c78a-48bc-a9e1-1e0ca349bc1a"",
                     ""expectedControlType"": ""Button"",
@@ -221,39 +221,6 @@ public partial class @Controls: IInputActionCollection2, IDisposable
             ],
             ""bindings"": [
                 {
-                    ""name"": ""One Modifier"",
-                    ""id"": ""02f93ff7-0d73-487a-91df-c0fb8cf5020c"",
-                    ""path"": ""OneModifier"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Point"",
-                    ""isComposite"": true,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": ""Modifier"",
-                    ""id"": ""30431ec6-6593-4e17-9b5f-b69e6fe32130"",
-                    ""path"": ""<Touchscreen>/primaryTouch/press"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Point"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""Binding"",
-                    ""id"": ""55470b40-8742-48a0-9bcd-933cb423b597"",
-                    ""path"": ""<Touchscreen>/position"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Point"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
                     ""name"": """",
                     ""id"": ""f1ff5918-d48e-4057-96fb-2dc191e6b422"",
                     ""path"": ""<Touchscreen>/position"",
@@ -272,6 +239,17 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Contact"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""07a15c1a-7b65-4977-903d-08a96b4f0d51"",
+                    ""path"": ""<Touchscreen>/primaryTouch/tap"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Tap"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -323,7 +301,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         m_Draw_Contact = m_Draw.FindAction("Contact", throwIfNotFound: true);
         // Aim
         m_Aim = asset.FindActionMap("Aim", throwIfNotFound: true);
-        m_Aim_Point = m_Aim.FindAction("Point", throwIfNotFound: true);
+        m_Aim_Tap = m_Aim.FindAction("Tap", throwIfNotFound: true);
         m_Aim_Position = m_Aim.FindAction("Position", throwIfNotFound: true);
         m_Aim_Contact = m_Aim.FindAction("Contact", throwIfNotFound: true);
         // Swing
@@ -560,14 +538,14 @@ public partial class @Controls: IInputActionCollection2, IDisposable
     // Aim
     private readonly InputActionMap m_Aim;
     private List<IAimActions> m_AimActionsCallbackInterfaces = new List<IAimActions>();
-    private readonly InputAction m_Aim_Point;
+    private readonly InputAction m_Aim_Tap;
     private readonly InputAction m_Aim_Position;
     private readonly InputAction m_Aim_Contact;
     public struct AimActions
     {
         private @Controls m_Wrapper;
         public AimActions(@Controls wrapper) { m_Wrapper = wrapper; }
-        public InputAction @Point => m_Wrapper.m_Aim_Point;
+        public InputAction @Tap => m_Wrapper.m_Aim_Tap;
         public InputAction @Position => m_Wrapper.m_Aim_Position;
         public InputAction @Contact => m_Wrapper.m_Aim_Contact;
         public InputActionMap Get() { return m_Wrapper.m_Aim; }
@@ -579,9 +557,9 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         {
             if (instance == null || m_Wrapper.m_AimActionsCallbackInterfaces.Contains(instance)) return;
             m_Wrapper.m_AimActionsCallbackInterfaces.Add(instance);
-            @Point.started += instance.OnPoint;
-            @Point.performed += instance.OnPoint;
-            @Point.canceled += instance.OnPoint;
+            @Tap.started += instance.OnTap;
+            @Tap.performed += instance.OnTap;
+            @Tap.canceled += instance.OnTap;
             @Position.started += instance.OnPosition;
             @Position.performed += instance.OnPosition;
             @Position.canceled += instance.OnPosition;
@@ -592,9 +570,9 @@ public partial class @Controls: IInputActionCollection2, IDisposable
 
         private void UnregisterCallbacks(IAimActions instance)
         {
-            @Point.started -= instance.OnPoint;
-            @Point.performed -= instance.OnPoint;
-            @Point.canceled -= instance.OnPoint;
+            @Tap.started -= instance.OnTap;
+            @Tap.performed -= instance.OnTap;
+            @Tap.canceled -= instance.OnTap;
             @Position.started -= instance.OnPosition;
             @Position.performed -= instance.OnPosition;
             @Position.canceled -= instance.OnPosition;
@@ -682,7 +660,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
     }
     public interface IAimActions
     {
-        void OnPoint(InputAction.CallbackContext context);
+        void OnTap(InputAction.CallbackContext context);
         void OnPosition(InputAction.CallbackContext context);
         void OnContact(InputAction.CallbackContext context);
     }

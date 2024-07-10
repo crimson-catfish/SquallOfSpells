@@ -144,7 +144,7 @@ public class InputManager : Singleton<InputManager>
     {
         Controls.AimActions actions = Controls.Aim;
 
-        actions.Point.performed += HandleAimPointPerformed;
+        actions.Tap.performed += HandleAimPointPerformed;
 
         // actions.Contact.started += HandleAimContactStart;
         // actions.Contact.canceled += HandleAimContactCancelled;
