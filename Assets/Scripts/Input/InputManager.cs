@@ -8,7 +8,7 @@ using UnityEngine.UI;
 
 public class InputManager : Singleton<InputManager>
 {
-    private float aimStickDeadzone = 0.4f;
+    private float aimStickDeadzone = 0.02f;
 
 
     // RuneCreationGUI
@@ -190,6 +190,8 @@ public class InputManager : Singleton<InputManager>
 
         if ((position - aimStartPosition).sqrMagnitude > math.pow(aimStickDeadzone * screenWidth, 2))
         {
+            OnAimStart?.Invoke(aimStartPosition);
+            OnAimDirectionChange?.Invoke(position);
             Controls.Aim.Position.performed -= HandleAimPosition;
             Controls.Aim.Position.performed += HandleAimDirectionChange;
             Controls.Aim.Contact.canceled -= HandleAimPress;
@@ -223,7 +225,7 @@ public class InputManager : Singleton<InputManager>
             return;
 
         Vector2 newDirection = context.ReadValue<Vector2>() -
-                               (Vector2)Camera.main.WorldToScreenPoint(player.transform.position);
+                               aimStartPosition;
 
         OnAimDirectionChange?.Invoke(newDirection);
     }
@@ -236,8 +238,7 @@ public class InputManager : Singleton<InputManager>
         if (Camera.main == null || player == null)
             return;
 
-        OnAimCast?.Invoke(Controls.Aim.Position.ReadValue<Vector2>() -
-                          (Vector2)Camera.main.WorldToScreenPoint(player.transform.position));
+        OnAimCast?.Invoke(Controls.Aim.Position.ReadValue<Vector2>() - aimStartPosition);
 
         Controls.Aim.Position.performed -= HandleAimDirectionChange;
         Controls.Aim.Contact.canceled -= HandleAimDirectionUnleash;
