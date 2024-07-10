@@ -31,6 +31,7 @@ public class InputManager : Singleton<InputManager>
     private readonly List<Canvas> enabledCanvases = new();
     private Canvas[] allCanvases;
     private InputActionMap currentMap;
+    private Vector2 aimStartPosition;
 
     public Controls Controls { get; private set; }
 
@@ -145,37 +146,58 @@ public class InputManager : Singleton<InputManager>
 
         actions.Point.performed += HandleAimPointPerformed;
 
-        actions.Contact.started += HandleAimContactStart;
-
-        actions.Position.performed += context =>
-            OnAimDirectionChange?.Invoke(context.ReadValue<Vector2>());
-
-        actions.Contact.canceled += HandleAimContactCancelled;
-    }
-
-    private void HandleAimContactCancelled(InputAction.CallbackContext _)
-    {
-        OnAimCast?.Invoke(Controls.Aim.Position.ReadValue<Vector2>());
-        SwitchToActionMap(Controls.Draw);
-    }
-
-    private void HandleAimPointPerformed(InputAction.CallbackContext _)
-    {
-        OnAimCast?.Invoke(Controls.Aim.Position.ReadValue<Vector2>());
-        SwitchToActionMap(Controls.Draw);
+        // actions.Contact.started += HandleAimContactStart;
+        // actions.Contact.canceled += HandleAimContactCancelled;
     }
 
     private void HandleDrawContactStart(InputAction.CallbackContext _)
     {
         Vector2 startPositionPixels = Controls.Draw.Position.ReadValue<Vector2>();
-        if (IsOverAnyUI(startPositionPixels) == false)
-            OnDrawStart?.Invoke(startPositionPixels / screenWidth);
+        if (IsOverAnyUI(startPositionPixels))
+            return;
+
+        OnDrawStart?.Invoke(startPositionPixels / screenWidth);
+    }
+
+    private void HandleAimPointPerformed(InputAction.CallbackContext _)
+    {
+        GameObject player = GameObject.FindWithTag("Player");
+        if (Camera.main == null || player == null)
+            return;
+
+        Vector2 direction = Controls.Aim.Position.ReadValue<Vector2>() -
+                            (Vector2)Camera.main.WorldToScreenPoint(player.transform.position);
+
+        OnAimCast?.Invoke(direction);
+
+        SwitchToActionMap(Controls.Draw);
     }
 
     private void HandleAimContactStart(InputAction.CallbackContext _)
     {
         Vector2 startPositionPixels = Controls.Aim.Position.ReadValue<Vector2>();
-        if (IsOverAnyUI(startPositionPixels) == false)
-            OnAimStart?.Invoke(startPositionPixels);
+        if (IsOverAnyUI(startPositionPixels))
+            return;
+
+        OnAimStart?.Invoke(startPositionPixels);
+        aimStartPosition = startPositionPixels;
+
+
+        print("start");
+
+        Controls.Aim.Position.performed += HandleAimPosition;
+    }
+
+    private void HandleAimContactCancelled(InputAction.CallbackContext _)
+    {
+        OnAimCast?.Invoke(Controls.Aim.Position.ReadValue<Vector2>());
+        Controls.Aim.Position.performed -= HandleAimPosition;
+        SwitchToActionMap(Controls.Draw);
+    }
+
+    private void HandleAimPosition(InputAction.CallbackContext context)
+    {
+        print("direction");
+        OnAimDirectionChange?.Invoke(context.ReadValue<Vector2>());
     }
 }

@@ -5,14 +5,8 @@ public class FireballProjectile : MonoBehaviour
     [SerializeField] private float speed;
     [SerializeField] private float explotionRadius;
 
-
     private void Update()
     {
-        Move();
-    }
-
-    private void Move()
-    {
-        GetComponent<Rigidbody2D>().velocity = transform.right * speed;
+        this.transform.Translate(new Vector3(1, 0, 0) * (speed * Time.deltaTime));
     }
 }
