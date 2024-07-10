@@ -171,7 +171,7 @@
             "actions": [
                 {
                     "name": "Tap",
-                    "type": "Button",
+                    "type": "Value",
                     "id": "73022bb0-c78a-48bc-a9e1-1e0ca349bc1a",
                     "expectedControlType": "Button",
                     "processors": "",
@@ -221,15 +221,37 @@
                     "isPartOfComposite": false
                 },
                 {
-                    "name": "",
-                    "id": "07a15c1a-7b65-4977-903d-08a96b4f0d51",
+                    "name": "TapPosition",
+                    "id": "7deace66-17dc-4aea-8287-277758f3786b",
+                    "path": "OneModifier",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Tap",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "modifier",
+                    "id": "e6c430a6-d24f-4244-a25d-1ca204958056",
                     "path": "<Touchscreen>/primaryTouch/tap",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
                     "action": "Tap",
                     "isComposite": false,
-                    "isPartOfComposite": false
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "binding",
+                    "id": "f84ddb90-e6c4-4587-becb-2049f37894ae",
+                    "path": "<Touchscreen>/position",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Tap",
+                    "isComposite": false,
+                    "isPartOfComposite": true
                 }
             ]
         },

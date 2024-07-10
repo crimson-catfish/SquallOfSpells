@@ -7,6 +7,9 @@ using UnityEngine.UI;
 
 public class InputManager : Singleton<InputManager>
 {
+    [SerializeField] private float aimStickDeadzone;
+
+
     // RuneCreationGUI
     public event Action OnDeleteRune;
     public event Action OnNewRune;
@@ -144,10 +147,8 @@ public class InputManager : Singleton<InputManager>
     {
         Controls.AimActions actions = Controls.Aim;
 
-        actions.Tap.performed += HandleAimPointPerformed;
-
-        // actions.Contact.started += HandleAimContactStart;
-        // actions.Contact.canceled += HandleAimContactCancelled;
+        actions.Contact.started += HandleAimContactStart;
+        actions.Contact.canceled += HandleAimPress;
     }
 
     private void HandleDrawContactStart(InputAction.CallbackContext _)
@@ -159,45 +160,87 @@ public class InputManager : Singleton<InputManager>
         OnDrawStart?.Invoke(startPositionPixels / screenWidth);
     }
 
-    private void HandleAimPointPerformed(InputAction.CallbackContext _)
-    {
-        GameObject player = GameObject.FindWithTag("Player");
-        if (Camera.main == null || player == null)
-            return;
-
-        Vector2 direction = Controls.Aim.Position.ReadValue<Vector2>() -
-                            (Vector2)Camera.main.WorldToScreenPoint(player.transform.position);
-
-        OnAimCast?.Invoke(direction);
-
-        SwitchToActionMap(Controls.Draw);
-    }
-
     private void HandleAimContactStart(InputAction.CallbackContext _)
     {
+        print("start");
+
         Vector2 startPositionPixels = Controls.Aim.Position.ReadValue<Vector2>();
         if (IsOverAnyUI(startPositionPixels))
             return;
 
-        OnAimStart?.Invoke(startPositionPixels);
+        GameObject player = GameObject.FindWithTag("Player");
+        if (Camera.main == null || player == null)
+            return;
+
         aimStartPosition = startPositionPixels;
-
-
-        print("start");
 
         Controls.Aim.Position.performed += HandleAimPosition;
     }
 
-    private void HandleAimContactCancelled(InputAction.CallbackContext _)
+    private void HandleAimPosition(InputAction.CallbackContext context)
     {
-        OnAimCast?.Invoke(Controls.Aim.Position.ReadValue<Vector2>());
+        print("position");
+
+        GameObject player = GameObject.FindWithTag("Player");
+        if (Camera.main == null || player == null)
+            return;
+
+        Vector2 position = context.ReadValue<Vector2>();
+
+        if ((position - aimStartPosition).sqrMagnitude > aimStickDeadzone * screenWidth)
+        {
+            Controls.Aim.Position.performed -= HandleAimPosition;
+            Controls.Aim.Position.performed += HandleAimDirectionChange;
+            Controls.Aim.Contact.canceled -= HandleAimPress;        
+            Controls.Aim.Contact.canceled += HandleAimDirectionUnleash;
+        }
+    }
+
+    private void HandleAimPress(InputAction.CallbackContext context)
+    {
+        print("press");
+
+        GameObject player = GameObject.FindWithTag("Player");
+        if (Camera.main == null || player == null)
+            return;
+
+        OnAimCast?.Invoke(Controls.Aim.Position.ReadValue<Vector2>() -
+                          (Vector2)Camera.main.WorldToScreenPoint(player.transform.position));
+
+
         Controls.Aim.Position.performed -= HandleAimPosition;
+
         SwitchToActionMap(Controls.Draw);
     }
 
-    private void HandleAimPosition(InputAction.CallbackContext context)
+    private void HandleAimDirectionChange(InputAction.CallbackContext context)
     {
         print("direction");
-        OnAimDirectionChange?.Invoke(context.ReadValue<Vector2>());
+
+        GameObject player = GameObject.FindWithTag("Player");
+        if (Camera.main == null || player == null)
+            return;
+
+        Vector2 newDirection = context.ReadValue<Vector2>() -
+                               (Vector2)Camera.main.WorldToScreenPoint(player.transform.position);
+
+        OnAimDirectionChange?.Invoke(newDirection);
+    }
+
+    private void HandleAimDirectionUnleash(InputAction.CallbackContext _)
+    {
+        print("unleash");
+
+        GameObject player = GameObject.FindWithTag("Player");
+        if (Camera.main == null || player == null)
+            return;
+
+        OnAimCast?.Invoke(Controls.Aim.Position.ReadValue<Vector2>() -
+                          (Vector2)Camera.main.WorldToScreenPoint(player.transform.position));
+
+        Controls.Aim.Position.performed -= HandleAimDirectionChange;
+        Controls.Aim.Contact.canceled -= HandleAimDirectionUnleash;
+
+        SwitchToActionMap(Controls.Draw);
     }
 }

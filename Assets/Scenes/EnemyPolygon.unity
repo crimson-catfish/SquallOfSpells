@@ -608,7 +608,7 @@ GameObject:
   - component: {fileID: 1640542755}
   - component: {fileID: 1640542757}
   m_Layer: 2
-  m_Name: Joystick
+  m_Name: MoveJoystick
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -690,19 +690,19 @@ MonoBehaviour:
   m_Behaviour: 0
   m_UseIsolatedInputActions: 0
   m_PointerDownAction:
-    m_Name: 
+    m_Name: Pointer Down
     m_Type: 0
     m_ExpectedControlType: 
-    m_Id: 
+    m_Id: 29d0363b-4022-4c7a-9a76-1c5c98428575
     m_Processors: 
     m_Interactions: 
     m_SingletonActionBindings: []
     m_Flags: 0
   m_PointerMoveAction:
-    m_Name: 
+    m_Name: Pointer Move
     m_Type: 0
     m_ExpectedControlType: 
-    m_Id: 
+    m_Id: f36634ea-e222-4d0e-a7db-3a80fc7f166c
     m_Processors: 
     m_Interactions: 
     m_SingletonActionBindings: []
