@@ -46,7 +46,7 @@ public class RuneDrawManager : MonoBehaviour
         inputManager.OnDrawEnd -= HandleDrawEnd;
     }
 
-    
+
     private void OnDrawGizmos()
     {
         if (!showDrawPoints) return;
@@ -72,7 +72,7 @@ public class RuneDrawManager : MonoBehaviour
     {
         lineRenderer.points.Add(nextDrawPosition * screenWidth);
         lineRenderer.SetAllDirty();
-        
+
         // check for the last point firstly because it's likely to be too close and then we don't need to do all heavy calculations
         if ((nextDrawPosition - lastPoint).magnitude < distanceBetweenPoints) return;
 
@@ -99,6 +99,8 @@ public class RuneDrawManager : MonoBehaviour
     {
         inputManager.OnNextDrawPosition -= HandleNextDrawPosition;
         PrepareRuneVariation();
+        lineRenderer.points.Clear();
+        lineRenderer.SetAllDirty();
         OnRuneDrawn?.Invoke(currentVariation);
     }
 
