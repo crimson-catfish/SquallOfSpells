@@ -19,6 +19,12 @@ public class Player : MonoBehaviour
 
         inputManager.OnMove += HandleNewMoveDirection;
         inputManager.OnAimDirectionChange += HandleAimDirectionChange;
+        inputManager.OnAimCast += HandleAimCast;
+    }
+
+    private void HandleAimCast(Vector2 direction)
+    {
+        LookTo(direction);
     }
 
     private void Update()
@@ -37,6 +43,11 @@ public class Player : MonoBehaviour
     }
 
     private void HandleAimDirectionChange(Vector2 direction)
+    {
+        LookTo(direction);
+    }
+
+    private void LookTo(Vector2 direction)
     {
         float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
         transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle));
