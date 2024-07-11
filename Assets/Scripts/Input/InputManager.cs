@@ -143,9 +143,6 @@ public class InputManager : Singleton<InputManager>
 
         actions.Position.performed += context =>
             OnNextDrawPosition?.Invoke(context.ReadValue<Vector2>() / screenWidth);
-
-        actions.Contact.canceled += _ =>
-            OnDrawEnd?.Invoke();
     }
 
     private void SetAimActions()
@@ -163,6 +160,17 @@ public class InputManager : Singleton<InputManager>
             Debug.Log("Draw contact start");
 
         OnDrawStart?.Invoke(startPositionPixels / screenWidth);
+
+        Controls.Draw.Contact.canceled += HandleDrawContactEnd;
+    }
+
+    private void HandleDrawContactEnd(InputAction.CallbackContext _)
+    {
+        if (traceHandlers)
+            Debug.Log("Draw contact end");
+
+        OnDrawEnd?.Invoke();
+        Controls.Draw.Contact.canceled -= HandleDrawContactEnd;
     }
 
     private void HandleAimContactStart(InputAction.CallbackContext _)
