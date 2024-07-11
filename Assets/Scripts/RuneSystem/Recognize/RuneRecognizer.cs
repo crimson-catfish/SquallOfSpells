@@ -55,13 +55,14 @@ public class RuneRecognizer : MonoBehaviour
             }
         }
 
-        OnRuneRecognized?.Invoke(closestRune != null ? closestRune : null);
+        OnRuneRecognized?.Invoke(closestRune);
 
         if (printRecognized && closestRune != null)
             Debug.Log("Recognized as " + closestRune.name);
     }
 
-    private IEnumerable<int> FindClosestRunesByParams(float runeParam, SortedList<float, int> sortedRunes, float acceptableDifferencePercent)
+    private IEnumerable<int> FindClosestRunesByParams(float runeParam, SortedList<float, int> sortedRunes,
+        float acceptableDifferencePercent)
     {
         if (sortedRunes.Count == 0)
             return Enumerable.Empty<int>();
