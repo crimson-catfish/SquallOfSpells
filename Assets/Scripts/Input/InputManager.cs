@@ -36,8 +36,32 @@ public class InputManager : Singleton<InputManager>
     private Canvas[] allCanvases;
     private InputActionMap currentMap;
     private Vector2 aimStartPosition;
+    private Transform _playerTransform;
+    private Camera _mainCamera;
 
     public Controls Controls { get; private set; }
+
+    private Camera MainCamera
+    {
+        get
+        {
+            if (_mainCamera == null)
+                _mainCamera = Camera.main;
+
+            return _mainCamera;
+        }
+    }
+
+    private Vector2 PlayerScreenPosition
+    {
+        get
+        {
+            if (_playerTransform == null)
+                _playerTransform = GameObject.FindWithTag("Player").transform;
+
+            return MainCamera.WorldToScreenPoint(_playerTransform.position);
+        }
+    }
 
     private void Awake()
     {
@@ -211,12 +235,7 @@ public class InputManager : Singleton<InputManager>
         if (settings.traceHandlers)
             Debug.Log("Aim pressed");
 
-        GameObject player = GameObject.FindWithTag("Player");
-        if (Camera.main == null || player == null)
-            return;
-
-        OnAimCast?.Invoke(Controls.Aim.Position.ReadValue<Vector2>() -
-                          (Vector2)Camera.main.WorldToScreenPoint(player.transform.position));
+        OnAimCast?.Invoke(Controls.Aim.Position.ReadValue<Vector2>() - PlayerScreenPosition);
 
         Controls.Aim.Position.performed -= HandleAimPosition;
 
@@ -228,17 +247,12 @@ public class InputManager : Singleton<InputManager>
         if (settings.traceHandlers)
             Debug.Log("Aim direction change");
 
-        GameObject player = GameObject.FindWithTag("Player");
-        if (Camera.main == null || player == null)
-            return;
-
         Vector2 newDirection = default;
 
         if (settings.origin == InputSettings.AimOrigin.Free)
             newDirection = context.ReadValue<Vector2>() - aimStartPosition;
         else if (settings.origin == InputSettings.AimOrigin.Player)
-            newDirection = context.ReadValue<Vector2>() -
-                           (Vector2)Camera.main.WorldToScreenPoint(player.transform.position);
+            newDirection = context.ReadValue<Vector2>() - PlayerScreenPosition;
 
         if (settings.direction == InputSettings.AimDirection.Reverse)
             newDirection *= -1f;
@@ -251,17 +265,12 @@ public class InputManager : Singleton<InputManager>
         if (settings.traceHandlers)
             Debug.Log("Aim unleash");
 
-        GameObject player = GameObject.FindWithTag("Player");
-        if (Camera.main == null || player == null)
-            return;
-
         Vector2 direction = default;
 
         if (settings.origin == InputSettings.AimOrigin.Free)
             direction = Controls.Aim.Position.ReadValue<Vector2>() - aimStartPosition;
         else if (settings.origin == InputSettings.AimOrigin.Player)
-            direction = Controls.Aim.Position.ReadValue<Vector2>() -
-                        (Vector2)Camera.main.WorldToScreenPoint(player.transform.position);
+            direction = Controls.Aim.Position.ReadValue<Vector2>() - PlayerScreenPosition;
 
         if (settings.direction == InputSettings.AimDirection.Reverse)
             direction *= -1f;
