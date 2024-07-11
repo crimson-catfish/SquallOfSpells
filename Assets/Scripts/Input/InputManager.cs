@@ -8,8 +8,7 @@ using UnityEngine.UI;
 
 public class InputManager : Singleton<InputManager>
 {
-    private float aimStickDeadzone = 0.02f;
-    private bool traceHandlers = false;
+    [SerializeField] private InputSettings settings;
 
 
     // RuneCreationGUI
@@ -156,7 +155,7 @@ public class InputManager : Singleton<InputManager>
         if (IsOverAnyUI(startPositionPixels))
             return;
 
-        if (traceHandlers)
+        if (settings.traceHandlers)
             Debug.Log("Draw contact start");
 
         OnDrawStart?.Invoke(startPositionPixels / screenWidth);
@@ -166,7 +165,7 @@ public class InputManager : Singleton<InputManager>
 
     private void HandleDrawContactEnd(InputAction.CallbackContext _)
     {
-        if (traceHandlers)
+        if (settings.traceHandlers)
             Debug.Log("Draw contact end");
 
         OnDrawEnd?.Invoke();
@@ -179,7 +178,7 @@ public class InputManager : Singleton<InputManager>
         if (IsOverAnyUI(startPositionPixels))
             return;
 
-        if (traceHandlers)
+        if (settings.traceHandlers)
             Debug.Log("Aim contact start");
 
         aimStartPosition = startPositionPixels;
@@ -190,12 +189,12 @@ public class InputManager : Singleton<InputManager>
 
     private void HandleAimPosition(InputAction.CallbackContext context)
     {
-        if (traceHandlers)
+        if (settings.traceHandlers)
             Debug.Log("Aim position");
 
         Vector2 position = context.ReadValue<Vector2>();
 
-        if ((position - aimStartPosition).sqrMagnitude > math.pow(aimStickDeadzone * screenWidth, 2))
+        if ((position - aimStartPosition).sqrMagnitude > math.pow(settings.stickDeadzone * screenWidth, 2))
         {
             OnAimStart?.Invoke(aimStartPosition);
             OnAimDirectionChange?.Invoke(position);
@@ -208,7 +207,7 @@ public class InputManager : Singleton<InputManager>
 
     private void HandleAimPressed(InputAction.CallbackContext context)
     {
-        if (traceHandlers)
+        if (settings.traceHandlers)
             Debug.Log("Aim pressed");
 
         GameObject player = GameObject.FindWithTag("Player");
@@ -225,7 +224,7 @@ public class InputManager : Singleton<InputManager>
 
     private void HandleAimDirectionChange(InputAction.CallbackContext context)
     {
-        if (traceHandlers)
+        if (settings.traceHandlers)
             Debug.Log("Aim direction change");
 
         Vector2 newDirection = context.ReadValue<Vector2>() - aimStartPosition;
@@ -235,7 +234,7 @@ public class InputManager : Singleton<InputManager>
 
     private void HandleAimDirectionUnleash(InputAction.CallbackContext _)
     {
-        if (traceHandlers)
+        if (settings.traceHandlers)
             Debug.Log("Aim unleash");
 
         OnAimCast?.Invoke(Controls.Aim.Position.ReadValue<Vector2>() - aimStartPosition);

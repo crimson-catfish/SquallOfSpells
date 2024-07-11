@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "RuneStorage", menuName = "ScriptableObjects/RuneStorage")]
+[CreateAssetMenu(fileName = "Rune storage", menuName = "Scriptable objects/Rune storage")]
 public class RuneStorage : ScriptableObject
 {
     public Dictionary<int, Rune> Runes { get; } = new();
