@@ -179,8 +179,7 @@ public class InputManager : Singleton<InputManager>
         if (IsOverAnyUI(startPositionPixels))
             return;
 
-        if (settings.traceHandlers)
-            Debug.Log("Draw contact start");
+        TraceHandler("Draw contact start");
 
         OnDrawStart?.Invoke(startPositionPixels / screenWidth);
 
@@ -189,8 +188,8 @@ public class InputManager : Singleton<InputManager>
 
     private void HandleDrawContactEnd(InputAction.CallbackContext _)
     {
-        if (settings.traceHandlers)
-            Debug.Log("Draw contact end");
+        TraceHandler("Draw contact end");
+
 
         OnDrawEnd?.Invoke();
         Controls.Draw.Contact.canceled -= HandleDrawContactEnd;
@@ -201,9 +200,8 @@ public class InputManager : Singleton<InputManager>
         Vector2 startPositionPixels = Controls.Aim.Position.ReadValue<Vector2>();
         if (IsOverAnyUI(startPositionPixels))
             return;
-
-        if (settings.traceHandlers)
-            Debug.Log("Aim contact start");
+        
+        TraceHandler("Aim contact start");
 
         if (settings.origin == InputSettings.AimOrigin.Free)
             aimStartPosition = startPositionPixels;
@@ -214,8 +212,8 @@ public class InputManager : Singleton<InputManager>
 
     private void HandleAimPosition(InputAction.CallbackContext context)
     {
-        if (settings.traceHandlers)
-            Debug.Log("Aim position");
+        TraceHandler("Aim position");
+
 
         Vector2 position = context.ReadValue<Vector2>();
 
@@ -232,8 +230,7 @@ public class InputManager : Singleton<InputManager>
 
     private void HandleAimPressed(InputAction.CallbackContext context)
     {
-        if (settings.traceHandlers)
-            Debug.Log("Aim pressed");
+        TraceHandler("Aim pressed");
 
         OnAimCast?.Invoke(Controls.Aim.Position.ReadValue<Vector2>() - PlayerScreenPosition);
 
@@ -244,8 +241,7 @@ public class InputManager : Singleton<InputManager>
 
     private void HandleAimDirectionChange(InputAction.CallbackContext context)
     {
-        if (settings.traceHandlers)
-            Debug.Log("Aim direction change");
+        TraceHandler("Aim direction change");
 
         Vector2 newDirection = default;
 
@@ -262,8 +258,7 @@ public class InputManager : Singleton<InputManager>
 
     private void HandleAimDirectionUnleash(InputAction.CallbackContext _)
     {
-        if (settings.traceHandlers)
-            Debug.Log("Aim unleash");
+        TraceHandler("Aim unleash");
 
         Vector2 direction = default;
 
@@ -281,5 +276,11 @@ public class InputManager : Singleton<InputManager>
         Controls.Aim.Contact.canceled -= HandleAimDirectionUnleash;
 
         SwitchToActionMap(Controls.Draw);
+    }
+
+    private void TraceHandler(string message)
+    {
+        if (settings.traceHandlers)
+            Debug.Log(message);
     }
 }
