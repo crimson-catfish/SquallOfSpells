@@ -875,6 +875,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   joystickRange: 0.44
+  settings: {fileID: 11400000, guid: 5a862e82871ef1e128f61f035ee4829a, type: 2}
   baseImage: {fileID: 1992465797}
   handle: {fileID: 1293887389}
   handleImage: {fileID: 1293887391}

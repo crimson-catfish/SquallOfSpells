@@ -7,6 +7,9 @@ public class AimJoystick : MonoBehaviour
 {
     [SerializeField, Range(0f, 0.5f)] private float joystickRange = 0.44f;
 
+    [SerializeField] private InputSettings settings;
+
+
     [SerializeField] private Image baseImage;
 
     [SerializeField] private GameObject handle;
@@ -15,6 +18,9 @@ public class AimJoystick : MonoBehaviour
 
     private void OnEnable()
     {
+        if (settings.origin == InputSettings.AimOrigin.Player)
+            return;
+
         InputManager.instance.OnAimStart += HandleAimStart;
         InputManager.instance.OnAimCast += HandleAimCast;
     }
