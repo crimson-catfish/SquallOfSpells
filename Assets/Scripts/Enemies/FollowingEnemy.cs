@@ -3,6 +3,8 @@ using UnityEngine;
 public abstract class FollowingEnemy : Enemy
 {
     [SerializeField] private float speed;
+    [SerializeField] private float attackRange;
+    
 
     // protected override void OnEnable()
     // {
@@ -23,7 +25,7 @@ public abstract class FollowingEnemy : Enemy
         float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
         transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle));
 
-        if (direction.magnitude > 1f)
+        if (direction.magnitude > attackRange)
             position += direction.normalized * (speed * Time.deltaTime);
 
         transform.position = position;
