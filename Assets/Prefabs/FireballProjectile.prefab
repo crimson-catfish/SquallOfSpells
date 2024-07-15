@@ -45,8 +45,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 581889a1f21b4dbeb8f62e3d5e5a71a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  damage: 2
   speed: 9.7
-  explotionRadius: 28.54
+  explotionRadius: 0
 --- !u!212 &5266992344228242525
 SpriteRenderer:
   m_ObjectHideFlags: 0

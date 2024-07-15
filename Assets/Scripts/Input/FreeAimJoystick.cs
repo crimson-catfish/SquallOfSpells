@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 [RequireComponent(typeof(Image))]
-public class AimJoystick : MonoBehaviour
+public class FreeAimJoystick : MonoBehaviour
 {
     [SerializeField, Range(0f, 0.5f)] private float joystickRange = 0.44f;
 
@@ -18,17 +18,21 @@ public class AimJoystick : MonoBehaviour
 
     private void OnEnable()
     {
-        if (settings.origin == InputSettings.AimOrigin.Player)
-            return;
-
         InputManager.instance.OnAimStart += HandleAimStart;
         InputManager.instance.OnAimCast += HandleAimCast;
     }
 
     private void HandleAimStart(Vector2 startPosition)
     {
-        this.transform.position = startPosition;
-        baseImage.enabled = true;
+        if (settings.origin == InputSettings.AimOrigin.Free)
+        {
+            this.transform.position = startPosition;
+            baseImage.enabled = true;
+        }
+        else if (settings.origin == InputSettings.AimOrigin.Player)
+        {
+            
+        }
 
         handle.transform.position = Vector3.zero;
         handleImage.enabled = true;

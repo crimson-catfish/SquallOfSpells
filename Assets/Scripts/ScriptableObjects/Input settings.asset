@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Input settings
   m_EditorClassIdentifier: 
   stickDeadzone: 0.02
-  direction: 0
+  direction: 1
   origin: 1
   traceHandlers: 0

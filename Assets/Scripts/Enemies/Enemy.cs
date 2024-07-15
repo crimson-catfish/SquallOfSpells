@@ -1,12 +1,12 @@
-using Interfaces;
 using UnityEngine;
 
+[RequireComponent(typeof(BoxCollider2D))]
 public abstract class Enemy : MonoBehaviour, IDamageable
 {
     [SerializeField] protected float startHealth;
 
     public float Health => health;
-    
+
     protected GameObject player;
 
     private float health;
@@ -26,5 +26,6 @@ public abstract class Enemy : MonoBehaviour, IDamageable
 
     private void Die()
     {
+        Destroy(this.gameObject);
     }
 }
