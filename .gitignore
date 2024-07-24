@@ -2,7 +2,8 @@
 .directory
 mono_crash.mem.*.blob
 /Assets/Scripts/Test.cs
-
+TestInputSettings.cs
+TestInputSettings.cs.meta
 /Launch.sh
 /nohup.out
 
@@ -10,6 +11,8 @@ mono_crash.mem.*.blob
 /Assets/Textures/Runes/Previews/
 .idea/
 .vscode/
+
+
 
 # This .gitignore file should be placed at the root of your Unity project directory
 #
