@@ -28,7 +28,7 @@ public class Rune : ScriptableObject, IComparable<Rune>
             return preview;
         }
         set => preview = value;
-    }
+    }               
 #endif
 
     private Texture2D preview;
