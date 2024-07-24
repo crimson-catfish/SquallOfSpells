@@ -247,6 +247,15 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Contact"",
+                    ""type"": ""Button"",
+                    ""id"": ""f7cd804e-a0c9-4a4a-95f6-d56967637271"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -258,6 +267,17 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Direction"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""8dc6f905-0318-4315-9c79-40d6d6cd861d"",
+                    ""path"": ""<Touchscreen>/primaryTouch/press"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Contact"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -286,6 +306,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         // Swing
         m_Swing = asset.FindActionMap("Swing", throwIfNotFound: true);
         m_Swing_Direction = m_Swing.FindAction("Direction", throwIfNotFound: true);
+        m_Swing_Contact = m_Swing.FindAction("Contact", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -572,11 +593,13 @@ public partial class @Controls: IInputActionCollection2, IDisposable
     private readonly InputActionMap m_Swing;
     private List<ISwingActions> m_SwingActionsCallbackInterfaces = new List<ISwingActions>();
     private readonly InputAction m_Swing_Direction;
+    private readonly InputAction m_Swing_Contact;
     public struct SwingActions
     {
         private @Controls m_Wrapper;
         public SwingActions(@Controls wrapper) { m_Wrapper = wrapper; }
         public InputAction @Direction => m_Wrapper.m_Swing_Direction;
+        public InputAction @Contact => m_Wrapper.m_Swing_Contact;
         public InputActionMap Get() { return m_Wrapper.m_Swing; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -589,6 +612,9 @@ public partial class @Controls: IInputActionCollection2, IDisposable
             @Direction.started += instance.OnDirection;
             @Direction.performed += instance.OnDirection;
             @Direction.canceled += instance.OnDirection;
+            @Contact.started += instance.OnContact;
+            @Contact.performed += instance.OnContact;
+            @Contact.canceled += instance.OnContact;
         }
 
         private void UnregisterCallbacks(ISwingActions instance)
@@ -596,6 +622,9 @@ public partial class @Controls: IInputActionCollection2, IDisposable
             @Direction.started -= instance.OnDirection;
             @Direction.performed -= instance.OnDirection;
             @Direction.canceled -= instance.OnDirection;
+            @Contact.started -= instance.OnContact;
+            @Contact.performed -= instance.OnContact;
+            @Contact.canceled -= instance.OnContact;
         }
 
         public void RemoveCallbacks(ISwingActions instance)
@@ -637,5 +666,6 @@ public partial class @Controls: IInputActionCollection2, IDisposable
     public interface ISwingActions
     {
         void OnDirection(InputAction.CallbackContext context);
+        void OnContact(InputAction.CallbackContext context);
     }
 }
