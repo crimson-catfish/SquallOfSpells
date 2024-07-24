@@ -1,8 +1,9 @@
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class FireballProjectile : Projectile
 {
-    [SerializeField] private float explotionRadius;
+    [FormerlySerializedAs("explotionRadius"), SerializeField] private float explosionRadius;
 
     private void Update()
     {
