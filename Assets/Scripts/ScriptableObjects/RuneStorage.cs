@@ -16,7 +16,9 @@ public class RuneStorage : ScriptableObject
 
     private void OnEnable()
     {
+#if UNITY_EDITOR
         EditorUtility.DisplayProgressBar("Resorting runes", "In process", 0);
+#endif
 
         Runes.Clear();
         RunesHeight.Clear();
@@ -33,7 +35,9 @@ public class RuneStorage : ScriptableObject
             RunesMassCenterY.Add(rune.Value.averageMassCenter.y, rune.Key);
         }
 
+#if UNITY_EDITOR
         EditorUtility.ClearProgressBar();
+#endif
     }
 
 
