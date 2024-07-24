@@ -22,7 +22,7 @@ public class RuneStorage : ScriptableObject
         RunesHeight.Clear();
         RunesMassCenterX.Clear();
         RunesMassCenterY.Clear();
-        
+
         foreach (Rune rune in Resources.LoadAll<Rune>("Runes"))
             Runes.Add(rune.GetHashCode(), rune);
 
