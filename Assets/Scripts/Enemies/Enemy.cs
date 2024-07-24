@@ -7,6 +7,7 @@ public abstract class Enemy : MonoBehaviour, IDamageable
 
     protected GameObject player;
 
+
     protected virtual void OnEnable()
     {
         Health = startHealth;
@@ -18,6 +19,8 @@ public abstract class Enemy : MonoBehaviour, IDamageable
         Destroy(this.gameObject);
     }
 
+    #region IDamageable Members
+
     public float Health { get; private set; }
 
     public void TakeDamage(float damage)
@@ -27,4 +30,6 @@ public abstract class Enemy : MonoBehaviour, IDamageable
         if (Health <= 0f)
             Die();
     }
+
+    #endregion
 }

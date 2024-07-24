@@ -14,7 +14,8 @@ namespace AYellowpaper.SerializedCollections.Editor.States
         private string _lastSearch = string.Empty;
         private Color  _previousColor;
 
-        public SearchListState(SerializedDictionaryInstanceDrawer serializedDictionaryDrawer) : base(serializedDictionaryDrawer)
+        public SearchListState(SerializedDictionaryInstanceDrawer serializedDictionaryDrawer) : base(
+            serializedDictionaryDrawer)
         {
         }
 
@@ -24,22 +25,8 @@ namespace AYellowpaper.SerializedCollections.Editor.States
 
         public override void DrawElement(Rect rect, SerializedProperty property, DisplayType displayType)
         {
-            SerializedDictionaryInstanceDrawer.DrawElement(rect, property, displayType, BeforeDrawingProperty, AfterDrawingProperty);
-        }
-
-        private void BeforeDrawingProperty(SerializedProperty obj)
-        {
-            _previousColor = GUI.backgroundColor;
-
-            if (_foundProperties.Contains(obj.propertyPath))
-            {
-                GUI.backgroundColor = Color.blue;
-            }
-        }
-
-        private void AfterDrawingProperty(SerializedProperty obj)
-        {
-            GUI.backgroundColor = _previousColor;
+            SerializedDictionaryInstanceDrawer.DrawElement(rect, property, displayType, BeforeDrawingProperty,
+                AfterDrawingProperty);
         }
 
         public override void OnEnter()
@@ -62,15 +49,6 @@ namespace AYellowpaper.SerializedCollections.Editor.States
             return this;
         }
 
-        private void UpdateSearch()
-        {
-            if (_lastSearch != this.Drawer.SearchText)
-            {
-                _lastSearch = this.Drawer.SearchText;
-                PerformSearch(this.Drawer.SearchText);
-            }
-        }
-
         public void PerformSearch(string searchString)
         {
             var query = new SearchQuery(Matchers.RegisteredMatchers);
@@ -78,7 +56,8 @@ namespace AYellowpaper.SerializedCollections.Editor.States
             _searchResults.Clear();
             _searchResults.AddRange(query.ApplyToArrayProperty(this.Drawer.ListProperty));
 
-            _foundProperties = _searchResults.SelectMany(x => x.MatchingResults, (x, y) => y.Property.propertyPath).ToHashSet();
+            _foundProperties = _searchResults.SelectMany(x => x.MatchingResults, (x, y) => y.Property.propertyPath)
+                .ToHashSet();
         }
 
         public override SerializedProperty GetPropertyAtIndex(int index)
@@ -103,6 +82,30 @@ namespace AYellowpaper.SerializedCollections.Editor.States
             var indexToAdd = _searchResults[index].Index;
             this.Drawer.ListProperty.InsertArrayElementAtIndex(indexToAdd);
             PerformSearch(_lastSearch);
+        }
+
+        private void BeforeDrawingProperty(SerializedProperty obj)
+        {
+            _previousColor = GUI.backgroundColor;
+
+            if (_foundProperties.Contains(obj.propertyPath))
+            {
+                GUI.backgroundColor = Color.blue;
+            }
+        }
+
+        private void AfterDrawingProperty(SerializedProperty obj)
+        {
+            GUI.backgroundColor = _previousColor;
+        }
+
+        private void UpdateSearch()
+        {
+            if (_lastSearch != this.Drawer.SearchText)
+            {
+                _lastSearch = this.Drawer.SearchText;
+                PerformSearch(this.Drawer.SearchText);
+            }
         }
     }
 }

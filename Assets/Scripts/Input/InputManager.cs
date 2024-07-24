@@ -12,6 +12,16 @@ public class InputManager : ScriptableObject
 {
     [SerializeField] private InputSettings settings;
 
+    private readonly List<Canvas>   enabledCanvases = new();
+    private readonly float          screenWidth     = Screen.width;
+    private          Camera         _mainCamera;
+    private          Transform      _playerTransform;
+    private          Vector2        aimStartPosition;
+    private          Canvas[]       allCanvases;
+    private          InputActionMap currentMap;
+
+    private EventSystem eventSystem;
+
     public Controls Controls { get; private set; }
 
     private Camera MainCamera {
@@ -32,6 +42,12 @@ public class InputManager : ScriptableObject
 
             return MainCamera.WorldToScreenPoint(_playerTransform.position);
         }
+    }
+
+    private void OnEnable()
+    {
+        SceneManager.sceneLoaded += HandleSceneLoad;
+        Controls = new Controls();
     }
 
     // RuneCreationGUI
@@ -58,21 +74,6 @@ public class InputManager : ScriptableObject
         currentMap.Disable();
         map.Enable();
         currentMap = map;
-    }
-
-    private          EventSystem    eventSystem;
-    private readonly float          screenWidth     = Screen.width;
-    private readonly List<Canvas>   enabledCanvases = new();
-    private          Canvas[]       allCanvases;
-    private          InputActionMap currentMap;
-    private          Vector2        aimStartPosition;
-    private          Transform      _playerTransform;
-    private          Camera         _mainCamera;
-
-    private void OnEnable()
-    {
-        SceneManager.sceneLoaded += HandleSceneLoad;
-        Controls = new Controls();
     }
 
     private void HandleSceneLoad(Scene scene, LoadSceneMode mode)

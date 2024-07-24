@@ -15,11 +15,34 @@ public class RuneMaker : MonoBehaviour
     [SerializeField] private int minimalPointAmount = 8;
 
     [Header("Rune preview related fields\nchanging those doesn't affects already created previews")]
-    [SerializeField] private int width = 128;
-    [SerializeField]              private int           border        = 8;
-    [SerializeField]              private int           pointRadius   = 4;
-    [SerializeField, Range(0, 1)] private float         pointDarkness = 0.3f;
-    [SerializeField]              private TextureFormat textureFormat;
+    [SerializeField] private TextureFormat textureFormat;
+    [SerializeField]              private int   width         = 128;
+    [SerializeField]              private int   border        = 8;
+    [SerializeField]              private int   pointRadius   = 4;
+    [SerializeField, Range(0, 1)] private float pointDarkness = 0.3f;
+
+    private void OnEnable()
+    {
+        inputManager.OnAddVariation += AddCurrentVariationToCurrentRune;
+        inputManager.OnNewRune += SaveCurrentVariationToNewRune;
+        inputManager.OnDeleteRune += DeleteCurrentRune;
+    }
+
+    private void OnDisable()
+    {
+        while (limbo.runesToDelete.Count > 0)
+        {
+            Rune rune = limbo.runesToDelete[0];
+            AssetDatabase.DeleteAsset(rune.previewPath);
+            AssetDatabase.DeleteAsset(AssetDatabase.GetAssetPath(rune));
+            limbo.runesToDelete.RemoveAt(0);
+        }
+
+        inputManager.OnAddVariation -= AddCurrentVariationToCurrentRune;
+        inputManager.OnNewRune -= SaveCurrentVariationToNewRune;
+        inputManager.OnDeleteRune -= DeleteCurrentRune;
+    }
+
 
     public void SaveCurrentVariationToNewRune()
     {
@@ -86,41 +109,8 @@ public class RuneMaker : MonoBehaviour
 
         Undo.RecordObject(limbo, "add rune to limbo");
         limbo.runesToDelete.Add(rune);
-
-        // EditorUtility.SetDirty(limbo);
-
-        // Undo.RecordObject(activeToggle.gameObject, "delete toggle");
-        // Undo.DestroyObjectImmediate(activeToggle.gameObject);
-
-        // Undo.RecordObject(rune.Preview, "delete preview");
-        // Undo.DestroyObjectImmediate(rune.Preview);
-        //
-        // Undo.RecordObject(rune, "delete rune");
-        // Undo.DestroyObjectImmediate(rune);
-
+        
         Undo.SetCurrentGroupName("delete rune");
-    }
-
-    private void OnEnable()
-    {
-        inputManager.OnAddVariation += AddCurrentVariationToCurrentRune;
-        inputManager.OnNewRune += SaveCurrentVariationToNewRune;
-        inputManager.OnDeleteRune += DeleteCurrentRune;
-    }
-
-    private void OnDisable()
-    {
-        while (limbo.runesToDelete.Count > 0)
-        {
-            Rune rune = limbo.runesToDelete[0];
-            AssetDatabase.DeleteAsset(rune.previewPath);
-            AssetDatabase.DeleteAsset(AssetDatabase.GetAssetPath(rune));
-            limbo.runesToDelete.RemoveAt(0);
-        }
-
-        inputManager.OnAddVariation -= AddCurrentVariationToCurrentRune;
-        inputManager.OnNewRune -= SaveCurrentVariationToNewRune;
-        inputManager.OnDeleteRune -= DeleteCurrentRune;
     }
 
     private bool DoesVariationHaveEnoughPoints(RuneDrawVariation variation)

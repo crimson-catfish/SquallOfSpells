@@ -9,13 +9,10 @@ public class RuneRecognizer : MonoBehaviour
     [SerializeField] private RuneDrawManager drawManager;
     [SerializeField] private bool            printRecognized;
 
-
-    [Header("Recognition settings")] [SerializeField]
-    private float acceptableHeightDifferencePercent = 30f;
-
+    [Header("Recognition settings")]
+    [SerializeField] private float acceptableHeightDifferencePercent = 30f;
     [SerializeField] private float acceptableMassCenterDifferencePercent = 20f;
     [SerializeField] private float acceptableError                       = 0.05f;
-    public event Action<Rune>      OnRuneRecognized;
 
     private void OnEnable()
     {
@@ -26,6 +23,8 @@ public class RuneRecognizer : MonoBehaviour
     {
         drawManager.OnRuneDrawn -= OnRuneDrawn;
     }
+
+    public event Action<Rune> OnRuneRecognized;
 
 
     private void OnRuneDrawn(RuneDrawVariation drawToCheck)
@@ -66,9 +65,7 @@ public class RuneRecognizer : MonoBehaviour
     }
 
     private IEnumerable<int> FindClosestRunesByParams(
-        float                  runeParam,
-        SortedList<float, int> sortedRunes,
-        float                  acceptableDifferencePercent)
+        float runeParam, SortedList<float, int> sortedRunes, float acceptableDifferencePercent)
     {
         if (sortedRunes.Count == 0)
             return Enumerable.Empty<int>();

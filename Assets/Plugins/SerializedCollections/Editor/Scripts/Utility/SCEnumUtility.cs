@@ -46,18 +46,6 @@ namespace AYellowpaper.SerializedCollections.Editor
             IsFlag = Type.IsDefined(typeof(FlagsAttribute));
         }
 
-        internal string[] GetNamesForValue(int value)
-        {
-            if (_namesByValue.TryGetValue(value, out var list))
-                return list;
-
-            string[] array = IsFlag ? GetFlagValues(value).ToArray() : new[] { GetEnumValue(value) };
-
-            _namesByValue.Add(value, array);
-
-            return array;
-        }
-
         private string GetEnumValue(int value)
         {
             for (int i = 0; i < Length; i++)
@@ -88,6 +76,18 @@ namespace AYellowpaper.SerializedCollections.Editor
 
             if (FlagValues[Length - 1] != -1 && flagValue == -1)
                 yield return "Everything";
+        }
+
+        internal string[] GetNamesForValue(int value)
+        {
+            if (_namesByValue.TryGetValue(value, out var list))
+                return list;
+
+            string[] array = IsFlag ? GetFlagValues(value).ToArray() : new[] { GetEnumValue(value) };
+
+            _namesByValue.Add(value, array);
+
+            return array;
         }
     }
 }

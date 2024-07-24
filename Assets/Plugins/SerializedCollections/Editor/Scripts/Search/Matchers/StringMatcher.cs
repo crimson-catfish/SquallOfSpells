@@ -7,7 +7,8 @@ namespace AYellowpaper.SerializedCollections.Editor.Search
     {
         public override bool IsMatch(SerializedProperty property)
         {
-            if (property.propertyType is SerializedPropertyType.String or SerializedPropertyType.Character && property.stringValue.Contains(this.SearchString, StringComparison.OrdinalIgnoreCase))
+            if (property.propertyType is SerializedPropertyType.String or SerializedPropertyType.Character &&
+                property.stringValue.Contains(this.SearchString, StringComparison.OrdinalIgnoreCase))
                 return true;
 
             return false;

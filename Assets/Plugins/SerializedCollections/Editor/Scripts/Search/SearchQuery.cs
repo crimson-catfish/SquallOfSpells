@@ -47,7 +47,8 @@ namespace AYellowpaper.SerializedCollections.Editor.Search
             }
         }
 
-        private bool TryGetMatchingProperties(SerializedProperty property, out List<PropertySearchResult> matchingProperties)
+        private bool TryGetMatchingProperties(
+            SerializedProperty property, out List<PropertySearchResult> matchingProperties)
         {
             matchingProperties = null;
 

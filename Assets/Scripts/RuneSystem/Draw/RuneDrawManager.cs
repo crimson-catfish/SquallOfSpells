@@ -5,26 +5,24 @@ using UnityEngine;
 [RequireComponent(typeof(UILineRenderer))]
 public class RuneDrawManager : MonoBehaviour
 {
-    [HideInInspector] public  RuneDrawVariation currentVariation;
-    [SerializeField]  private InputManager      inputManager;
+    [HideInInspector] public RuneDrawVariation currentVariation;
 
+    [SerializeField] private InputManager   inputManager;
     [SerializeField] private UILineRenderer lineRenderer;
-    [SerializeField] private float          drawLineThickness = 0.02f;
-    [SerializeField] private bool           showDrawPoints;
 
-    [Header("Doesn't affects already created runes\nplease recreate them to apply changes")] [SerializeField]
-    private float distanceBetweenPoints = 0.02f;
+    [SerializeField] private float drawLineThickness = 0.02f;
+    [SerializeField] private bool  showDrawPoints;
 
-    [SerializeField] private float         acceptableError = 0.001f;
-    [SerializeField] private float         heavyCheckStep  = 0.005f;
-    public event Action<RuneDrawVariation> OnRuneDrawn;
+    [Header("Doesn't affects already created runes\nplease recreate them to apply changes")]
+    [SerializeField] private float distanceBetweenPoints = 0.02f;
+    [SerializeField] private float acceptableError = 0.001f;
+    [SerializeField] private float heavyCheckStep  = 0.005f;
 
-    private          Vector2       momentSum = Vector2.zero;
-    private          Rect          drawFrame;
     private readonly List<Vector2> drawPoints = new();
-    private          Vector2       lastPoint;
-
     private readonly float screenWidth = Screen.width; // Probably reducing amount of Screen calls is worth it idk 
+    private          Rect drawFrame;
+    private          Vector2 lastPoint;
+    private          Vector2 momentSum = Vector2.zero;
 
     private void OnEnable()
     {
@@ -54,6 +52,8 @@ public class RuneDrawManager : MonoBehaviour
             Gizmos.DrawSphere(point * screenWidth, distanceBetweenPoints * screenWidth / 2);
         }
     }
+
+    public event Action<RuneDrawVariation> OnRuneDrawn;
 
 
     private void HandleDrawStart(Vector2 nextDrawPosition)

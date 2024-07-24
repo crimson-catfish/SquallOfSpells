@@ -11,12 +11,13 @@ public class RuneToggle : MonoBehaviour
 
     [SerializeField] private float scrollSpeed = 5f;
 
-
-    [Header("Transition color settings")] [SerializeField]
-    private Color normalColor = new(1f, 1f, 1f, 0.75f);
-
+    [Header("Transition color settings")]
+    [SerializeField] private Color normalColor = new(1f, 1f, 1f, 0.75f);
     [SerializeField] private Color selectedColor        = new(0.74f, 0.74f, 0.74f);
     [SerializeField] private Color outlineColorSelected = new(0f, 0f, 0f, 0.82f);
+
+    private Rune       rune;
+    private ScrollRect scrollRect;
 
     public Rune Rune {
         get => rune;
@@ -27,9 +28,6 @@ public class RuneToggle : MonoBehaviour
             ratioFitter.aspectRatio = rawImage.texture.height / (float)rawImage.texture.width;
         }
     }
-
-    private Rune       rune;
-    private ScrollRect scrollRect;
 
     private void OnEnable()
     {

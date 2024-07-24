@@ -36,19 +36,6 @@ namespace AYellowpaper.SerializedCollections.Editor
             EnsureSerializedObjectExists();
         }
 
-        private void EnsureSerializedObjectExists()
-        {
-            if (_serializedObject == null)
-            {
-                _searchAnimBool = new AnimBool();
-                _searchAnimBool.valueChanged.AddListener(Repaint);
-                _serializedObject = new SerializedObject(EditorUserSettings.Get());
-                _alwaysShowSearch = _serializedObject.FindProperty("_alwaysShowSearch");
-                _pageCountForSearch = _serializedObject.FindProperty("_pageCountForSearch");
-                _elementsPerPage = _serializedObject.FindProperty("_elementsPerPage");
-            }
-        }
-
         public override void OnGUI(string searchContext)
         {
             EnsureSerializedObjectExists();
@@ -75,6 +62,19 @@ namespace AYellowpaper.SerializedCollections.Editor
             if (changed)
             {
                 EditorUserSettings.Save();
+            }
+        }
+
+        private void EnsureSerializedObjectExists()
+        {
+            if (_serializedObject == null)
+            {
+                _searchAnimBool = new AnimBool();
+                _searchAnimBool.valueChanged.AddListener(Repaint);
+                _serializedObject = new SerializedObject(EditorUserSettings.Get());
+                _alwaysShowSearch = _serializedObject.FindProperty("_alwaysShowSearch");
+                _pageCountForSearch = _serializedObject.FindProperty("_pageCountForSearch");
+                _elementsPerPage = _serializedObject.FindProperty("_elementsPerPage");
             }
         }
 

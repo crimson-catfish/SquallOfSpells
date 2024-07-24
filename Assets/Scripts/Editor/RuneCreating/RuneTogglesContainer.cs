@@ -4,12 +4,41 @@ using UnityEngine.UI;
 
 public class RuneTogglesContainer : MonoBehaviour
 {
-    [SerializeField] private InputManager inputManager;
-
+    [SerializeField] private InputManager   inputManager;
     [SerializeField] private RuneRecognizer recognizer;
     [SerializeField] private GameObject     runeTogglePrefab;
     [SerializeField] private RuneStorage    storage;
     [SerializeField] private ToggleGroup    toggleGroup;
+
+    private readonly Dictionary<int, Toggle> toggles = new();
+    private          Rune                    currentRecognized;
+    private          Vector2                 scrollPosition;
+
+
+    private void Start()
+    {
+        toggleGroup = GetComponent<ToggleGroup>();
+
+        foreach (Rune rune in storage.Runes.Values)
+            AddToggle(rune);
+    }
+
+    private void OnEnable()
+    {
+        recognizer.OnRuneRecognized += HandleRuneRecognition;
+        inputManager.OnSelectRecognized += SelectRecognizedRune;
+    }
+
+    private void OnDisable()
+    {
+        recognizer.OnRuneRecognized -= HandleRuneRecognition;
+        inputManager.OnSelectRecognized -= SelectRecognizedRune;
+    }
+
+    private void HandleRuneRecognition(Rune rune)
+    {
+        currentRecognized = rune;
+    }
 
     public void AddNewToggle(Rune rune)
     {
@@ -31,31 +60,6 @@ public class RuneTogglesContainer : MonoBehaviour
 
         if (toggles.TryGetValue(currentRecognized.GetHashCode(), out Toggle toggle))
             toggle.isOn = true;
-    }
-
-    private          Vector2                 scrollPosition;
-    private readonly Dictionary<int, Toggle> toggles = new();
-    private          Rune                    currentRecognized;
-
-    private void OnEnable()
-    {
-        recognizer.OnRuneRecognized += rune => currentRecognized = rune;
-        inputManager.OnSelectRecognized += SelectRecognizedRune;
-    }
-
-
-    private void Start()
-    {
-        toggleGroup = GetComponent<ToggleGroup>();
-
-        foreach (Rune rune in storage.Runes.Values)
-            AddToggle(rune);
-    }
-
-    private void OnDisable()
-    {
-        recognizer.OnRuneRecognized -= rune => currentRecognized = rune;
-        inputManager.OnSelectRecognized -= SelectRecognizedRune;
     }
 
     private Toggle AddToggle(Rune rune)

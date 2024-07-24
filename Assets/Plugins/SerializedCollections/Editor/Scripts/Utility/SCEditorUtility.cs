@@ -79,12 +79,14 @@ namespace AYellowpaper.SerializedCollections.Editor
 
         public static bool HasDrawerForProperty(SerializedProperty property, Type type)
         {
-            Type attributeUtilityType = typeof(SerializedProperty).Assembly.GetType("UnityEditor.ScriptAttributeUtility");
+            Type attributeUtilityType =
+                typeof(SerializedProperty).Assembly.GetType("UnityEditor.ScriptAttributeUtility");
 
             if (attributeUtilityType == null)
                 return false;
 
-            var getDrawerMethod = attributeUtilityType.GetMethod("GetDrawerTypeForPropertyAndType", BindingFlags.Static | BindingFlags.NonPublic);
+            var getDrawerMethod = attributeUtilityType.GetMethod("GetDrawerTypeForPropertyAndType",
+                BindingFlags.Static | BindingFlags.NonPublic);
 
             if (getDrawerMethod == null)
                 return false;
@@ -92,7 +94,87 @@ namespace AYellowpaper.SerializedCollections.Editor
             return getDrawerMethod.Invoke(null, new object[] { property, type }) != null;
         }
 
-        internal static void AddGenericMenuItem(GenericMenu genericMenu, bool isOn, bool isEnabled, GUIContent content, GenericMenu.MenuFunction action)
+
+        public static object GetPropertyValue(SerializedProperty prop, object target)
+        {
+            var path = prop.propertyPath.Replace(".Array.data[", "[");
+            var elements = path.Split('.');
+
+            foreach (var element in elements.Take(elements.Length - 1))
+            {
+                if (element.Contains("["))
+                {
+                    var elementName = element.Substring(0, element.IndexOf("["));
+
+                    var index = Convert.ToInt32(element.Substring(element.IndexOf("[")).Replace("[", "")
+                        .Replace("]", ""));
+
+                    target = GetValue(target, elementName, index);
+                }
+                else
+                {
+                    target = GetValue(target, element);
+                }
+            }
+
+            return target;
+        }
+
+        public static object GetValue(object source, string name)
+        {
+            if (source == null)
+                return null;
+
+            var type = source.GetType();
+            var f = type.GetFieldRecursive(name, BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance);
+
+            if (f == null)
+            {
+                var p = type.GetPropertyRecursive(name,
+                    BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance | BindingFlags.IgnoreCase);
+
+                if (p == null)
+                    return null;
+
+                return p.GetValue(source, null);
+            }
+
+            return f.GetValue(source);
+        }
+
+        public static object GetValue(object source, string name, int index)
+        {
+            var enumerable = GetValue(source, name) as IEnumerable;
+            var enm = enumerable.GetEnumerator();
+
+            while (index-- >= 0)
+                enm.MoveNext();
+
+            return enm.Current;
+        }
+
+        private static FieldInfo GetFieldRecursive(this Type type, string name, BindingFlags bindingFlags)
+        {
+            var fieldInfo = type.GetField(name, bindingFlags);
+
+            if (fieldInfo == null && type.BaseType != null)
+                return type.BaseType.GetFieldRecursive(name, bindingFlags);
+
+            return fieldInfo;
+        }
+
+        private static PropertyInfo GetPropertyRecursive(this Type type, string name, BindingFlags bindingFlags)
+        {
+            var propertyInfo = type.GetProperty(name, bindingFlags);
+
+            if (propertyInfo == null && type.BaseType != null)
+                return type.BaseType.GetPropertyRecursive(name, bindingFlags);
+
+            return propertyInfo;
+        }
+
+        internal static void AddGenericMenuItem(
+            GenericMenu genericMenu, bool isOn, bool isEnabled, GUIContent content, GenericMenu.MenuFunction action)
         {
             if (isEnabled)
                 genericMenu.AddItem(content, isOn, action);
@@ -100,7 +182,9 @@ namespace AYellowpaper.SerializedCollections.Editor
                 genericMenu.AddDisabledItem(content);
         }
 
-        internal static void AddGenericMenuItem(GenericMenu genericMenu, bool isOn, bool isEnabled, GUIContent content, GenericMenu.MenuFunction2 action, object userData)
+        internal static void AddGenericMenuItem(
+            GenericMenu genericMenu, bool isOn, bool isEnabled, GUIContent content, GenericMenu.MenuFunction2 action,
+            object      userData)
         {
             if (isEnabled)
                 genericMenu.AddItem(content, isOn, action, userData);
@@ -113,7 +197,10 @@ namespace AYellowpaper.SerializedCollections.Editor
             try
             {
                 var classType = typeof(EditorGUI).Assembly.GetType("UnityEditor.ScriptAttributeUtility");
-                var methodInfo = classType.GetMethod("GetFieldInfoFromProperty", BindingFlags.Static | BindingFlags.NonPublic);
+
+                var methodInfo = classType.GetMethod("GetFieldInfoFromProperty",
+                    BindingFlags.Static | BindingFlags.NonPublic);
+
                 var parameters = new object[] { property, null };
                 methodInfo.Invoke(null, parameters);
                 type = (Type)parameters[1];
@@ -184,7 +271,11 @@ namespace AYellowpaper.SerializedCollections.Editor
                 case EventType.KeyDown:
                     bool flag = current.alt || current.shift || current.command || current.control;
 
-                    if ((current.keyCode == KeyCode.Space || current.keyCode == KeyCode.Return || current.keyCode == KeyCode.KeypadEnter) && !flag && GUIUtility.keyboardControl == id)
+                    if ((current.keyCode == KeyCode.Space ||
+                         current.keyCode == KeyCode.Return ||
+                         current.keyCode == KeyCode.KeypadEnter) &&
+                        !flag &&
+                        GUIUtility.keyboardControl == id)
                     {
                         current.Use();
                         GUI.changed = true;
@@ -205,81 +296,6 @@ namespace AYellowpaper.SerializedCollections.Editor
         internal static bool HitTest(Rect rect, Vector2 point)
         {
             return point.x >= rect.xMin && point.x < rect.xMax && point.y >= rect.yMin && point.y < rect.yMax;
-        }
-
-
-        public static object GetPropertyValue(SerializedProperty prop, object target)
-        {
-            var path = prop.propertyPath.Replace(".Array.data[", "[");
-            var elements = path.Split('.');
-
-            foreach (var element in elements.Take(elements.Length - 1))
-            {
-                if (element.Contains("["))
-                {
-                    var elementName = element.Substring(0, element.IndexOf("["));
-                    var index = Convert.ToInt32(element.Substring(element.IndexOf("[")).Replace("[", "").Replace("]", ""));
-                    target = GetValue(target, elementName, index);
-                }
-                else
-                {
-                    target = GetValue(target, element);
-                }
-            }
-
-            return target;
-        }
-
-        public static object GetValue(object source, string name)
-        {
-            if (source == null)
-                return null;
-
-            var type = source.GetType();
-            var f = type.GetFieldRecursive(name, BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance);
-
-            if (f == null)
-            {
-                var p = type.GetPropertyRecursive(name, BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance | BindingFlags.IgnoreCase);
-
-                if (p == null)
-                    return null;
-
-                return p.GetValue(source, null);
-            }
-
-            return f.GetValue(source);
-        }
-
-        public static object GetValue(object source, string name, int index)
-        {
-            var enumerable = GetValue(source, name) as IEnumerable;
-            var enm = enumerable.GetEnumerator();
-
-            while (index-- >= 0)
-                enm.MoveNext();
-
-            return enm.Current;
-        }
-
-        private static FieldInfo GetFieldRecursive(this Type type, string name, BindingFlags bindingFlags)
-        {
-            var fieldInfo = type.GetField(name, bindingFlags);
-
-            if (fieldInfo == null && type.BaseType != null)
-                return type.BaseType.GetFieldRecursive(name, bindingFlags);
-
-            return fieldInfo;
-        }
-
-        private static PropertyInfo GetPropertyRecursive(this Type type, string name, BindingFlags bindingFlags)
-        {
-            var propertyInfo = type.GetProperty(name, bindingFlags);
-
-            if (propertyInfo == null && type.BaseType != null)
-                return type.BaseType.GetPropertyRecursive(name, bindingFlags);
-
-            return propertyInfo;
         }
     }
 }

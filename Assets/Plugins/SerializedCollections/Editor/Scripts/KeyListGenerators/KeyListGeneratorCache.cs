@@ -22,14 +22,16 @@ namespace AYellowpaper.SerializedCollections.KeysGenerators
                 var attributes = populatorType.GetCustomAttributes<KeyListGeneratorAttribute>();
 
                 foreach (var attribute in attributes)
-                    _populators.Add(new KeyListGeneratorData(attribute.Name, attribute.TargetType, populatorType, attribute.NeedsWindow));
+                    _populators.Add(new KeyListGeneratorData(attribute.Name, attribute.TargetType, populatorType,
+                        attribute.NeedsWindow));
             }
         }
 
         public static IReadOnlyList<KeyListGeneratorData> GetPopulatorsForType(Type type)
         {
             if (!_populatorsByType.ContainsKey(type))
-                _populatorsByType.Add(type, new List<KeyListGeneratorData>(_populators.Where(x => x.TargetType.IsAssignableFrom(type))));
+                _populatorsByType.Add(type,
+                    new List<KeyListGeneratorData>(_populators.Where(x => x.TargetType.IsAssignableFrom(type))));
 
             return _populatorsByType[type];
         }

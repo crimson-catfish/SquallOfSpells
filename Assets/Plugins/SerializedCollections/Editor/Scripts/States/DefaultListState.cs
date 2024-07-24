@@ -5,7 +5,8 @@ namespace AYellowpaper.SerializedCollections.Editor.States
 {
     internal class DefaultListState : ListState
     {
-        public DefaultListState(SerializedDictionaryInstanceDrawer serializedDictionaryDrawer) : base(serializedDictionaryDrawer)
+        public DefaultListState(SerializedDictionaryInstanceDrawer serializedDictionaryDrawer) : base(
+            serializedDictionaryDrawer)
         {
         }
 

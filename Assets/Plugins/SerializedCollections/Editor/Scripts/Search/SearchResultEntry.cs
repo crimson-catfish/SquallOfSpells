@@ -10,7 +10,8 @@ namespace AYellowpaper.SerializedCollections.Editor.Search
         public readonly IEnumerable<PropertySearchResult> MatchingResults;
         public readonly SerializedProperty                Property;
 
-        public SearchResultEntry(int index, SerializedProperty property, IEnumerable<PropertySearchResult> matchingResults)
+        public SearchResultEntry(
+            int index, SerializedProperty property, IEnumerable<PropertySearchResult> matchingResults)
         {
             Index = index;
             Property = property;

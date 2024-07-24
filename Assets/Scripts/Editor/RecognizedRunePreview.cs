@@ -6,17 +6,17 @@ public class RecognizedRunePreview : MonoBehaviour
 {
     [SerializeField] private RuneRecognizer recognizer;
 
-
     private RawImage image;
 
-    private void OnEnable()
-    {
-        recognizer.OnRuneRecognized += HandleRuneRecognition;
-    }
 
     private void Start()
     {
         image = GetComponent<RawImage>();
+    }
+
+    private void OnEnable()
+    {
+        recognizer.OnRuneRecognized += HandleRuneRecognition;
     }
 
     private void OnDisable()

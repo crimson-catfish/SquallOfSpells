@@ -18,6 +18,8 @@ public class Rune : ScriptableObject, IComparable<Rune>
     public Vector2                 averageMassCenter = Vector2.zero;
     public List<RuneDrawVariation> drawVariations    = new();
 
+    private Texture2D preview;
+
 #if UNITY_EDITOR
     public Texture2D Preview {
         get
@@ -28,10 +30,8 @@ public class Rune : ScriptableObject, IComparable<Rune>
             return preview;
         }
         set => preview = value;
-    }               
+    }
 #endif
-
-    private Texture2D preview;
 
     public int CompareTo(Rune other)
     {

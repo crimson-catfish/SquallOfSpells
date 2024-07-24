@@ -26,7 +26,8 @@ public static class ScrollViewFocus
 
     public static Vector2 CalculateFocusedScrollPosition(this ScrollRect scrollView, RectTransform item)
     {
-        Vector2 itemCenterPoint = scrollView.content.InverseTransformPoint(item.transform.TransformPoint(item.rect.center));
+        Vector2 itemCenterPoint =
+            scrollView.content.InverseTransformPoint(item.transform.TransformPoint(item.rect.center));
 
         Vector2 contentSizeOffset = scrollView.content.rect.size;
         contentSizeOffset.Scale(scrollView.content.pivot);
@@ -44,7 +45,19 @@ public static class ScrollViewFocus
         scrollView.normalizedPosition = scrollView.CalculateFocusedScrollPosition(item);
     }
 
-    private static IEnumerator LerpToScrollPositionCoroutine(this ScrollRect scrollView, Vector2 targetNormalizedPos, float speed)
+    public static IEnumerator FocusAtPointCoroutine(this ScrollRect scrollView, Vector2 focusPoint, float speed)
+    {
+        yield return scrollView.LerpToScrollPositionCoroutine(scrollView.CalculateFocusedScrollPosition(focusPoint),
+            speed);
+    }
+
+    public static IEnumerator FocusOnItemCoroutine(this ScrollRect scrollView, RectTransform item, float speed)
+    {
+        yield return scrollView.LerpToScrollPositionCoroutine(scrollView.CalculateFocusedScrollPosition(item), speed);
+    }
+
+    private static IEnumerator LerpToScrollPositionCoroutine(
+        this ScrollRect scrollView, Vector2 targetNormalizedPos, float speed)
     {
         Vector2 initialNormalizedPos = scrollView.normalizedPosition;
 
@@ -52,22 +65,13 @@ public static class ScrollViewFocus
 
         while (t < 1f)
         {
-            scrollView.normalizedPosition = Vector2.LerpUnclamped(initialNormalizedPos, targetNormalizedPos, 1f - (1f - t) * (1f - t));
+            scrollView.normalizedPosition =
+                Vector2.LerpUnclamped(initialNormalizedPos, targetNormalizedPos, 1f - (1f - t) * (1f - t));
 
             yield return null;
             t += speed * Time.unscaledDeltaTime;
         }
 
         scrollView.normalizedPosition = targetNormalizedPos;
-    }
-
-    public static IEnumerator FocusAtPointCoroutine(this ScrollRect scrollView, Vector2 focusPoint, float speed)
-    {
-        yield return scrollView.LerpToScrollPositionCoroutine(scrollView.CalculateFocusedScrollPosition(focusPoint), speed);
-    }
-
-    public static IEnumerator FocusOnItemCoroutine(this ScrollRect scrollView, RectTransform item, float speed)
-    {
-        yield return scrollView.LerpToScrollPositionCoroutine(scrollView.CalculateFocusedScrollPosition(item), speed);
     }
 }

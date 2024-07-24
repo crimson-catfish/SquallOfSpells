@@ -1,17 +1,16 @@
 using UnityEngine;
 
-public class Player : MonoBehaviour
+public class Player : MonoBehaviour, IDamageable
 {
     [SerializeField] private     InputManager   inputManager;
     [SerializeField] private     RuneRecognizer recognizer;
-    [SerializeField] private     SpellContainer spellContainer;
     [SerializeField] private new Rigidbody2D    rigidbody;
+    [SerializeField] private     SpellContainer spellContainer;
 
     [SerializeField] private float moveSpeed = 2f;
 
-
-    private Vector2 moveDirection;
     private Rune    lastRecognized;
+    private Vector2 moveDirection;
 
     private void OnEnable()
     {
@@ -20,17 +19,18 @@ public class Player : MonoBehaviour
         inputManager.OnAimCast += HandleAimCast;
     }
 
-    private void HandleAimCast(Vector2 direction)
-    {
-        LookDirection(direction);
-    }
-
     private void FixedUpdate()
     {
         rigidbody.velocity = moveDirection;
 
         if (moveDirection != Vector2.zero)
             LookDirection(moveDirection);
+    }
+
+
+    private void HandleAimCast(Vector2 direction)
+    {
+        LookDirection(direction);
     }
 
     private void LookDirection(Vector2 direction)
@@ -48,4 +48,15 @@ public class Player : MonoBehaviour
     {
         LookDirection(direction);
     }
+
+    #region IDamageable Members
+
+    public float Health { get; set; }
+
+    public void TakeDamage(float damage)
+    {
+        Health -= damage;
+    }
+
+    #endregion
 }
