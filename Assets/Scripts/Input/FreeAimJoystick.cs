@@ -8,6 +8,7 @@ public class FreeAimJoystick : MonoBehaviour
     [SerializeField, Range(0f, 0.5f)] private float joystickRange = 0.44f;
 
     [SerializeField] private InputSettings settings;
+    [SerializeField] private InputManager inputManager;
 
 
     [SerializeField] private Image baseImage;
@@ -18,8 +19,8 @@ public class FreeAimJoystick : MonoBehaviour
 
     private void OnEnable()
     {
-        InputManager.instance.OnAimStart += HandleAimStart;
-        InputManager.instance.OnAimCast += HandleAimCast;
+        inputManager.OnAimStart += HandleAimStart;
+        inputManager.OnAimCast += HandleAimCast;
     }
 
     private void HandleAimStart(Vector2 startPosition)
@@ -31,13 +32,12 @@ public class FreeAimJoystick : MonoBehaviour
         }
         else if (settings.origin == InputSettings.AimOrigin.Player)
         {
-            
         }
 
         handle.transform.position = Vector3.zero;
         handleImage.enabled = true;
 
-        InputManager.instance.OnAimDirectionChange += HandleAimDirectionChange;
+        inputManager.OnAimDirectionChange += HandleAimDirectionChange;
     }
 
     private void HandleAimDirectionChange(Vector2 direction)

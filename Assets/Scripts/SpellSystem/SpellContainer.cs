@@ -4,13 +4,12 @@ public class SpellContainer : MonoBehaviour
 {
     [SerializeField] private RuneRecognizer recognizer;
     [SerializeField] private AYellowpaper.SerializedCollections.SerializedDictionary<Rune, GameObject> spells = new();
-
-    private InputManager inputManager;
+    [SerializeField] private InputManager inputManager;
+    
 
     private void OnEnable()
     {
         recognizer.OnRuneRecognized += HandleRuneRecognized;
-        inputManager = InputManager.instance;
     }
 
     private void HandleRuneRecognized(Rune rune)

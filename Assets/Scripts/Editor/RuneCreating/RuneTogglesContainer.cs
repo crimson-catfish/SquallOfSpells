@@ -4,20 +4,19 @@ using UnityEngine.UI;
 
 public class RuneTogglesContainer : MonoBehaviour
 {
+    [SerializeField] private InputManager inputManager;
+
     [SerializeField] private RuneRecognizer recognizer;
     [SerializeField] private GameObject runeTogglePrefab;
     [SerializeField] private RuneStorage storage;
     [SerializeField] private ToggleGroup toggleGroup;
 
-
-    private InputManager inputManager;
     private Vector2 scrollPosition;
     private readonly Dictionary<int, Toggle> toggles = new();
     private Rune currentRecognized;
 
     private void OnEnable()
     {
-        inputManager = InputManager.instance;
         recognizer.OnRuneRecognized += rune => currentRecognized = rune;
         inputManager.OnSelectRecognized += SelectRecognizedRune;
     }

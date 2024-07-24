@@ -4,12 +4,13 @@ using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class InputManager : Singleton<InputManager>
+[CreateAssetMenu(fileName = "Input manager", menuName = "Scriptable objects/Input manager")]
+public class InputManager : ScriptableObject
 {
     [SerializeField] private InputSettings settings;
-
 
     // RuneCreationGUI
     public event Action OnDeleteRune;
@@ -63,22 +64,33 @@ public class InputManager : Singleton<InputManager>
         }
     }
 
-    private void Awake()
+    private void OnEnable()
     {
+        SceneManager.sceneLoaded += HandleSceneLoad;
         Controls = new Controls();
     }
 
-    private void OnEnable()
+    private void HandleSceneLoad(Scene scene, LoadSceneMode mode)
     {
 #if UNITY_EDITOR
-        Controls.RuneCreatingUI.Enable();
+        if (scene.name == "RuneCreating")
+        {
+            Controls.RuneCreatingUI.Enable();
+            SetRuneCreatingUIActions();
+        }
 #endif
         Controls.Move.Enable();
         Controls.Draw.Enable();
         currentMap = Controls.Draw;
+
+        SetMoveActions();
+        SetDrawActions();
+        SetAimActions();
+
+        UpdateCanvasesList();
     }
 
-    void Start()
+    private void UpdateCanvasesList()
     {
         eventSystem = FindObjectOfType<EventSystem>();
         allCanvases = FindObjectsOfType<Canvas>();
@@ -87,22 +99,6 @@ public class InputManager : Singleton<InputManager>
             if (canvas.enabled && canvas.gameObject.layer == LayerMask.NameToLayer("UI"))
                 enabledCanvases.Add(canvas);
         }
-
-#if UNITY_EDITOR
-        SetRuneCreatingUIActions();
-#endif
-        SetMoveActions();
-        SetDrawActions();
-        SetAimActions();
-    }
-
-    private void OnDisable()
-    {
-#if UNITY_EDITOR
-        Controls.RuneCreatingUI.Disable();
-#endif
-        Controls.Move.Enable();
-        Controls.Draw.Disable();
     }
 
     public void SwitchToActionMap(InputActionMap map)
@@ -122,8 +118,6 @@ public class InputManager : Singleton<InputManager>
             results = new List<RaycastResult>();
 
             pointerData = new PointerEventData(eventSystem) { position = point };
-
-            print(canvas);
 
             if (canvas.TryGetComponent<GraphicRaycaster>(out var raycaster) == false)
                 continue;

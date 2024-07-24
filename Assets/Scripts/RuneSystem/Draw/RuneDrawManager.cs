@@ -8,6 +8,7 @@ public class RuneDrawManager : MonoBehaviour
     public event Action<RuneDrawVariation> OnRuneDrawn;
 
     [HideInInspector] public RuneDrawVariation currentVariation;
+    [SerializeField] private InputManager inputManager;
 
     [SerializeField] private UILineRenderer lineRenderer;
     [SerializeField] private float drawLineThickness = 0.02f;
@@ -23,13 +24,11 @@ public class RuneDrawManager : MonoBehaviour
     private Rect drawFrame;
     private readonly List<Vector2> drawPoints = new();
     private Vector2 lastPoint;
-    private InputManager inputManager;
 
     private readonly float screenWidth = Screen.width; // Probably reducing amount of Screen calls is worth it idk 
 
     private void OnEnable()
     {
-        inputManager = InputManager.instance;
         inputManager.OnDrawStart += HandleDrawStart;
         inputManager.OnDrawEnd += HandleDrawEnd;
     }

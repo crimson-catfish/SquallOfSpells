@@ -131,6 +131,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 233136712175551576, guid: 4ff70382848aabdf2ae3b0910a20d49e, type: 3}
+      propertyPath: inputManager
+      value: 
+      objectReference: {fileID: 11400000, guid: 03d0acaf65387b45e8744ba57b0b8613, type: 2}
+    - target: {fileID: 233136712175551576, guid: 4ff70382848aabdf2ae3b0910a20d49e, type: 3}
       propertyPath: showDrawPoints
       value: 1
       objectReference: {fileID: 0}
@@ -957,6 +961,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   joystickRange: 0.44
   settings: {fileID: 11400000, guid: 5a862e82871ef1e128f61f035ee4829a, type: 2}
+  inputManager: {fileID: 11400000, guid: 03d0acaf65387b45e8744ba57b0b8613, type: 2}
   baseImage: {fileID: 1992465797}
   handle: {fileID: 1293887389}
   handleImage: {fileID: 1293887391}
@@ -1128,6 +1133,10 @@ PrefabInstance:
       propertyPath: recognizer
       value: 
       objectReference: {fileID: 1178839774}
+    - target: {fileID: 3189088438561247743, guid: 9b454918a9a055d84bd117b4f0f88f33, type: 3}
+      propertyPath: inputManager
+      value: 
+      objectReference: {fileID: 11400000, guid: 03d0acaf65387b45e8744ba57b0b8613, type: 2}
     - target: {fileID: 4230735849268552375, guid: 9b454918a9a055d84bd117b4f0f88f33, type: 3}
       propertyPath: m_Name
       value: Player

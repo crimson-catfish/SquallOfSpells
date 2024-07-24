@@ -2,21 +2,19 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    [SerializeField] private InputManager inputManager;
     [SerializeField] private RuneRecognizer recognizer;
     [SerializeField] private SpellContainer spellContainer;
-    [SerializeField] private Rigidbody2D rigidbody;
+    [SerializeField] private new Rigidbody2D rigidbody;
 
     [SerializeField] private float moveSpeed = 2f;
 
 
-    private InputManager inputManager;
     private Vector2 moveDirection;
     private Rune lastRecognized;
 
     private void OnEnable()
     {
-        inputManager = InputManager.instance;
-
         inputManager.OnMove += HandleNewMoveDirection;
         inputManager.OnAimDirectionChange += HandleAimDirectionChange;
         inputManager.OnAimCast += HandleAimCast;
@@ -27,7 +25,7 @@ public class Player : MonoBehaviour
         LookDirection(direction);
     }
 
-    void FixedUpdate()
+    private void FixedUpdate()
     {
         rigidbody.velocity = moveDirection;
 
