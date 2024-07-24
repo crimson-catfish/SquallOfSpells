@@ -5,25 +5,24 @@ using UnityEngine;
 [RequireComponent(typeof(UILineRenderer))]
 public class RuneDrawManager : MonoBehaviour
 {
-    public event Action<RuneDrawVariation> OnRuneDrawn;
-
-    [HideInInspector] public RuneDrawVariation currentVariation;
-    [SerializeField] private InputManager inputManager;
+    [HideInInspector] public  RuneDrawVariation currentVariation;
+    [SerializeField]  private InputManager      inputManager;
 
     [SerializeField] private UILineRenderer lineRenderer;
-    [SerializeField] private float drawLineThickness = 0.02f;
-    [SerializeField] private bool showDrawPoints;
+    [SerializeField] private float          drawLineThickness = 0.02f;
+    [SerializeField] private bool           showDrawPoints;
 
     [Header("Doesn't affects already created runes\nplease recreate them to apply changes")] [SerializeField]
     private float distanceBetweenPoints = 0.02f;
 
-    [SerializeField] private float acceptableError = 0.001f;
-    [SerializeField] private float heavyCheckStep = 0.005f;
+    [SerializeField] private float         acceptableError = 0.001f;
+    [SerializeField] private float         heavyCheckStep  = 0.005f;
+    public event Action<RuneDrawVariation> OnRuneDrawn;
 
-    private Vector2 momentSum = Vector2.zero;
-    private Rect drawFrame;
+    private          Vector2       momentSum = Vector2.zero;
+    private          Rect          drawFrame;
     private readonly List<Vector2> drawPoints = new();
-    private Vector2 lastPoint;
+    private          Vector2       lastPoint;
 
     private readonly float screenWidth = Screen.width; // Probably reducing amount of Screen calls is worth it idk 
 
@@ -49,6 +48,7 @@ public class RuneDrawManager : MonoBehaviour
     private void OnDrawGizmos()
     {
         if (!showDrawPoints) return;
+
         foreach (Vector2 point in drawPoints)
         {
             Gizmos.DrawSphere(point * screenWidth, distanceBetweenPoints * screenWidth / 2);
@@ -77,7 +77,7 @@ public class RuneDrawManager : MonoBehaviour
 
         while ((lastPoint - nextDrawPosition).magnitude >= distanceBetweenPoints)
         {
-            Vector2 pointToCheck = lastPoint + ((nextDrawPosition - lastPoint).normalized * distanceBetweenPoints);
+            Vector2 pointToCheck = lastPoint + (nextDrawPosition - lastPoint).normalized * distanceBetweenPoints;
 
             Closest.PointAndDistance closest = Closest.GetPointAndDistance(pointToCheck, drawPoints);
 
@@ -121,6 +121,7 @@ public class RuneDrawManager : MonoBehaviour
             if (closest.sqrDistance >= distanceBetweenPoints * distanceBetweenPoints * 0.99)
             {
                 CreateNewPoint(pointToCheck);
+
                 return;
             }
         }
@@ -143,7 +144,7 @@ public class RuneDrawManager : MonoBehaviour
 
     private void PrepareRuneVariation()
     {
-        currentVariation = new()
+        currentVariation = new RuneDrawVariation
         {
             points = new Vector2[drawPoints.Count],
             height = drawFrame.height / drawFrame.width
@@ -151,6 +152,7 @@ public class RuneDrawManager : MonoBehaviour
 
         Vector2 ratioFactor = new(1, currentVariation.height);
         currentVariation.massCenter = Rect.PointToNormalized(drawFrame, momentSum / drawPoints.Count) * ratioFactor;
+
         for (int i = 0; i < drawPoints.Count; i++)
         {
             currentVariation.points[i] = Rect.PointToNormalized(drawFrame, drawPoints[i]) * ratioFactor;

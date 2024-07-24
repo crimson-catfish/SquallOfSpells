@@ -7,33 +7,9 @@ public class RuneTogglesContainer : MonoBehaviour
     [SerializeField] private InputManager inputManager;
 
     [SerializeField] private RuneRecognizer recognizer;
-    [SerializeField] private GameObject runeTogglePrefab;
-    [SerializeField] private RuneStorage storage;
-    [SerializeField] private ToggleGroup toggleGroup;
-
-    private Vector2 scrollPosition;
-    private readonly Dictionary<int, Toggle> toggles = new();
-    private Rune currentRecognized;
-
-    private void OnEnable()
-    {
-        recognizer.OnRuneRecognized += rune => currentRecognized = rune;
-        inputManager.OnSelectRecognized += SelectRecognizedRune;
-    }
-
-
-    private void Start()
-    {
-        toggleGroup = this.GetComponent<ToggleGroup>();
-        foreach (Rune rune in storage.Runes.Values)
-            AddToggle(rune);
-    }
-
-    private void OnDisable()
-    {
-        recognizer.OnRuneRecognized -= rune => currentRecognized = rune;
-        inputManager.OnSelectRecognized -= SelectRecognizedRune;
-    }
+    [SerializeField] private GameObject     runeTogglePrefab;
+    [SerializeField] private RuneStorage    storage;
+    [SerializeField] private ToggleGroup    toggleGroup;
 
     public void AddNewToggle(Rune rune)
     {
@@ -57,6 +33,31 @@ public class RuneTogglesContainer : MonoBehaviour
             toggle.isOn = true;
     }
 
+    private          Vector2                 scrollPosition;
+    private readonly Dictionary<int, Toggle> toggles = new();
+    private          Rune                    currentRecognized;
+
+    private void OnEnable()
+    {
+        recognizer.OnRuneRecognized += rune => currentRecognized = rune;
+        inputManager.OnSelectRecognized += SelectRecognizedRune;
+    }
+
+
+    private void Start()
+    {
+        toggleGroup = GetComponent<ToggleGroup>();
+
+        foreach (Rune rune in storage.Runes.Values)
+            AddToggle(rune);
+    }
+
+    private void OnDisable()
+    {
+        recognizer.OnRuneRecognized -= rune => currentRecognized = rune;
+        inputManager.OnSelectRecognized -= SelectRecognizedRune;
+    }
+
     private Toggle AddToggle(Rune rune)
     {
         GameObject runeToggleObject = Instantiate(runeTogglePrefab, this.transform);
@@ -68,7 +69,7 @@ public class RuneTogglesContainer : MonoBehaviour
             runeToggle.Rune = rune;
 
         if (runeToggleObject.TryGetComponent(out AspectRatioFitter ratioFitter))
-            ratioFitter.aspectRatio = (float)rune.Preview.width / (float)rune.Preview.height;
+            ratioFitter.aspectRatio = rune.Preview.width / (float)rune.Preview.height;
 
         toggles.Add(rune.GetHashCode(), toggle);
 

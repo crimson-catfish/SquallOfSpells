@@ -3,6 +3,8 @@ using System.Collections.Generic;
 
 public class DuplicateKeyComparer<TKey> : IComparer<TKey> where TKey : IComparable
 {
+    #region IComparer<TKey> Members
+
     public int Compare(TKey x, TKey y)
     {
         int result = x.CompareTo(y);
@@ -12,4 +14,6 @@ public class DuplicateKeyComparer<TKey> : IComparer<TKey> where TKey : IComparab
 
         return result;
     }
+
+    #endregion
 }

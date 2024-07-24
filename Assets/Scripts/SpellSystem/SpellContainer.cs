@@ -1,11 +1,12 @@
+using AYellowpaper.SerializedCollections;
 using UnityEngine;
 
 public class SpellContainer : MonoBehaviour
 {
-    [SerializeField] private RuneRecognizer recognizer;
-    [SerializeField] private AYellowpaper.SerializedCollections.SerializedDictionary<Rune, GameObject> spells = new();
-    [SerializeField] private InputManager inputManager;
-    
+    [SerializeField] private RuneRecognizer                         recognizer;
+    [SerializeField] private SerializedDictionary<Rune, GameObject> spells = new();
+    [SerializeField] private InputManager                           inputManager;
+
 
     private void OnEnable()
     {

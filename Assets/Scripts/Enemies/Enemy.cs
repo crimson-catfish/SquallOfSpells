@@ -5,27 +5,26 @@ public abstract class Enemy : MonoBehaviour, IDamageable
 {
     [SerializeField] protected float startHealth;
 
-    public float Health => health;
-
     protected GameObject player;
-
-    private float health;
 
     protected virtual void OnEnable()
     {
-        health = startHealth;
+        Health = startHealth;
         player = GameObject.FindGameObjectWithTag("Player");
-    }
-
-    public void TakeDamage(float damage)
-    {
-        health -= damage;
-        if (health <= 0f)
-            Die();
     }
 
     private void Die()
     {
         Destroy(this.gameObject);
+    }
+
+    public float Health { get; private set; }
+
+    public void TakeDamage(float damage)
+    {
+        Health -= damage;
+
+        if (Health <= 0f)
+            Die();
     }
 }

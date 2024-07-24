@@ -8,7 +8,7 @@ public class UILineRenderer : Graphic
     public List<Vector2> points = new();
 
     public float thickness = 10f;
-    public bool center = true;
+    public bool  center    = true;
 
     protected override void OnPopulateMesh(VertexHelper vh)
     {
@@ -40,18 +40,18 @@ public class UILineRenderer : Graphic
     }
 
     /// <summary>
-    /// Creates a rect from two points that acts as a line segment
+    ///     Creates a rect from two points that acts as a line segment
     /// </summary>
     /// <param name="point1">The starting point of the segment</param>
     /// <param name="point2">The endint point of the segment</param>
     /// <param name="vh">The vertex helper that the segment is added to</param>
     private void CreateLineSegment(Vector3 point1, Vector3 point2, VertexHelper vh)
     {
-        Vector3 offset = center ? (rectTransform.sizeDelta / 2) : Vector2.zero;
+        Vector3 offset = center ? this.rectTransform.sizeDelta / 2 : Vector2.zero;
 
         // Create vertex template
         UIVertex vertex = UIVertex.simpleVert;
-        vertex.color = color;
+        vertex.color = this.color;
 
         // Create the start of the segment
         Quaternion point1Rotation = Quaternion.Euler(0, 0, RotatePointTowards(point1, point2) + 90);
@@ -78,7 +78,7 @@ public class UILineRenderer : Graphic
 
 
     /// <summary>
-    /// Gets the angle that a vertex needs to rotate to face target vertex
+    ///     Gets the angle that a vertex needs to rotate to face target vertex
     /// </summary>
     /// <param name="vertex">The vertex being rotated</param>
     /// <param name="target">The vertex to rotate towards</param>

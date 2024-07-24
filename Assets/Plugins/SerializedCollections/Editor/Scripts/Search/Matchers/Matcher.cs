@@ -15,6 +15,7 @@ namespace AYellowpaper.SerializedCollections.Editor.Search
         {
             return searchString;
         }
+
         public abstract bool IsMatch(SerializedProperty property);
     }
 }

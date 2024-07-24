@@ -5,12 +5,35 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Rune storage", menuName = "Scriptable objects/Rune storage")]
 public class RuneStorage : ScriptableObject
 {
-    public Dictionary<int, Rune> Runes { get; } = new();
-    public SortedList<float, int> RunesHeight { get; } = new(Comparer);
-    public SortedList<float, int> RunesMassCenterX { get; } = new(Comparer);
-    public SortedList<float, int> RunesMassCenterY { get; } = new(Comparer);
-
     private static readonly DuplicateKeyComparer<float> Comparer = new();
+    public                  Dictionary<int, Rune>       Runes            { get; } = new();
+    public                  SortedList<float, int>      RunesHeight      { get; } = new(Comparer);
+    public                  SortedList<float, int>      RunesMassCenterX { get; } = new(Comparer);
+    public                  SortedList<float, int>      RunesMassCenterY { get; } = new(Comparer);
+
+
+    public void AddRune(Rune rune)
+    {
+        Runes.Add(rune.GetHashCode(), rune);
+
+        AddRuneProperties(rune);
+    }
+
+    public void AddVariationToRune(RuneDrawVariation variation, Rune rune)
+    {
+        RemoveRuneProperties(rune);
+
+        rune.drawVariations.Add(variation);
+
+        AddRuneProperties(rune);
+    }
+
+    public void DeleteRune(Rune rune)
+    {
+        Runes.Remove(rune.GetHashCode());
+        RemoveRuneProperties(rune);
+    }
+
     private bool areRunesSorted;
 
 
@@ -38,29 +61,6 @@ public class RuneStorage : ScriptableObject
 #if UNITY_EDITOR
         EditorUtility.ClearProgressBar();
 #endif
-    }
-
-
-    public void AddRune(Rune rune)
-    {
-        Runes.Add(rune.GetHashCode(), rune);
-
-        AddRuneProperties(rune);
-    }
-
-    public void AddVariationToRune(RuneDrawVariation variation, Rune rune)
-    {
-        RemoveRuneProperties(rune);
-
-        rune.drawVariations.Add(variation);
-
-        AddRuneProperties(rune);
-    }
-
-    public void DeleteRune(Rune rune)
-    {
-        Runes.Remove(rune.GetHashCode());
-        RemoveRuneProperties(rune);
     }
 
     private void AddRuneProperties(Rune rune)

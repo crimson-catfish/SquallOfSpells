@@ -5,8 +5,19 @@ namespace AYellowpaper.SerializedCollections.Editor
 {
     public class PagingElement
     {
-        public int Page
+        private const int buttonWidth = 20;
+        private const int inputWidth  = 20;
+        private const int labelWidth  = 30;
+
+        private int _page      = 1;
+        private int _pageCount = 1;
+
+        public PagingElement(int pageCount = 1)
         {
+            PageCount = pageCount;
+        }
+
+        public int Page {
             get => _page;
             set
             {
@@ -14,8 +25,8 @@ namespace AYellowpaper.SerializedCollections.Editor
                 EnsureValidPageIndex();
             }
         }
-        public int PageCount
-        {
+
+        public int PageCount {
             get => _pageCount;
             set
             {
@@ -23,18 +34,6 @@ namespace AYellowpaper.SerializedCollections.Editor
                 _pageCount = value;
                 EnsureValidPageIndex();
             }
-        }
-
-        private const int buttonWidth = 20;
-        private const int inputWidth = 20;
-        private const int labelWidth = 30;
-
-        private int _page = 1;
-        private int _pageCount = 1;
-
-        public PagingElement(int pageCount = 1)
-        {
-            PageCount = pageCount;
         }
 
         public float GetDesiredWidth()
@@ -48,16 +47,19 @@ namespace AYellowpaper.SerializedCollections.Editor
             Rect inputRect = leftButton.AppendRight(inputWidth);
             Rect labelRect = inputRect.AppendRight(labelWidth);
             Rect rightButton = labelRect.AppendRight(buttonWidth);
+
             using (new GUIEnabledScope(Page != 1))
                 if (GUI.Button(leftButton, "<"))
                     Page--;
+
             using (new GUIEnabledScope(Page != PageCount))
                 if (GUI.Button(rightButton, ">"))
                     Page++;
+
             Page = EditorGUI.IntField(inputRect, Page);
-            GUI.Label(labelRect, "/" + PageCount.ToString());
+            GUI.Label(labelRect, "/" + PageCount);
         }
-        
+
         private void EnsureValidPageIndex()
         {
             _page = Mathf.Clamp(_page, 1, PageCount);

@@ -5,15 +5,15 @@ namespace AYellowpaper.SerializedCollections
 {
     internal interface IKeyable
     {
-        void RecalculateOccurences();
+        IEnumerable        Keys { get; }
+        void               RecalculateOccurences();
         IReadOnlyList<int> GetOccurences(object key);
-        IEnumerable Keys { get; }
 
-        void AddKey(object key);
-        void RemoveKey(object key);
-        void RemoveAt(int index);
-        object GetKeyAt(int index);
-        int GetCount();
-        void RemoveDuplicates();
+        void   AddKey(object    key);
+        void   RemoveKey(object key);
+        void   RemoveAt(int     index);
+        object GetKeyAt(int     index);
+        int    GetCount();
+        void   RemoveDuplicates();
     }
 }

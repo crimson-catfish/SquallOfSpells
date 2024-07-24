@@ -5,6 +5,6 @@ namespace AYellowpaper.SerializedCollections
         None,
         Add,
         Remove,
-        Confine,
+        Confine
     }
 }

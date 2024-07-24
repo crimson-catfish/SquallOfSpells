@@ -8,13 +8,13 @@ public class FreeAimJoystick : MonoBehaviour
     [SerializeField, Range(0f, 0.5f)] private float joystickRange = 0.44f;
 
     [SerializeField] private InputSettings settings;
-    [SerializeField] private InputManager inputManager;
+    [SerializeField] private InputManager  inputManager;
 
 
     [SerializeField] private Image baseImage;
 
     [SerializeField] private GameObject handle;
-    [SerializeField] private Image handleImage;
+    [SerializeField] private Image      handleImage;
 
 
     private void OnEnable()

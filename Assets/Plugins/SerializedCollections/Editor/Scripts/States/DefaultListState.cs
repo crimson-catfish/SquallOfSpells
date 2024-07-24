@@ -5,15 +5,15 @@ namespace AYellowpaper.SerializedCollections.Editor.States
 {
     internal class DefaultListState : ListState
     {
-        public override int ListSize => Drawer.ListProperty.minArraySize;
-
         public DefaultListState(SerializedDictionaryInstanceDrawer serializedDictionaryDrawer) : base(serializedDictionaryDrawer)
         {
         }
 
+        public override int ListSize => this.Drawer.ListProperty.minArraySize;
+
         public override void OnEnter()
         {
-            Drawer.ReorderableList.draggable = true;
+            this.Drawer.ReorderableList.draggable = true;
         }
 
         public override void OnExit()
@@ -22,8 +22,8 @@ namespace AYellowpaper.SerializedCollections.Editor.States
 
         public override ListState OnUpdate()
         {
-            if (Drawer.SearchText.Length > 0)
-                return Drawer.SearchState;
+            if (this.Drawer.SearchText.Length > 0)
+                return this.Drawer.SearchState;
 
             return this;
         }
@@ -35,18 +35,18 @@ namespace AYellowpaper.SerializedCollections.Editor.States
 
         public override SerializedProperty GetPropertyAtIndex(int index)
         {
-            return Drawer.ListProperty.GetArrayElementAtIndex(index);
+            return this.Drawer.ListProperty.GetArrayElementAtIndex(index);
         }
 
         public override void RemoveElementAt(int index)
         {
-            Drawer.ListProperty.DeleteArrayElementAtIndex(index);
+            this.Drawer.ListProperty.DeleteArrayElementAtIndex(index);
         }
 
         public override void InserElementAt(int index)
         {
-            Drawer.ListProperty.InsertArrayElementAtIndex(index);
-            Drawer.ListProperty.serializedObject.ApplyModifiedProperties();
+            this.Drawer.ListProperty.InsertArrayElementAtIndex(index);
+            this.Drawer.ListProperty.serializedObject.ApplyModifiedProperties();
         }
     }
 }

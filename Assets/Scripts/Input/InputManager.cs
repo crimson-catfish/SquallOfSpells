@@ -12,6 +12,28 @@ public class InputManager : ScriptableObject
 {
     [SerializeField] private InputSettings settings;
 
+    public Controls Controls { get; private set; }
+
+    private Camera MainCamera {
+        get
+        {
+            if (_mainCamera == null)
+                _mainCamera = Camera.main;
+
+            return _mainCamera;
+        }
+    }
+
+    private Vector2 PlayerScreenPosition {
+        get
+        {
+            if (_playerTransform == null)
+                _playerTransform = GameObject.FindWithTag("Player").transform;
+
+            return MainCamera.WorldToScreenPoint(_playerTransform.position);
+        }
+    }
+
     // RuneCreationGUI
     public event Action OnDeleteRune;
     public event Action OnNewRune;
@@ -24,45 +46,28 @@ public class InputManager : ScriptableObject
     // Draw
     public event Action<Vector2> OnDrawStart;
     public event Action<Vector2> OnNextDrawPosition;
-    public event Action OnDrawEnd;
+    public event Action          OnDrawEnd;
 
     // Aim
     public event Action<Vector2> OnAimStart;
     public event Action<Vector2> OnAimDirectionChange;
     public event Action<Vector2> OnAimCast;
 
-    private EventSystem eventSystem;
-    private readonly float screenWidth = Screen.width;
-    private readonly List<Canvas> enabledCanvases = new();
-    private Canvas[] allCanvases;
-    private InputActionMap currentMap;
-    private Vector2 aimStartPosition;
-    private Transform _playerTransform;
-    private Camera _mainCamera;
-
-    public Controls Controls { get; private set; }
-
-    private Camera MainCamera
+    public void SwitchToActionMap(InputActionMap map)
     {
-        get
-        {
-            if (_mainCamera == null)
-                _mainCamera = Camera.main;
-
-            return _mainCamera;
-        }
+        currentMap.Disable();
+        map.Enable();
+        currentMap = map;
     }
 
-    private Vector2 PlayerScreenPosition
-    {
-        get
-        {
-            if (_playerTransform == null)
-                _playerTransform = GameObject.FindWithTag("Player").transform;
-
-            return MainCamera.WorldToScreenPoint(_playerTransform.position);
-        }
-    }
+    private          EventSystem    eventSystem;
+    private readonly float          screenWidth     = Screen.width;
+    private readonly List<Canvas>   enabledCanvases = new();
+    private          Canvas[]       allCanvases;
+    private          InputActionMap currentMap;
+    private          Vector2        aimStartPosition;
+    private          Transform      _playerTransform;
+    private          Camera         _mainCamera;
 
     private void OnEnable()
     {
@@ -94,18 +99,12 @@ public class InputManager : ScriptableObject
     {
         eventSystem = FindObjectOfType<EventSystem>();
         allCanvases = FindObjectsOfType<Canvas>();
+
         foreach (Canvas canvas in allCanvases)
         {
             if (canvas.enabled && canvas.gameObject.layer == LayerMask.NameToLayer("UI"))
                 enabledCanvases.Add(canvas);
         }
-    }
-
-    public void SwitchToActionMap(InputActionMap map)
-    {
-        currentMap.Disable();
-        map.Enable();
-        currentMap = map;
     }
 
     private bool IsOverAnyUI(Vector2 point)
@@ -170,6 +169,7 @@ public class InputManager : ScriptableObject
     private void HandleDrawContactStart(InputAction.CallbackContext _)
     {
         Vector2 startPositionPixels = Controls.Draw.Position.ReadValue<Vector2>();
+
         if (IsOverAnyUI(startPositionPixels))
             return;
 
@@ -192,6 +192,7 @@ public class InputManager : ScriptableObject
     private void HandleAimContactStart(InputAction.CallbackContext _)
     {
         Vector2 startPositionPixels = Controls.Aim.Position.ReadValue<Vector2>();
+
         if (IsOverAnyUI(startPositionPixels))
             return;
 

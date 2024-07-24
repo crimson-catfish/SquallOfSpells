@@ -8,7 +8,7 @@ namespace AYellowpaper.SerializedCollections.KeysGenerators
     public class IntSteppingGenerator : KeyListGenerator
     {
         [SerializeField]
-        private int _startIndex = 0;
+        private int _startIndex;
         [SerializeField]
         private int _stepDistance = 10;
         [SerializeField, Min(0)]

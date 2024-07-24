@@ -13,23 +13,7 @@ namespace AYellowpaper.SerializedCollections.KeysGenerators
         [SerializeField]
         private ModificationType _modificationType;
 
-        private KeyListGenerator _generator;
-        private UnityEditor.Editor _editor;
-        private List<KeyListGeneratorData> _generatorsData;
-        private Type _targetType;
-        private int _undoStart;
-        private Dictionary<Type, KeyListGenerator> _keysGenerators = new Dictionary<Type, KeyListGenerator>();
-        private string _detailsText;
-
         public event Action<KeyListGenerator, ModificationType> OnApply;
-
-        private void OnEnable()
-        {
-            VisualTreeAsset document = AssetDatabase.LoadAssetAtPath<VisualTreeAsset>("Assets/Plugins/SerializedCollections/Editor/Assets/KeysGeneratorSelectorWindow.uxml");
-            var element = document.CloneTree();
-            element.style.height = new StyleLength(new Length(100, LengthUnit.Percent));
-            rootVisualElement.Add(element);
-        }
 
         public void Initialize(IEnumerable<KeyListGeneratorData> generatorsData, Type type)
         {
@@ -41,19 +25,19 @@ namespace AYellowpaper.SerializedCollections.KeysGenerators
             SetGeneratorIndex(0);
             Undo.undoRedoPerformed += HandleUndoCallback;
 
-            rootVisualElement.Q<Button>(className: "sc-close-button").clicked += Close;
+            this.rootVisualElement.Q<Button>(className: "sc-close-button").clicked += Close;
 
-            rootVisualElement.Q<RadioButton>(name = "add-modification").userData = ModificationType.Add;
-            rootVisualElement.Q<RadioButton>(name = "remove-modification").userData = ModificationType.Remove;
-            rootVisualElement.Q<RadioButton>(name = "confine-modification").userData = ModificationType.Confine;
+            this.rootVisualElement.Q<RadioButton>(this.name = "add-modification").userData = ModificationType.Add;
+            this.rootVisualElement.Q<RadioButton>(this.name = "remove-modification").userData = ModificationType.Remove;
+            this.rootVisualElement.Q<RadioButton>(this.name = "confine-modification").userData = ModificationType.Confine;
 
-            var modificationToggles = rootVisualElement.Query<RadioButton>(className: "sc-modification-toggle");
+            var modificationToggles = this.rootVisualElement.Query<RadioButton>(className: "sc-modification-toggle");
             modificationToggles.ForEach(InitializeModificationToggle);
 
-            rootVisualElement.Q<IMGUIContainer>(name = "imgui-inspector").onGUIHandler = EditorGUIHandler;
-            rootVisualElement.Q<Button>(name = "apply-button").clicked += ApplyButtonClicked;
+            this.rootVisualElement.Q<IMGUIContainer>(this.name = "imgui-inspector").onGUIHandler = EditorGUIHandler;
+            this.rootVisualElement.Q<Button>(this.name = "apply-button").clicked += ApplyButtonClicked;
 
-            var generatorsContent = rootVisualElement.Q<ScrollView>(name = "generators-content");
+            var generatorsContent = this.rootVisualElement.Q<ScrollView>(this.name = "generators-content");
             var radioButtonGroup = new RadioButtonGroup();
             radioButtonGroup.name = "generators-group";
             radioButtonGroup.AddToClassList("sc-radio-button-group");
@@ -73,6 +57,22 @@ namespace AYellowpaper.SerializedCollections.KeysGenerators
             }
         }
 
+        private          KeyListGenerator                   _generator;
+        private          UnityEditor.Editor                 _editor;
+        private          List<KeyListGeneratorData>         _generatorsData;
+        private          Type                               _targetType;
+        private          int                                _undoStart;
+        private readonly Dictionary<Type, KeyListGenerator> _keysGenerators = new();
+        private          string                             _detailsText;
+
+        private void OnEnable()
+        {
+            VisualTreeAsset document = AssetDatabase.LoadAssetAtPath<VisualTreeAsset>("Assets/Plugins/SerializedCollections/Editor/Assets/KeysGeneratorSelectorWindow.uxml");
+            var element = document.CloneTree();
+            element.style.height = new StyleLength(new Length(100, LengthUnit.Percent));
+            this.rootVisualElement.Add(element);
+        }
+
         private void ApplyButtonClicked()
         {
             OnApply?.Invoke(_editor.target as KeyListGenerator, _modificationType);
@@ -84,6 +84,7 @@ namespace AYellowpaper.SerializedCollections.KeysGenerators
         {
             EditorGUI.BeginChangeCheck();
             _editor.OnInspectorGUI();
+
             if (EditorGUI.EndChangeCheck())
             {
                 UpdateDetailsText();
@@ -94,6 +95,7 @@ namespace AYellowpaper.SerializedCollections.KeysGenerators
         {
             if ((ModificationType)obj.userData == _modificationType)
                 obj.value = true;
+
             obj.RegisterValueChangedCallback(OnModificationToggleClicked);
         }
 
@@ -111,24 +113,29 @@ namespace AYellowpaper.SerializedCollections.KeysGenerators
             var enumerable = _generator.GetKeys(_targetType);
             int count = 0;
             var enumerator = enumerable.GetEnumerator();
+
             while (enumerator.MoveNext())
             {
                 count++;
+
                 if (count > 100)
                 {
                     _detailsText = "over 100 Elements";
+
                     return;
                 }
             }
+
             _detailsText = $"{count} Elements";
 
-            rootVisualElement.Q<Label>(name = "generated-count-label").text = _detailsText;
+            this.rootVisualElement.Q<Label>(this.name = "generated-count-label").text = _detailsText;
         }
 
         private void OnDestroy()
         {
             Undo.undoRedoPerformed -= HandleUndoCallback;
             Undo.RevertAllDownToGroup(_undoStart);
+
             foreach (var keyGenerator in _keysGenerators)
                 DestroyImmediate(keyGenerator.Value);
         }
@@ -157,12 +164,15 @@ namespace AYellowpaper.SerializedCollections.KeysGenerators
         private void UpdateGeneratorAndEditorIfNeeded()
         {
             var targetType = _generatorsData[_selectedIndex].GeneratorType;
+
             if (_generator != null && _generator.GetType() == targetType)
                 return;
 
             _generator = GetOrCreateKeysGenerator(targetType);
+
             if (_editor != null)
                 DestroyImmediate(_editor);
+
             _editor = UnityEditor.Editor.CreateEditor(_generator);
 
             UpdateDetailsText();
@@ -176,6 +186,7 @@ namespace AYellowpaper.SerializedCollections.KeysGenerators
                 so.hideFlags = HideFlags.DontSave;
                 _keysGenerators.Add(type, so);
             }
+
             return _keysGenerators[type];
         }
     }

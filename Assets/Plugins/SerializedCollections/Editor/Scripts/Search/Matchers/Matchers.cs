@@ -4,9 +4,7 @@ namespace AYellowpaper.SerializedCollections.Editor.Search
 {
     public static class Matchers
     {
-        public static IEnumerable<Matcher> RegisteredMatchers => _registeredMatchers;
-
-        private static List<Matcher> _registeredMatchers = new List<Matcher>();
+        private static readonly List<Matcher> _registeredMatchers = new();
 
         static Matchers()
         {
@@ -14,6 +12,8 @@ namespace AYellowpaper.SerializedCollections.Editor.Search
             _registeredMatchers.Add(new StringMatcher());
             _registeredMatchers.Add(new EnumMatcher());
         }
+
+        public static IEnumerable<Matcher> RegisteredMatchers => _registeredMatchers;
 
         public static void AddMatcher(Matcher matcher)
         {

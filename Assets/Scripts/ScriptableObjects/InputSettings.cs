@@ -3,13 +3,6 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Input settings", menuName = "Scriptable objects/Input settings")]
 public class InputSettings : ScriptableObject
 {
-    public float stickDeadzone = 0.02f;
-
-    public AimDirection direction;
-    public AimOrigin origin;
-
-    public bool traceHandlers = false;
-
     public enum AimDirection
     {
         Direct,
@@ -21,4 +14,11 @@ public class InputSettings : ScriptableObject
         Player,
         Free
     }
+
+    public float stickDeadzone = 0.02f;
+
+    public AimDirection direction;
+    public AimOrigin    origin;
+
+    public bool traceHandlers;
 }

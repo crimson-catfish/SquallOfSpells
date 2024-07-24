@@ -1,8 +1,9 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace AYellowpaper.SerializedCollections.Editor.Data
 {
-    [System.Serializable]
+    [Serializable]
     internal class PropertyData
     {
         [SerializeField]
@@ -12,16 +13,14 @@ namespace AYellowpaper.SerializedCollections.Editor.Data
         [SerializeField]
         private ElementData _valueData;
         [SerializeField]
-        private bool _alwaysShowSearch = false;
+        private bool _alwaysShowSearch;
 
-        public bool AlwaysShowSearch
-        {
+        public bool AlwaysShowSearch {
             get => _alwaysShowSearch;
             set => _alwaysShowSearch = value;
         }
 
-        public float KeyLabelWidth
-        {
+        public float KeyLabelWidth {
             get => _keyLabelWidth;
             set => _keyLabelWidth = value;
         }

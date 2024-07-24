@@ -2,16 +2,16 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    [SerializeField] private InputManager inputManager;
-    [SerializeField] private RuneRecognizer recognizer;
-    [SerializeField] private SpellContainer spellContainer;
-    [SerializeField] private new Rigidbody2D rigidbody;
+    [SerializeField] private     InputManager   inputManager;
+    [SerializeField] private     RuneRecognizer recognizer;
+    [SerializeField] private     SpellContainer spellContainer;
+    [SerializeField] private new Rigidbody2D    rigidbody;
 
     [SerializeField] private float moveSpeed = 2f;
 
 
     private Vector2 moveDirection;
-    private Rune lastRecognized;
+    private Rune    lastRecognized;
 
     private void OnEnable()
     {

@@ -1,9 +1,11 @@
+using System;
+
 namespace AYellowpaper.SerializedCollections
 {
-    [System.Serializable]
+    [Serializable]
     public struct SerializedKeyValuePair<TKey, TValue>
     {
-        public TKey Key;
+        public TKey   Key;
         public TValue Value;
 
         public SerializedKeyValuePair(TKey key, TValue value)

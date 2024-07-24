@@ -6,8 +6,8 @@ namespace AYellowpaper.SerializedCollections.KeysGenerators
     public class KeyListGeneratorAttribute : Attribute
     {
         public readonly string Name;
-        public readonly Type TargetType;
-        public readonly bool NeedsWindow;
+        public readonly bool   NeedsWindow;
+        public readonly Type   TargetType;
 
         public KeyListGeneratorAttribute(string name, Type targetType, bool needsWindow = true)
         {

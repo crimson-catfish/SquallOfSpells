@@ -7,17 +7,20 @@ namespace AYellowpaper.SerializedCollections.KeysGenerators
     {
         public override void OnInspectorGUI()
         {
-            var iterator = serializedObject.GetIterator();
+            var iterator = this.serializedObject.GetIterator();
+
             if (iterator.Next(true))
             {
                 // skip script name
                 iterator.NextVisible(true);
+
                 while (iterator.NextVisible(true))
                 {
                     EditorGUILayout.PropertyField(iterator);
                 }
             }
-            serializedObject.ApplyModifiedProperties();
+
+            this.serializedObject.ApplyModifiedProperties();
         }
     }
 }

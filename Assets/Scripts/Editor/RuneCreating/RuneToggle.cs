@@ -4,21 +4,10 @@ using UnityEngine.UI;
 [RequireComponent(typeof(Toggle), typeof(RectTransform), typeof(AspectRatioFitter))]
 public class RuneToggle : MonoBehaviour
 {
-    public Rune Rune
-    {
-        get => rune;
-        set
-        {
-            rune = value;
-            rawImage.texture = rune.Preview;
-            ratioFitter.aspectRatio = (float)rawImage.texture.height / (float)rawImage.texture.width;
-        }
-    }
-
     [SerializeField] private AspectRatioFitter ratioFitter;
-    [SerializeField] private RawImage rawImage;
-    [SerializeField] private Toggle toggle;
-    [SerializeField] private Outline outline;
+    [SerializeField] private RawImage          rawImage;
+    [SerializeField] private Toggle            toggle;
+    [SerializeField] private Outline           outline;
 
     [SerializeField] private float scrollSpeed = 5f;
 
@@ -26,10 +15,20 @@ public class RuneToggle : MonoBehaviour
     [Header("Transition color settings")] [SerializeField]
     private Color normalColor = new(1f, 1f, 1f, 0.75f);
 
-    [SerializeField] private Color selectedColor = new(0.74f, 0.74f, 0.74f);
+    [SerializeField] private Color selectedColor        = new(0.74f, 0.74f, 0.74f);
     [SerializeField] private Color outlineColorSelected = new(0f, 0f, 0f, 0.82f);
 
-    private Rune rune;
+    public Rune Rune {
+        get => rune;
+        set
+        {
+            rune = value;
+            rawImage.texture = rune.Preview;
+            ratioFitter.aspectRatio = rawImage.texture.height / (float)rawImage.texture.width;
+        }
+    }
+
+    private Rune       rune;
     private ScrollRect scrollRect;
 
     private void OnEnable()
@@ -50,7 +49,7 @@ public class RuneToggle : MonoBehaviour
         {
             rawImage.color = selectedColor;
             outline.effectColor = outlineColorSelected;
-            StartCoroutine(scrollRect.FocusOnItemCoroutine(this.GetComponent<RectTransform>(), scrollSpeed));
+            StartCoroutine(scrollRect.FocusOnItemCoroutine(GetComponent<RectTransform>(), scrollSpeed));
         }
         else
         {
