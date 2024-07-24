@@ -26,10 +26,5 @@ public class SpellContainer : MonoBehaviour
             inputManager.SwitchToActionMap(inputManager.Controls.Aim);
             inputManager.OnAimCast += aimableSpell.Cast;
         }
-        else if (spellObject.TryGetComponent(out ISwingable swingableSpell))
-        {
-            inputManager.SwitchToActionMap(inputManager.Controls.Swing);
-            // inputManager.On
-        }
     }
 }

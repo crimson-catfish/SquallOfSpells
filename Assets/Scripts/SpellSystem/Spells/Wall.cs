@@ -1,7 +1,9 @@
-public class Wall : Spell, ISwingable
+using UnityEngine;
+
+public class Wall : Spell, IAimable
 {
-    public void Cast()
+    public void Cast(Vector2 direction)
     {
-        // print("shield");
+        throw new System.NotImplementedException();
     }
 }
