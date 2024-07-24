@@ -5,7 +5,7 @@ public class Player : MonoBehaviour
     [SerializeField] private RuneRecognizer recognizer;
     [SerializeField] private SpellContainer spellContainer;
     [SerializeField] private Rigidbody2D rigidbody;
-    
+
     [SerializeField] private float moveSpeed = 2f;
 
 
@@ -40,7 +40,7 @@ public class Player : MonoBehaviour
         float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
         rigidbody.rotation = angle;
     }
-    
+
     private void HandleNewMoveDirection(Vector2 direction)
     {
         moveDirection = direction * moveSpeed;
