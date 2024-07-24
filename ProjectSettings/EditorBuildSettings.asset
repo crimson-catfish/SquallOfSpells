@@ -11,9 +11,12 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/RuneCreating.unity
     guid: 3fc8acdd13e6c734bafef6554d6fdbcd
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/DemoBuild.unity
     guid: 3c51c672a34ec9a0b9f2029a852bbbb0
+  - enabled: 1
+    path: Assets/Scenes/EnemyPolygon.unity
+    guid: dccbed51e4e5032b39ed35473ca05673
   m_configObjects:
     com.unity.adaptiveperformance.google.android.provider_settings: {fileID: 11400000, guid: 1df3dbf06f8c4ee49be5dece94a639a4, type: 2}
     com.unity.adaptiveperformance.loader_settings: {fileID: 11400000, guid: b28b8fb20fcb6924b8c62f335638c055, type: 2}
