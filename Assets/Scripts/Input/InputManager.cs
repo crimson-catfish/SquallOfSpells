@@ -107,9 +107,6 @@ public class InputManager : Singleton<InputManager>
 
     public void SwitchToActionMap(InputActionMap map)
     {
-        // print("switching to " + map.name);
-        // print("previous map was " + currentMap.name);
-
         currentMap.Disable();
         map.Enable();
         currentMap = map;
@@ -126,7 +123,10 @@ public class InputManager : Singleton<InputManager>
 
             pointerData = new PointerEventData(eventSystem) { position = point };
 
-            GraphicRaycaster raycaster = canvas.GetComponent<GraphicRaycaster>();
+            print(canvas);
+
+            if (canvas.TryGetComponent<GraphicRaycaster>(out var raycaster) == false)
+                continue;
 
             raycaster.Raycast(pointerData, results);
 
@@ -200,7 +200,7 @@ public class InputManager : Singleton<InputManager>
         Vector2 startPositionPixels = Controls.Aim.Position.ReadValue<Vector2>();
         if (IsOverAnyUI(startPositionPixels))
             return;
-        
+
         TraceHandler("Aim contact start");
 
         if (settings.origin == InputSettings.AimOrigin.Free)
