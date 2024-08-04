@@ -109,7 +109,7 @@ public class RuneMaker : MonoBehaviour
 
         Undo.RecordObject(limbo, "add rune to limbo");
         limbo.runesToDelete.Add(rune);
-        
+
         Undo.SetCurrentGroupName("delete rune");
     }
 
