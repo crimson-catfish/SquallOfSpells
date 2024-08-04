@@ -59,9 +59,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 909595988108559396}
-  - component: {fileID: 243330150165855576}
   - component: {fileID: 6874674776020311074}
   - component: {fileID: 233136712175551576}
+  - component: {fileID: 243330150165855576}
   m_Layer: 2
   m_Name: Draw Manager
   m_TagString: Untagged
@@ -88,14 +88,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
---- !u!222 &243330150165855576
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4965070417072367437}
-  m_CullTransparentMesh: 1
 --- !u!114 &6874674776020311074
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -138,6 +130,14 @@ MonoBehaviour:
   distanceBetweenPoints: 0.02
   acceptableError: 0.001
   heavyCheckStep: 0.005
+--- !u!222 &243330150165855576
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4965070417072367437}
+  m_CullTransparentMesh: 1
 --- !u!1 &7145409369980141671
 GameObject:
   m_ObjectHideFlags: 0

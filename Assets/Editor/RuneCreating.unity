@@ -284,7 +284,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 11526dfac76e24a4bb28427dbe1cedb0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inputManager: {fileID: 0}
+  inputManager: {fileID: 11400000, guid: 03d0acaf65387b45e8744ba57b0b8613, type: 2}
   storage: {fileID: 11400000, guid: be54250f59b104a42828af839132ca3c, type: 2}
   drawManager: {fileID: 2130554244}
   togglesContainer: {fileID: 1473150035}
@@ -592,8 +592,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 425847874}
-  - component: {fileID: 425847876}
   - component: {fileID: 425847875}
+  - component: {fileID: 425847876}
   m_Layer: 5
   m_Name: Text (TMP)
   m_TagString: Untagged
@@ -1264,8 +1264,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 705524311}
-  - component: {fileID: 705524313}
   - component: {fileID: 705524312}
+  - component: {fileID: 705524313}
   m_Layer: 5
   m_Name: Text (TMP)
   m_TagString: Untagged
@@ -1621,10 +1621,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1172375749}
+  - component: {fileID: 1172375756}
   - component: {fileID: 1172375752}
   - component: {fileID: 1172375754}
   - component: {fileID: 1172375755}
-  - component: {fileID: 1172375756}
   m_Layer: 5
   m_Name: Recognized Rune
   m_TagString: Untagged
@@ -2037,7 +2037,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c9ea59210524e50a85be6b0a1f410b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inputManager: {fileID: 0}
+  inputManager: {fileID: 11400000, guid: 03d0acaf65387b45e8744ba57b0b8613, type: 2}
   recognizer: {fileID: 519869103}
   runeTogglePrefab: {fileID: 6491440029119343913, guid: 5a21be4bfd67e22e4a9c59e658c7f1a5, type: 3}
   storage: {fileID: 11400000, guid: be54250f59b104a42828af839132ca3c, type: 2}
@@ -2051,8 +2051,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1888999086}
-  - component: {fileID: 1888999088}
   - component: {fileID: 1888999087}
+  - component: {fileID: 1888999088}
   m_Layer: 5
   m_Name: Text (TMP)
   m_TagString: Untagged
