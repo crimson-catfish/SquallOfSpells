@@ -1,7 +1,7 @@
 using UnityEngine;
 
-[RequireComponent(typeof(BoxCollider2D))]
-public abstract class Enemy : MonoBehaviour, IDamageable
+[RequireComponent(typeof(BoxCollider2D), typeof(Health))]
+public abstract class Enemy : MonoBehaviour
 {
     [SerializeField] protected float startHealth;
 

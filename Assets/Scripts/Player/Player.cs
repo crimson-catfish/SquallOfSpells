@@ -1,6 +1,7 @@
 using UnityEngine;
 
-public class Player : MonoBehaviour, IDamageable
+[RequireComponent(typeof(Health))]
+public class Player : MonoBehaviour
 {
     [SerializeField] private     InputManager   inputManager;
     [SerializeField] private     RuneRecognizer recognizer;

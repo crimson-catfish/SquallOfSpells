@@ -17,8 +17,8 @@ public class FireballProjectile : Projectile
 
     private void Explode(GameObject hit)
     {
-        if (hit.TryGetComponent(out IDamageable damageable))
-            damageable.TakeDamage(this.damage);
+        if (hit.TryGetComponent(out Health healthComponent))
+            healthComponent.TakeDamage(this.damage);
 
         Destroy(this.gameObject);
     }

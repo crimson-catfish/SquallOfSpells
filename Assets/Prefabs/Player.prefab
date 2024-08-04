@@ -103,6 +103,7 @@ GameObject:
   - component: {fileID: 1157572424319928881}
   - component: {fileID: 3188437514516134672}
   - component: {fileID: 518959049955366800}
+  - component: {fileID: 4510702143249838437}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -140,8 +141,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   inputManager: {fileID: 11400000, guid: 03d0acaf65387b45e8744ba57b0b8613, type: 2}
   recognizer: {fileID: 0}
-  spellContainer: {fileID: 3189088438561247743}
   rigidbody: {fileID: 0}
+  spellContainer: {fileID: 3189088438561247743}
   moveSpeed: 3
 --- !u!212 &1157572424319928881
 SpriteRenderer:
@@ -257,6 +258,19 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
+--- !u!114 &4510702143249838437
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4230735849268552375}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dfd1e7f6ffba465bbefd792ec2c3a9a5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 100
 --- !u!1 &4929590327851568461
 GameObject:
   m_ObjectHideFlags: 0
