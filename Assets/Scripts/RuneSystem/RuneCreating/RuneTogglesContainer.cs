@@ -1,3 +1,4 @@
+#if UNITY_EDITOR
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -83,3 +84,4 @@ namespace SquallOfSpells.RuneSystem.RuneCreating
         }
     }
 }
+#endif

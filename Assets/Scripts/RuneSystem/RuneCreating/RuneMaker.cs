@@ -1,3 +1,4 @@
+#if UNITY_EDITOR
 using SquallOfSpells.RuneSystem.Draw;
 using Unity.Mathematics;
 using UnityEditor;
@@ -183,3 +184,4 @@ namespace SquallOfSpells.RuneSystem.RuneCreating
         }
     }
 }
+#endif
