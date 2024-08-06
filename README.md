@@ -1,4 +1,4 @@
-# Rune game
+# Squall of spells
 The main idea is game controlled by "runes" - a schematic symbols, drawn by player. Each of those has the corresponding spell to cast.
 The spell system is ideologically similar to Magic: majority of the “runes” are immediately available to the player, but there is neither a list of possible rune draws nor a list of spells that runes cast. The player explores possible combinations in the process. And player improves their own skills rather than improves game character.
 
@@ -19,5 +19,5 @@ The spell system is ideologically similar to Magic: majority of the “runes” 
 |------------------------|--------|
 | New rune               | N      |
 | Delete rune            | Delete |
-| Add to current rune    | Space  |   
+| Add to current rune    | Space  |
 | Select recognized rune | R      |
