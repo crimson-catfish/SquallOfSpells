@@ -1,7 +1,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RuneLimbo : MonoBehaviour
+namespace SquallOfSpells.RuneSystem.RuneCreating
 {
-    public List<Rune> runesToDelete = new();
+    public class RuneLimbo : MonoBehaviour
+    {
+        public List<Rune> runesToDelete = new();
+    }
 }

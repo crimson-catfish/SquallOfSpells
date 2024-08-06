@@ -1,32 +1,35 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-[RequireComponent(typeof(RawImage))]
-public class RecognizedRunePreview : MonoBehaviour
+namespace SquallOfSpells.RuneSystem.RuneCreating
 {
-    [SerializeField] private RuneRecognizer recognizer;
-
-    private RawImage image;
-
-
-    private void Start()
+    [RequireComponent(typeof(RawImage))]
+    public class RecognizedRunePreview : MonoBehaviour
     {
-        image = GetComponent<RawImage>();
-    }
+        [SerializeField] private RuneRecognizer recognizer;
 
-    private void OnEnable()
-    {
-        recognizer.OnRuneRecognized += HandleRuneRecognition;
-    }
-
-    private void OnDisable()
-    {
-        recognizer.OnRuneRecognized -= HandleRuneRecognition;
-    }
+        private RawImage image;
 
 
-    private void HandleRuneRecognition(Rune rune)
-    {
-        image.texture = rune == null ? null : rune.Preview;
+        private void Start()
+        {
+            image = GetComponent<RawImage>();
+        }
+
+        private void OnEnable()
+        {
+            recognizer.OnRuneRecognized += HandleRuneRecognition;
+        }
+
+        private void OnDisable()
+        {
+            recognizer.OnRuneRecognized -= HandleRuneRecognition;
+        }
+
+
+        private void HandleRuneRecognition(Rune rune)
+        {
+            image.texture = rune == null ? null : rune.Preview;
+        }
     }
 }

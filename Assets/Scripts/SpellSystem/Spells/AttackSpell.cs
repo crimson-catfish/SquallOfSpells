@@ -1,6 +1,9 @@
 using UnityEngine;
 
-public class AttackSpell : Spell
+namespace SquallOfSpells.SpellSystem
 {
-    [SerializeField] protected float damage;
+    public class AttackSpell : Spell
+    {
+        [SerializeField] protected float damage;
+    }
 }

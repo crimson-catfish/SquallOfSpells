@@ -1,4 +1,7 @@
-public interface INonTargetable
+namespace SquallOfSpells.SpellSystem
 {
-    public void Cast();
+    public interface INonTargetable
+    {
+        public void Cast();
+    }
 }

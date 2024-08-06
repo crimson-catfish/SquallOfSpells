@@ -1,9 +1,12 @@
 using UnityEngine;
 
-public class MainCamera : MonoBehaviour
+namespace SquallOfSpells
 {
-    // Start is called before the first frame update
-    private void Start()
+    public class MainCamera : MonoBehaviour
     {
+        // Start is called before the first frame update
+        private void Start()
+        {
+        }
     }
 }

@@ -1,6 +1,9 @@
 using UnityEngine;
 
-public interface IPositionable
+namespace SquallOfSpells.SpellSystem
 {
-    public void Cast(Vector2 position);
+    public interface IPositionable
+    {
+        public void Cast(Vector2 position);
+    }
 }

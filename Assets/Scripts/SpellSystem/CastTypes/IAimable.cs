@@ -1,6 +1,9 @@
 using UnityEngine;
 
-public interface IAimable
+namespace SquallOfSpells.SpellSystem
 {
-    public void Cast(Vector2 direction);
+    public interface IAimable
+    {
+        public void Cast(Vector2 direction);
+    }
 }

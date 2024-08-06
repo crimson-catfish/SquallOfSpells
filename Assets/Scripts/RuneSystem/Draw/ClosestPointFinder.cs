@@ -1,46 +1,49 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public static class Closest
+namespace SquallOfSpells.RuneSystem.Draw
 {
-    public static PointAndDistance GetPointAndDistance(Vector2 pointToCheck, IEnumerable<Vector2> pointsField)
+    public static class Closest
     {
-        PointAndDistance closest = new() { sqrDistance = Mathf.Infinity };
-
-        foreach (Vector2 point in pointsField)
+        public static PointAndDistance GetPointAndDistance(Vector2 pointToCheck, IEnumerable<Vector2> pointsField)
         {
-            float sqrDistance = (point - pointToCheck).sqrMagnitude;
+            PointAndDistance closest = new() { sqrDistance = Mathf.Infinity };
 
-            if (sqrDistance < closest.sqrDistance)
+            foreach (Vector2 point in pointsField)
             {
-                closest.sqrDistance = sqrDistance;
-                closest.point = point;
+                float sqrDistance = (point - pointToCheck).sqrMagnitude;
+
+                if (sqrDistance < closest.sqrDistance)
+                {
+                    closest.sqrDistance = sqrDistance;
+                    closest.point = point;
+                }
             }
+
+            return closest;
         }
 
-        return closest;
-    }
-
-    public static float GetSqrDistance(Vector2 pointToCheck, IEnumerable<Vector2> pointsField)
-    {
-        float minSqrDistance = Mathf.Infinity;
-
-        foreach (Vector2 point in pointsField)
+        public static float GetSqrDistance(Vector2 pointToCheck, IEnumerable<Vector2> pointsField)
         {
-            float sqrDistance = (point - pointToCheck).sqrMagnitude;
-            if (sqrDistance < minSqrDistance) minSqrDistance = sqrDistance;
+            float minSqrDistance = Mathf.Infinity;
+
+            foreach (Vector2 point in pointsField)
+            {
+                float sqrDistance = (point - pointToCheck).sqrMagnitude;
+                if (sqrDistance < minSqrDistance) minSqrDistance = sqrDistance;
+            }
+
+            return minSqrDistance;
         }
 
-        return minSqrDistance;
+        #region Nested type: PointAndDistance
+
+        public struct PointAndDistance
+        {
+            public Vector2 point;
+            public float   sqrDistance;
+        }
+
+        #endregion
     }
-
-    #region Nested type: PointAndDistance
-
-    public struct PointAndDistance
-    {
-        public Vector2 point;
-        public float   sqrDistance;
-    }
-
-    #endregion
 }

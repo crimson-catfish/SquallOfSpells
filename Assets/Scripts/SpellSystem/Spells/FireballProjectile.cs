@@ -1,25 +1,28 @@
 using UnityEngine;
 
-public class FireballProjectile : Projectile
+namespace SquallOfSpells.SpellSystem
 {
-    [SerializeField] private float explosionRadius;
-
-    private void Update()
+    public class FireballProjectile : Projectile
     {
-        RaycastHit2D hit =
-            Physics2D.Raycast(this.transform.position, this.transform.right, this.speed * Time.deltaTime);
+        [SerializeField] private float explosionRadius;
 
-        if (hit)
-            Explode(hit.transform.gameObject);
+        private void Update()
+        {
+            RaycastHit2D hit =
+                Physics2D.Raycast(this.transform.position, this.transform.right, this.speed * Time.deltaTime);
 
-        this.transform.Translate(Vector3.right * (this.speed * Time.deltaTime));
-    }
+            if (hit)
+                Explode(hit.transform.gameObject);
 
-    private void Explode(GameObject hit)
-    {
-        if (hit.TryGetComponent(out Health healthComponent))
-            healthComponent.TakeDamage(this.damage);
+            this.transform.Translate(Vector3.right * (this.speed * Time.deltaTime));
+        }
 
-        Destroy(this.gameObject);
+        private void Explode(GameObject hit)
+        {
+            if (hit.TryGetComponent(out Health healthComponent))
+                healthComponent.TakeDamage(this.damage);
+
+            Destroy(this.gameObject);
+        }
     }
 }

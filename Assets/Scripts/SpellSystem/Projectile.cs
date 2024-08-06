@@ -1,6 +1,9 @@
 using UnityEngine;
 
-public class Projectile : AttackSpell
+namespace SquallOfSpells.SpellSystem
 {
-    [SerializeField] protected float speed;
+    public class Projectile : AttackSpell
+    {
+        [SerializeField] protected float speed;
+    }
 }

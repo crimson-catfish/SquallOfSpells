@@ -1,21 +1,24 @@
 using UnityEngine;
 
-public class Health : MonoBehaviour
+namespace SquallOfSpells
 {
-    [SerializeField] private float maxHealth;
-
-    private float health;
-
-    public void TakeDamage(float damage)
+    public class Health : MonoBehaviour
     {
-        health -= damage;
+        [SerializeField] private float maxHealth;
 
-        if (health <= 0f)
-            Die();
-    }
+        private float health;
 
-    private void Die()
-    {
-        Destroy(this.gameObject);
+        public void TakeDamage(float damage)
+        {
+            health -= damage;
+
+            if (health <= 0f)
+                Die();
+        }
+
+        private void Die()
+        {
+            Destroy(this.gameObject);
+        }
     }
 }

@@ -1,10 +1,13 @@
 using System;
 using UnityEngine;
 
-public class Wall : Spell, IAimable
+namespace SquallOfSpells.SpellSystem
 {
-    public void Cast(Vector2 direction)
+    public class Wall : Spell, IAimable
     {
-        throw new NotImplementedException();
+        public void Cast(Vector2 direction)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

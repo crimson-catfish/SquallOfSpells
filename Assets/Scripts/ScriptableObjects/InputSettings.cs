@@ -1,24 +1,27 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "Input settings", menuName = "Scriptable objects/Input settings")]
-public class InputSettings : ScriptableObject
+namespace SquallOfSpells
 {
-    public enum AimDirection
+    [CreateAssetMenu(fileName = "Input settings", menuName = "Scriptable objects/Input settings")]
+    public class InputSettings : ScriptableObject
     {
-        Direct,
-        Reverse
+        public enum AimDirection
+        {
+            Direct,
+            Reverse
+        }
+
+        public enum AimOrigin
+        {
+            Player,
+            Free
+        }
+
+        public float stickDeadzone = 0.02f;
+
+        public AimDirection direction;
+        public AimOrigin    origin;
+
+        public bool traceHandlers;
     }
-
-    public enum AimOrigin
-    {
-        Player,
-        Free
-    }
-
-    public float stickDeadzone = 0.02f;
-
-    public AimDirection direction;
-    public AimOrigin    origin;
-
-    public bool traceHandlers;
 }

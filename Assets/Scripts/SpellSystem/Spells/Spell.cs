@@ -1,9 +1,12 @@
 using UnityEngine;
 
-public abstract class Spell : MonoBehaviour
+namespace SquallOfSpells.SpellSystem
 {
-    // private void OnDisable() 
-    // {
-    //     InputManager.instance.SwitchToActionMap(InputManager.instance.Controls.Draw);
-    // }
+    public abstract class Spell : MonoBehaviour
+    {
+        // private void OnDisable() 
+        // {
+        //     InputManager.instance.SwitchToActionMap(InputManager.instance.Controls.Draw);
+        // }
+    }
 }

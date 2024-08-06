@@ -1,18 +1,21 @@
 using UnityEngine;
 
-[RequireComponent(typeof(BoxCollider2D), typeof(Health))]
-public abstract class Enemy : MonoBehaviour
+namespace SquallOfSpells
 {
-    protected GameObject player;
-
-
-    protected virtual void OnEnable()
+    [RequireComponent(typeof(BoxCollider2D), typeof(Health))]
+    public abstract class Enemy : MonoBehaviour
     {
-        player = GameObject.FindGameObjectWithTag("Player");
-    }
+        protected GameObject player;
 
-    private void Die()
-    {
-        Destroy(this.gameObject);
+
+        protected virtual void OnEnable()
+        {
+            player = GameObject.FindGameObjectWithTag("Player");
+        }
+
+        private void Die()
+        {
+            Destroy(this.gameObject);
+        }
     }
 }

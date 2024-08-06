@@ -5,103 +5,106 @@ using UnityEditorInternal;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-[InitializeOnLoad]
-public class ComponentsSorter : ScriptableObject
+namespace CrimsonCatfish.Editor
 {
-    static ComponentsSorter()
+    [InitializeOnLoad]
+    public class ComponentsSorter : ScriptableObject
     {
-        EditorApplication.hierarchyChanged += OnHierarchyChanged;
-    }
-
-    [MenuItem("Edit/Sort Components %&a")]
-    private static void SortComponentsMenuItem()
-    {
-        SortComponentsInAllGameObjects();
-    }
-
-    private static void OnHierarchyChanged()
-    {
-        if (Selection.activeGameObject == null)
-            return;
-
-        SortComponents(Selection.activeGameObject);
-    }
-
-    private static void SortComponentsInAllGameObjects()
-    {
-        // Sort components in all loaded scenes
-        for (int i = 0; i < SceneManager.sceneCount; i++)
+        static ComponentsSorter()
         {
-            Scene scene = SceneManager.GetSceneAt(i);
+            EditorApplication.hierarchyChanged += OnHierarchyChanged;
+        }
 
-            foreach (GameObject gameObject in scene.GetRootGameObjects())
+        [MenuItem("Edit/Sort Components %&a")]
+        private static void SortComponentsMenuItem()
+        {
+            SortComponentsInAllGameObjects();
+        }
+
+        private static void OnHierarchyChanged()
+        {
+            if (Selection.activeGameObject == null)
+                return;
+
+            SortComponents(Selection.activeGameObject);
+        }
+
+        private static void SortComponentsInAllGameObjects()
+        {
+            // Sort components in all loaded scenes
+            for (int i = 0; i < SceneManager.sceneCount; i++)
             {
-                SortComponentsInHierarchy(gameObject);
+                Scene scene = SceneManager.GetSceneAt(i);
+
+                foreach (GameObject gameObject in scene.GetRootGameObjects())
+                {
+                    SortComponentsInHierarchy(gameObject);
+                }
+            }
+
+            // Sort components in all prefabs
+            string[] prefabGuids = AssetDatabase.FindAssets("t:Prefab");
+
+            foreach (string prefabGuid in prefabGuids)
+            {
+                string prefabPath = AssetDatabase.GUIDToAssetPath(prefabGuid);
+                GameObject prefab = AssetDatabase.LoadAssetAtPath<GameObject>(prefabPath);
+                SortComponentsInHierarchy(prefab);
             }
         }
 
-        // Sort components in all prefabs
-        string[] prefabGuids = AssetDatabase.FindAssets("t:Prefab");
-
-        foreach (string prefabGuid in prefabGuids)
+        private static void SortComponentsInHierarchy(GameObject gameObject)
         {
-            string prefabPath = AssetDatabase.GUIDToAssetPath(prefabGuid);
-            GameObject prefab = AssetDatabase.LoadAssetAtPath<GameObject>(prefabPath);
-            SortComponentsInHierarchy(prefab);
-        }
-    }
+            SortComponents(gameObject);
 
-    private static void SortComponentsInHierarchy(GameObject gameObject)
-    {
-        SortComponents(gameObject);
-
-        foreach (Transform child in gameObject.transform)
-        {
-            SortComponentsInHierarchy(child.gameObject);
-        }
-    }
-
-    private static void SortComponents(GameObject gameObject)
-    {
-        List<Component> sortedComponents = gameObject.GetComponents<Component>()
-            .Where(component => !(component is Transform))
-            .OrderBy(component => IsCustomComponent(component) ? 0 : 1)
-            .ToList();
-
-        for (int i = 0; i < sortedComponents.Count; i++)
-        {
-            MoveComponentToIndex(gameObject, sortedComponents[i], i);
-        }
-    }
-
-    private static void MoveComponentToIndex(GameObject gameObject, Component component, int index)
-    {
-        List<Component> components = gameObject.GetComponents<Component>()
-            .Where(comp => !(comp is Transform))
-            .ToList();
-
-        int currentIndex = components.IndexOf(component);
-
-        while (currentIndex > index)
-        {
-            ComponentUtility.MoveComponentUp(component);
-            currentIndex--;
+            foreach (Transform child in gameObject.transform)
+            {
+                SortComponentsInHierarchy(child.gameObject);
+            }
         }
 
-        while (currentIndex < index)
+        private static void SortComponents(GameObject gameObject)
         {
-            ComponentUtility.MoveComponentDown(component);
-            currentIndex++;
+            List<Component> sortedComponents = gameObject.GetComponents<Component>()
+                .Where(component => !(component is Transform))
+                .OrderBy(component => IsCustomComponent(component) ? 0 : 1)
+                .ToList();
+
+            for (int i = 0; i < sortedComponents.Count; i++)
+            {
+                MoveComponentToIndex(gameObject, sortedComponents[i], i);
+            }
         }
-    }
 
-    private static bool IsCustomComponent(Component component)
-    {
-        string ns = component.GetType().Namespace;
+        private static void MoveComponentToIndex(GameObject gameObject, Component component, int index)
+        {
+            List<Component> components = gameObject.GetComponents<Component>()
+                .Where(comp => !(comp is Transform))
+                .ToList();
 
-        if (ns == null)
-            return true;
+            int currentIndex = components.IndexOf(component);
 
-        return !ns.StartsWith("UnityEngine");
+            while (currentIndex > index)
+            {
+                ComponentUtility.MoveComponentUp(component);
+                currentIndex--;
+            }
+
+            while (currentIndex < index)
+            {
+                ComponentUtility.MoveComponentDown(component);
+                currentIndex++;
+            }
+        }
+
+        private static bool IsCustomComponent(Component component)
+        {
+            string ns = component.GetType().Namespace;
+
+            if (ns == null)
+                return true;
+
+            return !ns.StartsWith("UnityEngine");
+        }
     }
 }

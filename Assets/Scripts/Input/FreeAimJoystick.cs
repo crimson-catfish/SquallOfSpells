@@ -2,54 +2,57 @@ using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.UI;
 
-[RequireComponent(typeof(Image))]
-public class FreeAimJoystick : MonoBehaviour
+namespace SquallOfSpells
 {
-    [SerializeField, Range(0f, 0.5f)] private float joystickRange = 0.44f;
-
-    [SerializeField] private InputSettings settings;
-    [SerializeField] private InputManager  inputManager;
-
-
-    [SerializeField] private Image baseImage;
-
-    [SerializeField] private GameObject handle;
-    [SerializeField] private Image      handleImage;
-
-
-    private void OnEnable()
+    [RequireComponent(typeof(Image))]   
+    public class FreeAimJoystick : MonoBehaviour
     {
-        inputManager.OnAimStart += HandleAimStart;
-        inputManager.OnAimCast += HandleAimCast;
-    }
+        [SerializeField, Range(0f, 0.5f)] private float joystickRange = 0.44f;
 
-    private void HandleAimStart(Vector2 startPosition)
-    {
-        if (settings.origin == InputSettings.AimOrigin.Free)
+        [SerializeField] private InputSettings settings;
+        [SerializeField] private InputManager  inputManager;
+
+
+        [SerializeField] private Image baseImage;
+
+        [SerializeField] private GameObject handle;
+        [SerializeField] private Image      handleImage;
+
+
+        private void OnEnable()
         {
-            this.transform.position = startPosition;
-            baseImage.enabled = true;
-        }
-        else if (settings.origin == InputSettings.AimOrigin.Player)
-        {
+            inputManager.OnAimStart += HandleAimStart;
+            inputManager.OnAimCast += HandleAimCast;
         }
 
-        handle.transform.position = Vector3.zero;
-        handleImage.enabled = true;
+        private void HandleAimStart(Vector2 startPosition)
+        {
+            if (settings.origin == InputSettings.AimOrigin.Free)
+            {
+                this.transform.position = startPosition;
+                baseImage.enabled = true;
+            }
+            else if (settings.origin == InputSettings.AimOrigin.Player)
+            {
+            }
 
-        inputManager.OnAimDirectionChange += HandleAimDirectionChange;
-    }
+            handle.transform.position = Vector3.zero;
+            handleImage.enabled = true;
 
-    private void HandleAimDirectionChange(Vector2 direction)
-    {
-        direction = direction.normalized * math.pow(direction.sqrMagnitude, joystickRange);
+            inputManager.OnAimDirectionChange += HandleAimDirectionChange;
+        }
 
-        handle.transform.position = this.transform.position + (Vector3)direction;
-    }
+        private void HandleAimDirectionChange(Vector2 direction)
+        {
+            direction = direction.normalized * math.pow(direction.sqrMagnitude, joystickRange);
 
-    private void HandleAimCast(Vector2 _)
-    {
-        baseImage.enabled = false;
-        handleImage.enabled = false;
+            handle.transform.position = this.transform.position + (Vector3)direction;
+        }
+
+        private void HandleAimCast(Vector2 _)
+        {
+            baseImage.enabled = false;
+            handleImage.enabled = false;
+        }
     }
 }

@@ -1,7 +1,10 @@
-public class GoofyEnemy : FollowingEnemy
+namespace SquallOfSpells
 {
-    private void Update()
+    public class GoofyEnemy : FollowingEnemy
     {
-        Follow();
+        private void Update()
+        {
+            Follow();
+        }
     }
 }
