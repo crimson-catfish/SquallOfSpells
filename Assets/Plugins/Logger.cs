@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 namespace SquallOfSpells.Plugins
@@ -15,8 +16,26 @@ namespace SquallOfSpells.Plugins
 
         public void Log(object message)
         {
-            if (_enabled)
+            if (!_enabled)
+                return;
+
+            if (message is IEnumerable enumerable)
+            {
+                Debug.Log("===============================================");
+
+                Debug.Log("enumerable collection: " + message, _owner);
+
+                foreach (var element in enumerable)
+                {
+                    Debug.Log(element, _owner);
+                }
+
+                Debug.Log("===============================================");
+            }
+            else
+            {
                 Debug.Log(message, _owner);
+            }
         }
     }
 }
