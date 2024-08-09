@@ -1,55 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &4403586568013779255
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 5203958911758339630}
-  - component: {fileID: 4698872773820208350}
-  m_Layer: 0
-  m_Name: Rune Recognizer
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &5203958911758339630
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4403586568013779255}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 4212380282339299733}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4698872773820208350
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4403586568013779255}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ef132027360bf0e4babc5139f04264af, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  storage: {fileID: 11400000, guid: be54250f59b104a42828af839132ca3c, type: 2}
-  drawManager: {fileID: 233136712175551576}
-  printRecognized: 0
-  acceptableHeightDifferencePercent: 30
-  acceptableMassCenterDifferencePercent: 20
-  acceptableError: 0.04
 --- !u!1 &4965070417072367437
 GameObject:
   m_ObjectHideFlags: 0
@@ -125,6 +75,7 @@ MonoBehaviour:
     points: []
   inputManager: {fileID: 11400000, guid: 03d0acaf65387b45e8744ba57b0b8613, type: 2}
   lineRenderer: {fileID: 6874674776020311074}
+  recognizer: {fileID: 11400000, guid: e6e7a13fe0541ebf9b0fd5de420d2c9e, type: 2}
   drawLineThickness: 0.02
   showDrawPoints: 0
   distanceBetweenPoints: 0.02
@@ -168,7 +119,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 9063664199522281688}
-  - {fileID: 5203958911758339630}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8967070782096712107

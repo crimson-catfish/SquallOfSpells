@@ -419,17 +419,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 5.07, y: 5.12}
   m_EdgeRadius: 0
---- !u!114 &1178839774 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 4698872773820208350, guid: 4ff70382848aabdf2ae3b0910a20d49e, type: 3}
-  m_PrefabInstance: {fileID: 231468252}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ef132027360bf0e4babc5139f04264af, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1293887389
 GameObject:
   m_ObjectHideFlags: 0
@@ -986,7 +975,7 @@ PrefabInstance:
     - target: {fileID: 3189088438561247743, guid: 9b454918a9a055d84bd117b4f0f88f33, type: 3}
       propertyPath: recognizer
       value: 
-      objectReference: {fileID: 1178839774}
+      objectReference: {fileID: 0}
     - target: {fileID: 3189088438561247743, guid: 9b454918a9a055d84bd117b4f0f88f33, type: 3}
       propertyPath: inputManager
       value: 
@@ -1030,7 +1019,7 @@ PrefabInstance:
     - target: {fileID: 7845758583061478427, guid: 9b454918a9a055d84bd117b4f0f88f33, type: 3}
       propertyPath: recognizer
       value: 
-      objectReference: {fileID: 1178839774}
+      objectReference: {fileID: 11400000, guid: e6e7a13fe0541ebf9b0fd5de420d2c9e, type: 2}
     - target: {fileID: 9100786171447711631, guid: 9b454918a9a055d84bd117b4f0f88f33, type: 3}
       propertyPath: settings
       value: 
@@ -1042,7 +1031,7 @@ PrefabInstance:
     - target: {fileID: 9100786171447711631, guid: 9b454918a9a055d84bd117b4f0f88f33, type: 3}
       propertyPath: recognizer
       value: 
-      objectReference: {fileID: 1178839774}
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

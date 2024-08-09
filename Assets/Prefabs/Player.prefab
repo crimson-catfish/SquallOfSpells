@@ -82,7 +82,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   storage: {fileID: 11400000, guid: 28ddf84523df4ac0a946d6ec8f756184, type: 2}
-  recognizer: {fileID: 0}
+  recognizer: {fileID: 11400000, guid: e6e7a13fe0541ebf9b0fd5de420d2c9e, type: 2}
   inputManager: {fileID: 11400000, guid: 03d0acaf65387b45e8744ba57b0b8613, type: 2}
 --- !u!212 &1157572424319928881
 SpriteRenderer:

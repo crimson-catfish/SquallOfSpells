@@ -19,16 +19,16 @@ namespace SquallOfSpells.RuneSystem.RuneCreating
 
         private void OnEnable()
         {
-            recognizer.OnRuneRecognized += HandleRuneRecognition;
+            recognizer.OnRecognized += HandleRecognition;
         }
 
         private void OnDisable()
         {
-            recognizer.OnRuneRecognized -= HandleRuneRecognition;
+            recognizer.OnRecognized -= HandleRecognition;
         }
 
 
-        private void HandleRuneRecognition(Rune rune)
+        private void HandleRecognition(Rune rune)
         {
             image.texture = rune == null ? null : rune.Preview;
         }

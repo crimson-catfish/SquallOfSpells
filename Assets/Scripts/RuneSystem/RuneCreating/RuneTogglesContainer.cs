@@ -28,17 +28,17 @@ namespace SquallOfSpells.RuneSystem.RuneCreating
 
         private void OnEnable()
         {
-            recognizer.OnRuneRecognized += HandleRuneRecognition;
+            recognizer.OnRecognized += HandleRecognition;
             inputManager.OnSelectRecognized += SelectRecognizedRune;
         }
 
         private void OnDisable()
         {
-            recognizer.OnRuneRecognized -= HandleRuneRecognition;
+            recognizer.OnRecognized -= HandleRecognition;
             inputManager.OnSelectRecognized -= SelectRecognizedRune;
         }
 
-        private void HandleRuneRecognition(Rune rune)
+        private void HandleRecognition(Rune rune)
         {
             currentRecognized = rune;
         }

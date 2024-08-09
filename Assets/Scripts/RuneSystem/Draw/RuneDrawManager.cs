@@ -11,6 +11,8 @@ namespace SquallOfSpells.RuneSystem.Draw
 
         [SerializeField] private InputManager   inputManager;
         [SerializeField] private UILineRenderer lineRenderer;
+        [SerializeField] private RuneRecognizer recognizer;
+
 
         [SerializeField] private float drawLineThickness = 0.02f;
         [SerializeField] private bool  showDrawPoints;
@@ -103,6 +105,8 @@ namespace SquallOfSpells.RuneSystem.Draw
             PrepareRuneVariation();
             lineRenderer.points.Clear();
             lineRenderer.SetAllDirty();
+
+            recognizer.Recognize(currentVariation);
             OnRuneDrawn?.Invoke(currentVariation);
         }
 

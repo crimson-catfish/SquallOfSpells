@@ -1,3 +1,4 @@
+using System;
 using SquallOfSpells.RuneSystem;
 using UnityEngine;
 
@@ -9,7 +10,8 @@ namespace SquallOfSpells.SpellSystem
         [SerializeField] private RuneRecognizer recognizer;
         [SerializeField] private InputManager   inputManager;
 
-        private void HandleRuneRecognized(Rune rune)
+
+        private void HandleRecognized(Rune rune)
         {
             if (rune == null)
                 return;
@@ -27,7 +29,12 @@ namespace SquallOfSpells.SpellSystem
 
         private void OnEnable()
         {
-            recognizer.OnRuneRecognized += HandleRuneRecognized;
+            recognizer.OnRecognized += HandleRecognized;
+        }
+
+        private void OnDisable()
+        {
+            recognizer.OnRecognized -= HandleRecognized;
         }
     }
 }
