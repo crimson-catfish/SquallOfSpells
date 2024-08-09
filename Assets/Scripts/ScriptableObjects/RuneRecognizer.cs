@@ -4,6 +4,8 @@ using System.Linq;
 using SquallOfSpells.RuneSystem;
 using SquallOfSpells.RuneSystem.Draw;
 using UnityEngine;
+using UnityEngine.Serialization;
+using Logger = SquallOfSpells.Plugins.Logger;
 
 namespace SquallOfSpells
 {
@@ -11,16 +13,23 @@ namespace SquallOfSpells
     public class RuneRecognizer : ScriptableObject
     {
         [SerializeField] private RuneStorage storage;
-        [SerializeField] private bool        printRecognized;
+
+        [SerializeField] private bool log;
 
         [Header("Recognition settings")]
         [SerializeField] private float acceptableHeightDifferencePercent = 30f;
-        [SerializeField] private float acceptableMassCenterDifferencePercent = 20f;
-        [SerializeField] private float acceptableError                       = 0.05f;
+        [SerializeField]                                         private float acceptableMassCenterDifferencePercent = 20f;
+        [SerializeField] private float acceptableMismatch                    = 0.05f;
+
+        private Logger logger;
 
         // ReSharper disable once IdentifierTypo
         public event Action<Rune> OnRecognized;
 
+        private void OnEnable()
+        {
+            logger = new Logger(this, log);
+        }
 
         public void Recognize(RuneVariation variationToCheck)
         {
@@ -41,23 +50,28 @@ namespace SquallOfSpells
             foreach (int hash in selectedRuneHashes)
                 runesToCheck.Add(storage.Runes[hash]);
 
+            logger.Log(runesToCheck);
+
             Rune closestRune = null;
-            float minError = acceptableError;
+            float minMismatch = acceptableMismatch;
 
             foreach (Rune rune in runesToCheck)
             {
-                float runeError = DeepCheck(variationToCheck, rune); // expensive!
+                float mismatch = DeepCheck(variationToCheck, rune); // expensive!
 
-                if (runeError < minError)
+                logger.Log(rune + " | mismatch: " + mismatch);
+
+                if (mismatch < minMismatch)
                 {
-                    minError = runeError;
+                    minMismatch = mismatch;
                     closestRune = rune;
                 }
             }
 
+
             OnRecognized?.Invoke(closestRune);
 
-            if (printRecognized && closestRune != null)
+            if (log && closestRune != null)
                 Debug.Log("Recognized as " + closestRune.name);
         }
 
@@ -80,27 +94,27 @@ namespace SquallOfSpells
         /// <returns></returns>
         private static float DeepCheck(RuneVariation toCheck, Rune rune)
         {
-            float totalRuneError = 0;
+            float totalMismatch = 0;
 
             foreach (RuneVariation variation in rune.drawVariations)
             {
-                totalRuneError += GetAverageVariationError(variation, toCheck);
-                totalRuneError += GetAverageVariationError(toCheck, variation);
+                totalMismatch += GetVariationMismatch(variation, toCheck);
+                totalMismatch += GetVariationMismatch(toCheck, variation);
             }
 
-            return totalRuneError / rune.drawVariations.Count;
+            return totalMismatch / rune.drawVariations.Count;
         }
 
-        private static float GetAverageVariationError(RuneVariation baseVariation, RuneVariation maskVariation)
+        private static float GetVariationMismatch(RuneVariation baseVariation, RuneVariation maskVariation)
         {
-            float totalVariationError = 0;
+            float totalMismatch = 0;
 
             foreach (Vector2 point in maskVariation.points)
             {
-                totalVariationError += Closest.GetSqrDistance(point, baseVariation.points);
+                totalMismatch += Closest.GetSqrDistance(point, baseVariation.points);
             }
 
-            return totalVariationError / maskVariation.points.Length;
+            return totalMismatch / maskVariation.points.Length;
         }
     }
 }
