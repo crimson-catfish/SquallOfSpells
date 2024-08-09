@@ -1,27 +1,20 @@
-using AYellowpaper.SerializedCollections;
 using SquallOfSpells.RuneSystem;
 using UnityEngine;
 
 namespace SquallOfSpells.SpellSystem
 {
-    public class SpellContainer : MonoBehaviour
+    public class SpellCaster : MonoBehaviour
     {
-        [SerializeField] private RuneRecognizer                         recognizer;
-        [SerializeField] private SerializedDictionary<Rune, GameObject> spells = new();
-        [SerializeField] private InputManager                           inputManager;
-
-
-        private void OnEnable()
-        {
-            recognizer.OnRuneRecognized += HandleRuneRecognized;
-        }
+        [SerializeField] private SpellStorage   storage;
+        [SerializeField] private RuneRecognizer recognizer;
+        [SerializeField] private InputManager   inputManager;
 
         private void HandleRuneRecognized(Rune rune)
         {
             if (rune == null)
                 return;
 
-            if (!spells.TryGetValue(rune, out var spellObject))
+            if (!storage.spells.TryGetValue(rune, out var spellObject))
                 return;
 
             if (spellObject.TryGetComponent(out IAimable aimableSpell))
@@ -30,6 +23,11 @@ namespace SquallOfSpells.SpellSystem
                 inputManager.OnAimCast += aimableSpell.Cast;
                 inputManager.OnAimCast += _ => inputManager.OnAimCast -= aimableSpell.Cast;
             }
+        }
+
+        private void OnEnable()
+        {
+            recognizer.OnRuneRecognized += HandleRuneRecognized;
         }
     }
 }
