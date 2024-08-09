@@ -20,22 +20,23 @@ namespace SquallOfSpells.RuneSystem.Draw
         [SerializeField] private float acceptableError = 0.001f;
         [SerializeField] private float heavyCheckStep  = 0.005f;
 
-        private readonly List<Vector2> drawPoints  = new();
-        private readonly float         screenWidth = Screen.width; // Probably reducing amount of Screen calls is worth it idk 
-        private          Rect          drawFrame;
-        private          Vector2       lastPoint;
-        private          Vector2       momentSum = Vector2.zero;
+        private readonly List<Vector2> drawPoints = new();
+        private readonly float screenWidth = Screen.width; // Probably reducing amount of Screen calls is worth it idk
 
-        private void OnEnable()
-        {
-            inputManager.OnDrawStart += HandleDrawStart;
-            inputManager.OnDrawEnd += HandleDrawEnd;
-        }
+        private Rect    drawFrame;
+        private Vector2 lastPoint;
+        private Vector2 momentSum = Vector2.zero;
 
         private void Start()
         {
             lineRenderer.thickness = drawLineThickness * Screen.width;
             Gizmos.color = Color.green;
+        }
+
+        private void OnEnable()
+        {
+            inputManager.OnDrawStart += HandleDrawStart;
+            inputManager.OnDrawEnd += HandleDrawEnd;
         }
 
         private void OnDisable()
