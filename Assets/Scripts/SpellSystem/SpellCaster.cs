@@ -14,7 +14,7 @@ namespace SquallOfSpells.SpellSystem
             if (rune == null)
                 return;
 
-            if (!storage.spells.TryGetValue(rune, out var spellObject))
+            if (!storage.spells.TryGetValue(rune, out GameObject spellObject))
                 return;
 
             if (spellObject.TryGetComponent(out IAimable aimableSpell))
