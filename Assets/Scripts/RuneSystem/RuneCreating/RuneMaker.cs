@@ -50,7 +50,7 @@ namespace SquallOfSpells.RuneSystem.RuneCreating
 
         public void SaveCurrentVariationToNewRune()
         {
-            RuneDrawVariation variation = drawManager.currentVariation;
+            RuneVariation variation = drawManager.currentVariation;
 
             if (!DoesVariationHaveEnoughPoints(variation)) return;
 
@@ -117,7 +117,7 @@ namespace SquallOfSpells.RuneSystem.RuneCreating
             Undo.SetCurrentGroupName("delete rune");
         }
 
-        private bool DoesVariationHaveEnoughPoints(RuneDrawVariation variation)
+        private bool DoesVariationHaveEnoughPoints(RuneVariation variation)
         {
             if (variation == null)
             {
@@ -138,7 +138,7 @@ namespace SquallOfSpells.RuneSystem.RuneCreating
 
         private void AddCurrentVariationToRune(Rune rune)
         {
-            RuneDrawVariation variation = drawManager.currentVariation;
+            RuneVariation variation = drawManager.currentVariation;
 
             if (!DoesVariationHaveEnoughPoints(variation)) return;
             if (rune.drawVariations.Contains(variation)) return;

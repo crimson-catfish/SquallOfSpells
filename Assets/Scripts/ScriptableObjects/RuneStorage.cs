@@ -51,7 +51,7 @@ namespace SquallOfSpells
             AddRuneProperties(rune);
         }
 
-        public void AddVariationToRune(RuneDrawVariation variation, Rune rune)
+        public void AddVariationToRune(RuneVariation variation, Rune rune)
         {
             RemoveRuneProperties(rune);
 

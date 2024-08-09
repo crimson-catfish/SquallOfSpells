@@ -22,17 +22,17 @@ namespace SquallOfSpells
         public event Action<Rune> OnRecognized;
 
 
-        public void Recognize(RuneDrawVariation drawToCheck)
+        public void Recognize(RuneVariation variationToCheck)
         {
             HashSet<int> selectedRuneHashes =
-                new(FindClosestRunesByParams(drawToCheck.height, storage.RunesHeight,
+                new(FindClosestRunesByParams(variationToCheck.height, storage.RunesHeight,
                     acceptableHeightDifferencePercent));
 
-            selectedRuneHashes.IntersectWith(FindClosestRunesByParams(drawToCheck.massCenter.x,
+            selectedRuneHashes.IntersectWith(FindClosestRunesByParams(variationToCheck.massCenter.x,
                 storage.RunesMassCenterX,
                 acceptableMassCenterDifferencePercent));
 
-            selectedRuneHashes.IntersectWith(FindClosestRunesByParams(drawToCheck.massCenter.y,
+            selectedRuneHashes.IntersectWith(FindClosestRunesByParams(variationToCheck.massCenter.y,
                 storage.RunesMassCenterY,
                 acceptableMassCenterDifferencePercent));
 
@@ -46,7 +46,7 @@ namespace SquallOfSpells
 
             foreach (Rune rune in runesToCheck)
             {
-                float runeError = DeepCheck(drawToCheck, rune); // expensive!
+                float runeError = DeepCheck(variationToCheck, rune); // expensive!
 
                 if (runeError < minError)
                 {
@@ -78,20 +78,20 @@ namespace SquallOfSpells
         ///     Use multithreading.
         /// </summary>
         /// <returns></returns>
-        private static float DeepCheck(RuneDrawVariation drawToCheck, Rune rune)
+        private static float DeepCheck(RuneVariation toCheck, Rune rune)
         {
             float totalRuneError = 0;
 
-            foreach (RuneDrawVariation variation in rune.drawVariations)
+            foreach (RuneVariation variation in rune.drawVariations)
             {
-                totalRuneError += GetAverageVariationError(variation, drawToCheck);
-                totalRuneError += GetAverageVariationError(drawToCheck, variation);
+                totalRuneError += GetAverageVariationError(variation, toCheck);
+                totalRuneError += GetAverageVariationError(toCheck, variation);
             }
 
             return totalRuneError / rune.drawVariations.Count;
         }
 
-        private static float GetAverageVariationError(RuneDrawVariation baseVariation, RuneDrawVariation maskVariation)
+        private static float GetAverageVariationError(RuneVariation baseVariation, RuneVariation maskVariation)
         {
             float totalVariationError = 0;
 

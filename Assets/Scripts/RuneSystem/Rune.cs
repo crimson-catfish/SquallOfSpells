@@ -16,7 +16,7 @@ namespace SquallOfSpells.RuneSystem
         public string                  previewPath;
         public float                   averageHeight;
         public Vector2                 averageMassCenter = Vector2.zero;
-        public List<RuneDrawVariation> drawVariations    = new();
+        public List<RuneVariation> drawVariations    = new();
 
         private Texture2D preview;
 

@@ -7,7 +7,7 @@ namespace SquallOfSpells.RuneSystem.Draw
     [RequireComponent(typeof(UILineRenderer))]
     public class RuneDrawManager : MonoBehaviour
     {
-        [HideInInspector] public RuneDrawVariation currentVariation;
+        [HideInInspector] public RuneVariation currentVariation;
 
         [SerializeField] private InputManager   inputManager;
         [SerializeField] private UILineRenderer lineRenderer;
@@ -58,7 +58,7 @@ namespace SquallOfSpells.RuneSystem.Draw
             }
         }
 
-        public event Action<RuneDrawVariation> OnRuneDrawn;
+        public event Action<RuneVariation> OnRuneDrawn;
 
 
         private void HandleDrawStart(Vector2 nextDrawPosition)
@@ -151,7 +151,7 @@ namespace SquallOfSpells.RuneSystem.Draw
 
         private void PrepareRuneVariation()
         {
-            currentVariation = new RuneDrawVariation
+            currentVariation = new RuneVariation
             {
                 points = new Vector2[drawPoints.Count],
                 height = drawFrame.height / drawFrame.width
