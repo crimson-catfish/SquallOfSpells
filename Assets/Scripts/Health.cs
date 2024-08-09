@@ -8,6 +8,11 @@ namespace SquallOfSpells
 
         private float health;
 
+        private void OnEnable()
+        {
+            health = maxHealth;
+        }
+
         public void TakeDamage(float damage)
         {
             health -= damage;
