@@ -9,10 +9,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5758701776325794067}
-  - component: {fileID: -8784197832088923157}
+  - component: {fileID: -1854781957502032192}
   - component: {fileID: 5266992344228242525}
   m_Layer: 0
-  m_Name: FireballProjectile
+  m_Name: ShotgunProjectile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -28,12 +28,12 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.29, y: 0.29, z: 0.29}
+  m_LocalScale: {x: 0.12, y: 0.12, z: 0.12}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &-8784197832088923157
+--- !u!114 &-1854781957502032192
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -42,11 +42,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 8882211435051311793}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 581889a1f21b4dbeb8f62e3d5e5a71a1, type: 3}
+  m_Script: {fileID: 11500000, guid: 0737b44eb59f4d6a804820845032e4d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 25
-  speed: 9.7
+  damage: 8
+  speed: 12
 --- !u!212 &5266992344228242525
 SpriteRenderer:
   m_ObjectHideFlags: 0

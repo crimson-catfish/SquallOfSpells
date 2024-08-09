@@ -44,9 +44,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 978128a17f5146ffa3dea841958001a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 4230735849268552375}
   fireballProjectile: {fileID: 8882211435051311793, guid: f238592a388ff567abd2785f9e3f4e50, type: 3}
---- !u!1 &1249050672756384944
+--- !u!1 &3332562245340573996
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -54,22 +53,22 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 4682836145491360453}
-  - component: {fileID: 6016403546346654529}
+  - component: {fileID: 8976864186689502708}
+  - component: {fileID: 5891380480192198841}
   m_Layer: 0
-  m_Name: Shield
+  m_Name: Shotgun
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &4682836145491360453
+--- !u!4 &8976864186689502708
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1249050672756384944}
+  m_GameObject: {fileID: 3332562245340573996}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
@@ -78,18 +77,21 @@ Transform:
   m_Children: []
   m_Father: {fileID: 7609157800152524842}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6016403546346654529
+--- !u!114 &5891380480192198841
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1249050672756384944}
+  m_GameObject: {fileID: 3332562245340573996}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b920c495af434d1683efad695e5a22fa, type: 3}
+  m_Script: {fileID: 11500000, guid: cb88a2aae58e4b19807c74fe86148017, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  numberOfBullets: 8
+  spreadAngle: 30
+  shotgunProjectile: {fileID: 8882211435051311793, guid: 61a9f0d6febbd1a25ad963eea01de2c2, type: 3}
 --- !u!1 &4230735849268552375
 GameObject:
   m_ObjectHideFlags: 0
@@ -302,7 +304,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1410970518694068453}
-  - {fileID: 4682836145491360453}
+  - {fileID: 8976864186689502708}
   m_Father: {fileID: 2719285077934940273}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &3189088438561247743
@@ -323,5 +325,5 @@ MonoBehaviour:
     - Key: {fileID: 11400000, guid: ebc68e16701b8d53b9182a8e297aa170, type: 2}
       Value: {fileID: 302212288128168322}
     - Key: {fileID: 11400000, guid: 167e473a7023f74d4a0965e0d39bac11, type: 2}
-      Value: {fileID: 1249050672756384944}
-  inputManager: {fileID: 0}
+      Value: {fileID: 3332562245340573996}
+  inputManager: {fileID: 11400000, guid: 03d0acaf65387b45e8744ba57b0b8613, type: 2}
