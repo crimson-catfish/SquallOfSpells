@@ -1027,6 +1027,10 @@ PrefabInstance:
       propertyPath: spreadHorizontal
       value: 0.1
       objectReference: {fileID: 0}
+    - target: {fileID: 7845758583061478427, guid: 9b454918a9a055d84bd117b4f0f88f33, type: 3}
+      propertyPath: recognizer
+      value: 
+      objectReference: {fileID: 1178839774}
     - target: {fileID: 9100786171447711631, guid: 9b454918a9a055d84bd117b4f0f88f33, type: 3}
       propertyPath: settings
       value: 
