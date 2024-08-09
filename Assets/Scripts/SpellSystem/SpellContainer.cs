@@ -28,6 +28,7 @@ namespace SquallOfSpells.SpellSystem
             {
                 inputManager.SwitchToActionMap(inputManager.Controls.Aim);
                 inputManager.OnAimCast += aimableSpell.Cast;
+                inputManager.OnAimCast += _ => inputManager.OnAimCast -= aimableSpell.Cast;
             }
         }
     }
