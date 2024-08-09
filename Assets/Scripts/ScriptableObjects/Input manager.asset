@@ -13,3 +13,4 @@ MonoBehaviour:
   m_Name: Input manager
   m_EditorClassIdentifier: 
   settings: {fileID: 11400000, guid: 5a862e82871ef1e128f61f035ee4829a, type: 2}
+  log: 0

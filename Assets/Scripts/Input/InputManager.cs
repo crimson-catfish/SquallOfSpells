@@ -6,6 +6,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using Logger = SquallOfSpells.Plugins.Logger;
 
 namespace SquallOfSpells
 {
@@ -14,15 +15,18 @@ namespace SquallOfSpells
     {
         [SerializeField] private InputSettings settings;
 
-        private readonly List<Canvas>   enabledCanvases = new();
-        private readonly float          screenWidth     = Screen.width;
-        private          Camera         _mainCamera;
-        private          Transform      _playerTransform;
-        private          Vector2        aimStartPosition;
-        private          Canvas[]       allCanvases;
-        private          InputActionMap currentMap;
+        [SerializeField] private bool log;
 
-        private EventSystem eventSystem;
+        private readonly List<Canvas> enabledCanvases = new();
+        private readonly float        screenWidth     = Screen.width;
+
+        private Camera         _mainCamera;
+        private Transform      _playerTransform;
+        private Vector2        aimStartPosition;
+        private Canvas[]       allCanvases;
+        private InputActionMap currentMap;
+        private EventSystem    eventSystem;
+        private Logger         logger;
 
         public Controls Controls { get; private set; }
 
@@ -50,6 +54,8 @@ namespace SquallOfSpells
         {
             SceneManager.sceneLoaded += HandleSceneLoad;
             Controls = new Controls();
+
+            logger = new Logger(this, log);
         }
 
         // RuneCreationGUI
@@ -176,7 +182,7 @@ namespace SquallOfSpells
             if (IsOverAnyUI(startPositionPixels))
                 return;
 
-            TraceHandler("Draw contact start");
+            logger.Log("Draw contact start");
 
             OnDrawStart?.Invoke(startPositionPixels / screenWidth);
 
@@ -185,7 +191,7 @@ namespace SquallOfSpells
 
         private void HandleDrawContactEnd(InputAction.CallbackContext _)
         {
-            TraceHandler("Draw contact end");
+            logger.Log("Draw contact end");
 
 
             OnDrawEnd?.Invoke();
@@ -199,7 +205,7 @@ namespace SquallOfSpells
             if (IsOverAnyUI(startPositionPixels))
                 return;
 
-            TraceHandler("Aim contact start");
+            logger.Log("Aim contact start");
 
             if (settings.origin == InputSettings.AimOrigin.Free)
                 aimStartPosition = startPositionPixels;
@@ -210,7 +216,7 @@ namespace SquallOfSpells
 
         private void HandleAimPosition(InputAction.CallbackContext context)
         {
-            TraceHandler("Aim position");
+            logger.Log("Aim position");
 
 
             Vector2 position = context.ReadValue<Vector2>();
@@ -228,7 +234,7 @@ namespace SquallOfSpells
 
         private void HandleAimPressed(InputAction.CallbackContext context)
         {
-            TraceHandler("Aim pressed");
+            logger.Log("Aim pressed");
 
             OnAimCast?.Invoke(Controls.Aim.Position.ReadValue<Vector2>() - PlayerScreenPosition);
 
@@ -239,7 +245,7 @@ namespace SquallOfSpells
 
         private void HandleAimDirectionChange(InputAction.CallbackContext context)
         {
-            TraceHandler("Aim direction change");
+            logger.Log("Aim direction change");
 
             Vector2 newDirection = default;
 
@@ -256,7 +262,7 @@ namespace SquallOfSpells
 
         private void HandleAimDirectionUnleash(InputAction.CallbackContext _)
         {
-            TraceHandler("Aim unleash");
+            logger.Log("Aim unleash");
 
             Vector2 direction = default;
 
@@ -274,12 +280,6 @@ namespace SquallOfSpells
             Controls.Aim.Contact.canceled -= HandleAimDirectionUnleash;
 
             SwitchToActionMap(Controls.Draw);
-        }
-
-        private void TraceHandler(string message)
-        {
-            if (settings.traceHandlers)
-                Debug.Log(message);
         }
     }
 }
