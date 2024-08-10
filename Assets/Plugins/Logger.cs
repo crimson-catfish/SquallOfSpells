@@ -19,7 +19,7 @@ namespace SquallOfSpells.Plugins
             if (!_enabled)
                 return;
 
-            if (message is IEnumerable enumerable)
+            if (!(message is string) && message is IEnumerable enumerable)
             {
                 Debug.Log("===============================================");
 
