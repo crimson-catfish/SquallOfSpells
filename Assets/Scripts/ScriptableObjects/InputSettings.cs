@@ -21,7 +21,5 @@ namespace SquallOfSpells
 
         public AimDirection direction;
         public AimOrigin    origin;
-
-        public bool traceHandlers;
     }
 }
