@@ -14,6 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   storage: {fileID: 11400000, guid: be54250f59b104a42828af839132ca3c, type: 2}
   log: 1
-  acceptableHeightDifferencePercent: 30
-  acceptableMassCenterDifferencePercent: 20
-  acceptableError: 0.05
+  averageVariationPower: 1.4
+  averagePointPower: 3
+  sizeDiffPower: 1.6
+  acceptableHeightDifferencePercent: 10
+  acceptableMassCenterDifferencePercent: 10
+  acceptableMismatch: 0.00001

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using SquallOfSpells.RuneSystem;
 using SquallOfSpells.RuneSystem.Draw;
+using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.Serialization;
 using Logger = SquallOfSpells.Plugins.Logger;
@@ -17,9 +18,12 @@ namespace SquallOfSpells
         [SerializeField] private bool log;
 
         [Header("Recognition settings")]
-        [SerializeField] private float acceptableHeightDifferencePercent = 30f;
-        [SerializeField]                                         private float acceptableMassCenterDifferencePercent = 20f;
-        [SerializeField] private float acceptableMismatch                    = 0.05f;
+        [SerializeField] private float averageVariationPower = 1.2f;
+        [SerializeField]                                                                                            private float averagePointPower                     = 1.2f;
+        [FormerlySerializedAs("pointCountPower"),FormerlySerializedAs("pointCountDifferencePower"), SerializeField] private float sizeDiffPower                         = 0.2f;
+        [SerializeField]                                                                                            private float acceptableHeightDifferencePercent     = 10f;
+        [SerializeField]                                                                                            private float acceptableMassCenterDifferencePercent = 10f;
+        [SerializeField]                                                                                            private float acceptableMismatch                    = 0.03f;
 
         private Logger logger;
 
@@ -59,7 +63,7 @@ namespace SquallOfSpells
             {
                 float mismatch = DeepCheck(variationToCheck, rune); // expensive!
 
-                logger.Log(rune + " | mismatch: " + mismatch);
+                logger.Log(rune.name + " | mismatch: " + mismatch);
 
                 if (mismatch < minMismatch)
                 {
@@ -68,11 +72,12 @@ namespace SquallOfSpells
                 }
             }
 
+            logger.Log("minimal mismatch is " + minMismatch + " acceptable mismatch is " + acceptableMismatch);
 
             OnRecognized?.Invoke(closestRune);
 
-            if (log && closestRune != null)
-                Debug.Log("Recognized as " + closestRune.name);
+            if (closestRune is not null)
+                logger.Log("Recognized as " + closestRune.name);
         }
 
         private static IEnumerable<int> FindClosestRunesByParams(
@@ -92,7 +97,7 @@ namespace SquallOfSpells
         ///     Use multithreading.
         /// </summary>
         /// <returns></returns>
-        private static float DeepCheck(RuneVariation toCheck, Rune rune)
+        private float DeepCheck(RuneVariation toCheck, Rune rune)
         {
             float totalMismatch = 0;
 
@@ -102,10 +107,13 @@ namespace SquallOfSpells
                 totalMismatch += GetVariationMismatch(toCheck, variation);
             }
 
-            return totalMismatch / rune.drawVariations.Count;
+            logger.Log("total " + rune.name + " rune mismatch: " + totalMismatch);
+
+            return totalMismatch /
+                   math.pow(rune.drawVariations.Count, averageVariationPower);
         }
 
-        private static float GetVariationMismatch(RuneVariation baseVariation, RuneVariation maskVariation)
+        private float GetVariationMismatch(RuneVariation baseVariation, RuneVariation maskVariation)
         {
             float totalMismatch = 0;
 
@@ -114,7 +122,9 @@ namespace SquallOfSpells
                 totalMismatch += Closest.GetSqrDistance(point, baseVariation.points);
             }
 
-            return totalMismatch / maskVariation.points.Length;
+            return totalMismatch /
+                   math.pow(maskVariation.points.Length, averagePointPower) /
+                   math.pow((float)maskVariation.points.Length / baseVariation.points.Length, sizeDiffPower);
         }
     }
 }
