@@ -25,11 +25,15 @@ namespace SquallOfSpells.RuneSystem.RuneCreating
         [SerializeField]              private int   pointRadius   = 4;
         [SerializeField, Range(0, 1)] private float pointDarkness = 0.3f;
 
+        private RuneVariation currentVariation;
+
         private void OnEnable()
         {
             inputManager.OnAddVariation += AddCurrentVariationToCurrentRune;
             inputManager.OnNewRune += SaveCurrentVariationToNewRune;
             inputManager.OnDeleteRune += DeleteCurrentRune;
+
+            drawManager.OnRuneDrawn += variation => currentVariation = variation;
         }
 
         private void OnDisable()
@@ -50,9 +54,7 @@ namespace SquallOfSpells.RuneSystem.RuneCreating
 
         public void SaveCurrentVariationToNewRune()
         {
-            RuneVariation variation = drawManager.currentVariation;
-
-            if (!DoesVariationHaveEnoughPoints(variation)) return;
+            if (!DoesVariationHaveEnoughPoints(currentVariation)) return;
 
             Rune rune = ScriptableObject.CreateInstance<Rune>();
             AssetDatabase.CreateAsset(rune, AssetDatabase.GenerateUniqueAssetPath("Assets/Resources/Runes/rune.asset"));
@@ -138,36 +140,34 @@ namespace SquallOfSpells.RuneSystem.RuneCreating
 
         private void AddCurrentVariationToRune(Rune rune)
         {
-            RuneVariation variation = drawManager.currentVariation;
-
-            if (!DoesVariationHaveEnoughPoints(variation)) return;
-            if (rune.drawVariations.Contains(variation)) return;
+            if (!DoesVariationHaveEnoughPoints(currentVariation)) return;
+            if (rune.drawVariations.Contains(currentVariation)) return;
 
             // update rune data
-            rune.averageMassCenter = (rune.averageMassCenter * rune.drawVariations.Count + variation.massCenter) /
+            rune.averageMassCenter = (rune.averageMassCenter * rune.drawVariations.Count + currentVariation.massCenter) /
                                      (rune.drawVariations.Count + 1);
 
-            rune.averageHeight = (rune.averageHeight * rune.drawVariations.Count + variation.height) /
+            rune.averageHeight = (rune.averageHeight * rune.drawVariations.Count + currentVariation.height) /
                                  (rune.drawVariations.Count + 1);
 
-            if (!rune.drawVariations.Contains(variation))
-                rune.drawVariations.Add(variation);
+            if (!rune.drawVariations.Contains(currentVariation))
+                rune.drawVariations.Add(currentVariation);
 
             // resize preview texture
             Texture2D tex = rune.Preview;
             Texture2D oldPreview = new(tex.width, tex.height, textureFormat, false);
             Graphics.CopyTexture(tex, oldPreview);
-            tex.Reinitialize(width, (int)math.max(tex.height, variation.height * width));
+            tex.Reinitialize(width, (int)math.max(tex.height, currentVariation.height * width));
 
             tex.SetPixels(0, (tex.height - oldPreview.height) / 2, oldPreview.width, oldPreview.height,
                 oldPreview.GetPixels(0, 0, oldPreview.width, oldPreview.height));
 
 
             // add new draw variation on preview texture
-            foreach (Vector2 point in variation.points)
+            foreach (Vector2 point in currentVariation.points)
             {
                 int x = (int)(point.x * (tex.width - border * 2)) + border - pointRadius;
-                int y = (int)(point.y / variation.height * (tex.height - border * 2)) + border - pointRadius;
+                int y = (int)(point.y / currentVariation.height * (tex.height - border * 2)) + border - pointRadius;
 
                 Color[] colors = tex.GetPixels(x, y, pointRadius, pointRadius);
 

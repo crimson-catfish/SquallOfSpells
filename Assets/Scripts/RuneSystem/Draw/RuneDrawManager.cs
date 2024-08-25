@@ -7,7 +7,7 @@ namespace SquallOfSpells.RuneSystem.Draw
     [RequireComponent(typeof(UILineRenderer))]
     public class RuneDrawManager : MonoBehaviour
     {
-        [HideInInspector] public RuneVariation currentVariation;
+        public RuneVariation currentVariation;
 
         [SerializeField] private InputManager   inputManager;
         [SerializeField] private UILineRenderer lineRenderer;
@@ -19,16 +19,10 @@ namespace SquallOfSpells.RuneSystem.Draw
 
         [Header("Doesn't affects already created runes\nplease recreate them to apply changes")]
         [SerializeField] private float distanceBetweenPoints = 0.02f;
-        [SerializeField] private float acceptableError = 0.001f;
-        [SerializeField] private float heavyCheckStep  = 0.005f;
 
-        private readonly List<Vector2> drawPoints = new();
-        private readonly float screenWidth = Screen.width; // Probably reducing amount of Screen calls is worth it idk
+        private readonly List<Vector2> drawPositions = new();
 
-        private Rect          drawFrame;
-        private Vector2       lastPoint;
-        private Vector2       momentSum     = Vector2.zero;
-        private List<Vector2> drawPositions = new();
+        private Rect drawFrame;
 
         private void Start()
         {
@@ -49,77 +43,92 @@ namespace SquallOfSpells.RuneSystem.Draw
         }
 
 
-        // private void OnDrawGizmos()
-        // {
-        //     if (!showDrawPoints) return;
-        //
-        //     foreach (Vector2 point in drawPoints)
-        //     {
-        //         Gizmos.DrawSphere(point * screenWidth, distanceBetweenPoints * screenWidth / 2);
-        //     }
-        // }
+        private void OnDrawGizmos()
+        {
+            if (!showDrawPoints) return;
+
+            foreach (Vector2 point in currentVariation.points)
+                Gizmos.DrawSphere(point * Screen.width, distanceBetweenPoints * Screen.width / 2);
+        }
 
         public event Action<RuneVariation> OnRuneDrawn;
 
 
         private void HandleDrawStart(Vector2 nextDrawPosition)
         {
+            drawPositions.Clear();
             inputManager.OnNextDrawPosition += HandleNextDrawPosition;
-            lineRenderer.points.Clear();
-            drawPoints.Clear();
-            momentSum = Vector2.zero;
             drawFrame = new Rect(nextDrawPosition.x, nextDrawPosition.y, 0, 0);
-            CreateNewPoint(nextDrawPosition);
+
+            lineRenderer.points.Clear();
             lineRenderer.SetAllDirty();
         }
 
-        private void HandleNextDrawPosition(Vector2 nextDrawPosition)
+        private void HandleNextDrawPosition(Vector2 position)
         {
-            lineRenderer.points.Add(nextDrawPosition);
-            lineRenderer.SetAllDirty();
+            drawPositions.Add(position);
 
-            while ((lastPoint - nextDrawPosition).magnitude >= distanceBetweenPoints)
-                CreateNewPoint(lastPoint + (nextDrawPosition - lastPoint).normalized * distanceBetweenPoints);
+            if (position.x > drawFrame.xMax) drawFrame.xMax = position.x;
+            if (position.x < drawFrame.xMin) drawFrame.xMin = position.x;
+            if (position.y > drawFrame.yMax) drawFrame.yMax = position.y;
+            if (position.y < drawFrame.yMin) drawFrame.yMin = position.y;
+
+            lineRenderer.points.Add(position);
+            lineRenderer.SetAllDirty();
         }
 
         private void HandleDrawEnd()
         {
             inputManager.OnNextDrawPosition -= HandleNextDrawPosition;
-            PrepareRuneVariation();
+
             lineRenderer.points.Clear();
             lineRenderer.SetAllDirty();
+
+            if (drawPositions.Count < 2)
+                return;
+
+            CreateRuneVariation();
 
             recognizer.Recognize(currentVariation);
             OnRuneDrawn?.Invoke(currentVariation);
         }
 
-        private void CreateNewPoint(Vector2 position)
+        private void CreateRuneVariation()
         {
-            lastPoint = position;
-            drawPoints.Add(position);
+            List<Vector2> drawPoints = new();
+            Vector2 lastPoint = MapToFrame(drawPositions[0]);
+            Vector2 momentum = Vector2.zero;
 
-            momentSum += position;
-            if (position.x > drawFrame.xMax) drawFrame.xMax = position.x;
-            if (position.x < drawFrame.xMin) drawFrame.xMin = position.x;
-            if (position.y > drawFrame.yMax) drawFrame.yMax = position.y;
-            if (position.y < drawFrame.yMin) drawFrame.yMin = position.y;
-        }
 
-        private void PrepareRuneVariation()
-        {
+            foreach (Vector2 positionScreen in drawPositions)
+            {
+                Vector2 position = MapToFrame(positionScreen);
+
+                while ((lastPoint - position).magnitude >= distanceBetweenPoints)
+                {
+                    Vector2 point = lastPoint + (position - lastPoint).normalized * distanceBetweenPoints;
+                    lastPoint = point;
+                    drawPoints.Add(point);
+                    momentum += point;
+                    print(point);
+                }
+            }
+    
             currentVariation = new RuneVariation
             {
-                points = new Vector2[drawPoints.Count],
-                height = drawFrame.height / drawFrame.width
+                points = drawPoints.ToArray(),
+                height = drawFrame.height / drawFrame.width,
+                massCenter = momentum / drawPoints.Count
             };
+        }
 
-            Vector2 ratioFactor = new(1, currentVariation.height);
-            currentVariation.massCenter = Rect.PointToNormalized(drawFrame, momentSum / drawPoints.Count) * ratioFactor;
-
-            for (int i = 0; i < drawPoints.Count; i++)
-            {
-                currentVariation.points[i] = Rect.PointToNormalized(drawFrame, drawPoints[i]) * ratioFactor;
-            }
+        Vector2 MapToFrame(Vector2 vector2)
+        {
+            return new Vector2
+            (
+                (vector2.x - drawFrame.xMin) / drawFrame.width,
+                (vector2.y - drawFrame.yMin) / drawFrame.width
+            );
         }
     }
 }
