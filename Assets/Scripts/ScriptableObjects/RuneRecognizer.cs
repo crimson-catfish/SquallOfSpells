@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using SquallOfSpells.RuneSystem;
-using SquallOfSpells.RuneSystem.Draw;
 using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -19,11 +18,12 @@ namespace SquallOfSpells
 
         [Header("Recognition settings")]
         [SerializeField] private float averageVariationPower = 1.2f;
-        [SerializeField]                                                                                            private float averagePointPower                     = 1.2f;
-        [FormerlySerializedAs("pointCountPower"),FormerlySerializedAs("pointCountDifferencePower"), SerializeField] private float sizeDiffPower                         = 0.2f;
-        [SerializeField]                                                                                            private float acceptableHeightDifferencePercent     = 10f;
-        [SerializeField]                                                                                            private float acceptableMassCenterDifferencePercent = 10f;
-        [SerializeField]                                                                                            private float acceptableMismatch                    = 0.03f;
+        [SerializeField] private float averagePointPower = 1.2f;
+        [FormerlySerializedAs("pointCountPower"), FormerlySerializedAs("pointCountDifferencePower"), SerializeField]
+        private float sizeDiffPower = 0.2f;
+        [SerializeField] private float acceptableHeightDifferencePercent     = 10f;
+        [SerializeField] private float acceptableMassCenterDifferencePercent = 10f;
+        [SerializeField] private float acceptableMismatch                    = 0.03f;
 
         private Logger logger;
 
@@ -117,9 +117,19 @@ namespace SquallOfSpells
         {
             float totalMismatch = 0;
 
-            foreach (Vector2 point in maskVariation.points)
+            foreach (Vector2 basePoint in baseVariation.points)
             {
-                totalMismatch += Closest.GetSqrDistance(point, baseVariation.points);
+                float minSqrDistance = Mathf.Infinity;
+
+                foreach (Vector2 maskPoint in maskVariation.points)
+                {
+                    float sqrDistance = (maskPoint - basePoint).sqrMagnitude;
+
+                    if (sqrDistance < minSqrDistance)
+                        minSqrDistance = sqrDistance;
+                }
+
+                totalMismatch += minSqrDistance;
             }
 
             return totalMismatch /

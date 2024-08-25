@@ -77,26 +77,8 @@ namespace SquallOfSpells.RuneSystem.Draw
             lineRenderer.points.Add(nextDrawPosition * screenWidth);
             lineRenderer.SetAllDirty();
 
-            // check for the last point firstly because it's likely to be too close and then we don't need to do all heavy calculations
-            if ((nextDrawPosition - lastPoint).magnitude < distanceBetweenPoints) return;
-
             while ((lastPoint - nextDrawPosition).magnitude >= distanceBetweenPoints)
-            {
-                Vector2 pointToCheck = lastPoint + (nextDrawPosition - lastPoint).normalized * distanceBetweenPoints;
-
-                Closest.PointAndDistance closest = Closest.GetPointAndDistance(pointToCheck, drawPoints);
-
-
-                // check if distance is long enough
-                if (closest.sqrDistance >= distanceBetweenPoints * distanceBetweenPoints * (1 - acceptableError))
-                {
-                    CreateNewPoint(pointToCheck);
-                }
-                else
-                {
-                    HeavyCheck(nextDrawPosition, pointToCheck);
-                }
-            }
+                CreateNewPoint(lastPoint + (nextDrawPosition - lastPoint).normalized * distanceBetweenPoints);
         }
 
         private void HandleDrawEnd()
@@ -109,33 +91,6 @@ namespace SquallOfSpells.RuneSystem.Draw
             recognizer.Recognize(currentVariation);
             OnRuneDrawn?.Invoke(currentVariation);
         }
-
-        private void HeavyCheck(Vector2 nextDrawPosition, Vector2 pointToCheck)
-        {
-            Closest.PointAndDistance closest = Closest.GetPointAndDistance(pointToCheck, drawPoints);
-
-            for
-            (
-                float currentStep = heavyCheckStep;
-                currentStep <= (nextDrawPosition - pointToCheck).magnitude;
-                currentStep += heavyCheckStep
-            )
-            {
-                pointToCheck += (pointToCheck - lastPoint).normalized * currentStep;
-
-                closest = Closest.GetPointAndDistance(pointToCheck, drawPoints);
-
-                if (closest.sqrDistance >= distanceBetweenPoints * distanceBetweenPoints * 0.99)
-                {
-                    CreateNewPoint(pointToCheck);
-
-                    return;
-                }
-            }
-
-            lastPoint = closest.point;
-        }
-
 
         private void CreateNewPoint(Vector2 position)
         {
