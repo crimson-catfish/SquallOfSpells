@@ -45,7 +45,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   numberOfBullets: 8
-  spreadAngle: 10
-  spreadHorizontal: 0.2
-  spreadAlong: 0.6
+  spreadAngle: 15
+  spreadHorizontal: 0.3
+  spreadAlong: 1
   shotgunProjectile: {fileID: 8882211435051311793, guid: 61a9f0d6febbd1a25ad963eea01de2c2, type: 3}
