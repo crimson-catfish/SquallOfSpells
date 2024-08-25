@@ -1,4 +1,4 @@
-    using System;
+using System;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
@@ -13,9 +13,9 @@ namespace SquallOfSpells.RuneSystem
     {
         public const float Width = 1;
 
-        public string                  previewPath;
-        public float                   averageHeight;
-        public Vector2                 averageMassCenter = Vector2.zero;
+        public string              previewPath;
+        public float               averageHeight;
+        public Vector2             averageMassCenter = Vector2.zero;
         public List<RuneVariation> drawVariations    = new();
 
         private Texture2D preview;

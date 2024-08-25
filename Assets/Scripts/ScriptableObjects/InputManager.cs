@@ -167,7 +167,7 @@ namespace SquallOfSpells
             actions.Contact.started += HandleDrawContactStart;
 
             actions.Position.performed += context =>
-                OnNextDrawPosition?.Invoke(context.ReadValue<Vector2>() / screenWidth);
+                OnNextDrawPosition?.Invoke(context.ReadValue<Vector2>());
         }
 
         private void SetAimActions()
@@ -184,7 +184,7 @@ namespace SquallOfSpells
 
             logger.Log("Draw contact start");
 
-            OnDrawStart?.Invoke(startPositionPixels / screenWidth);
+            OnDrawStart?.Invoke(startPositionPixels);
 
             Controls.Draw.Contact.canceled += HandleDrawContactEnd;
         }

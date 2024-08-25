@@ -25,9 +25,10 @@ namespace SquallOfSpells.RuneSystem.Draw
         private readonly List<Vector2> drawPoints = new();
         private readonly float screenWidth = Screen.width; // Probably reducing amount of Screen calls is worth it idk
 
-        private Rect    drawFrame;
-        private Vector2 lastPoint;
-        private Vector2 momentSum = Vector2.zero;
+        private Rect          drawFrame;
+        private Vector2       lastPoint;
+        private Vector2       momentSum     = Vector2.zero;
+        private List<Vector2> drawPositions = new();
 
         private void Start()
         {
@@ -48,15 +49,15 @@ namespace SquallOfSpells.RuneSystem.Draw
         }
 
 
-        private void OnDrawGizmos()
-        {
-            if (!showDrawPoints) return;
-
-            foreach (Vector2 point in drawPoints)
-            {
-                Gizmos.DrawSphere(point * screenWidth, distanceBetweenPoints * screenWidth / 2);
-            }
-        }
+        // private void OnDrawGizmos()
+        // {
+        //     if (!showDrawPoints) return;
+        //
+        //     foreach (Vector2 point in drawPoints)
+        //     {
+        //         Gizmos.DrawSphere(point * screenWidth, distanceBetweenPoints * screenWidth / 2);
+        //     }
+        // }
 
         public event Action<RuneVariation> OnRuneDrawn;
 
@@ -74,7 +75,7 @@ namespace SquallOfSpells.RuneSystem.Draw
 
         private void HandleNextDrawPosition(Vector2 nextDrawPosition)
         {
-            lineRenderer.points.Add(nextDrawPosition * screenWidth);
+            lineRenderer.points.Add(nextDrawPosition);
             lineRenderer.SetAllDirty();
 
             while ((lastPoint - nextDrawPosition).magnitude >= distanceBetweenPoints)
