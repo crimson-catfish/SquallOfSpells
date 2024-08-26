@@ -1939,7 +1939,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 4133147992681433436, guid: 68c562847aab85bb38d53eb8c9bb20c7, type: 3}
       propertyPath: showDrawPoints
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4133147992681433436, guid: 68c562847aab85bb38d53eb8c9bb20c7, type: 3}
       propertyPath: distanceBetweenPoints

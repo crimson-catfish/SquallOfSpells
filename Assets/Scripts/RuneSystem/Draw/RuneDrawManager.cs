@@ -110,10 +110,9 @@ namespace SquallOfSpells.RuneSystem.Draw
                     lastPoint = point;
                     drawPoints.Add(point);
                     momentum += point;
-                    print(point);
                 }
             }
-    
+
             currentVariation = new RuneVariation
             {
                 points = drawPoints.ToArray(),
