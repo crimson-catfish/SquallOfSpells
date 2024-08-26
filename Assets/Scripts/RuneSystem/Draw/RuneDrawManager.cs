@@ -18,6 +18,8 @@ namespace SquallOfSpells.RuneSystem.Draw
 
         [SerializeField] private float drawLineThickness = 0.02f;
         [SerializeField] private bool  showDrawPoints;
+        [SerializeField] private bool  showDrawPositionsCount;
+
 
         [Header("Doesn't affects already created runes\nplease recreate them to apply changes")]
         [SerializeField] private float distanceBetweenPoints = 0.02f;
@@ -94,7 +96,8 @@ namespace SquallOfSpells.RuneSystem.Draw
             recognizer.Recognize(currentVariation);
             OnRuneDrawn?.Invoke(currentVariation);
 
-            drawPositionsDisplayer.text = drawPositions.Count.ToString();
+            if (showDrawPositionsCount)
+                drawPositionsDisplayer.text = drawPositions.Count.ToString();
         }
 
         private void CreateRuneVariation()
