@@ -95,7 +95,7 @@ namespace SquallOfSpells.RuneSystem.Draw
             OnRuneDrawn?.Invoke(currentVariation);
 
             drawPositionsDisplayer.text = drawPositions.Count.ToString();
-        }   
+        }
 
         private void CreateRuneVariation()
         {
