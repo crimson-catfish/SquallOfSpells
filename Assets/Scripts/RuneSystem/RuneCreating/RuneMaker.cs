@@ -144,8 +144,9 @@ namespace SquallOfSpells.RuneSystem.RuneCreating
             if (rune.drawVariations.Contains(currentVariation)) return;
 
             // update rune data
-            rune.averageMassCenter = (rune.averageMassCenter * rune.drawVariations.Count + currentVariation.massCenter) /
-                                     (rune.drawVariations.Count + 1);
+            rune.averageMassCenter =
+                (rune.averageMassCenter * rune.drawVariations.Count + currentVariation.massCenter) /
+                (rune.drawVariations.Count + 1);
 
             rune.averageHeight = (rune.averageHeight * rune.drawVariations.Count + currentVariation.height) /
                                  (rune.drawVariations.Count + 1);

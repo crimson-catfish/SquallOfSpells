@@ -8,10 +8,10 @@ namespace SquallOfSpells
     [RequireComponent(typeof(Health))]
     public class Player : MonoBehaviour
     {
-        [SerializeField]                                        private     InputManager   inputManager;
-        [SerializeField]                                        private     RuneRecognizer recognizer;
-        [SerializeField]                                        private new Rigidbody2D    rigidbody;
-        [FormerlySerializedAs("spellContainer"),SerializeField] private     SpellStorage   spellStorage;
+        [SerializeField]                                         private     InputManager   inputManager;
+        [SerializeField]                                         private     RuneRecognizer recognizer;
+        [SerializeField]                                         private new Rigidbody2D    rigidbody;
+        [FormerlySerializedAs("spellContainer"), SerializeField] private     SpellStorage   spellStorage;
 
         [SerializeField] private float moveSpeed = 2f;
 

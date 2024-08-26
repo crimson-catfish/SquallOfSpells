@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 namespace SquallOfSpells.RuneSystem.Draw
@@ -9,9 +10,10 @@ namespace SquallOfSpells.RuneSystem.Draw
     {
         public RuneVariation currentVariation;
 
-        [SerializeField] private InputManager   inputManager;
-        [SerializeField] private UILineRenderer lineRenderer;
-        [SerializeField] private RuneRecognizer recognizer;
+        [SerializeField] private InputManager    inputManager;
+        [SerializeField] private UILineRenderer  lineRenderer;
+        [SerializeField] private RuneRecognizer  recognizer;
+        [SerializeField] private TextMeshProUGUI drawPositionsDisplayer;
 
 
         [SerializeField] private float drawLineThickness = 0.02f;
@@ -91,7 +93,9 @@ namespace SquallOfSpells.RuneSystem.Draw
 
             recognizer.Recognize(currentVariation);
             OnRuneDrawn?.Invoke(currentVariation);
-        }
+
+            drawPositionsDisplayer.text = drawPositions.Count.ToString();
+        }   
 
         private void CreateRuneVariation()
         {

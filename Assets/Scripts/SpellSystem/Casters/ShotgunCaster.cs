@@ -27,7 +27,7 @@ namespace SquallOfSpells.SpellSystem
 
                 Vector3 offsetX = direction.normalized *
                                   RandomGaussian.Generate(-spreadHorizontal, spreadHorizontal);
-    
+
                 Vector3 offsetY =
                     new Vector2(direction.y, direction.x).normalized * // direction vector rotated by 90 degrees
                     RandomGaussian.Generate(-spreadAlong, spreadAlong);

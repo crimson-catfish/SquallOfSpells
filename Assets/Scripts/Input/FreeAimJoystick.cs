@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 namespace SquallOfSpells
 {
-    [RequireComponent(typeof(Image))]   
+    [RequireComponent(typeof(Image))]
     public class FreeAimJoystick : MonoBehaviour
     {
         [SerializeField, Range(0f, 0.5f)] private float joystickRange = 0.44f;
