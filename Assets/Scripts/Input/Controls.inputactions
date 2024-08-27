@@ -24,15 +24,6 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "AddVariation",
-                    "type": "Button",
-                    "id": "b75e1a35-3f7a-4f89-a3b5-fb126f773ec2",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
                     "name": "SelectRecognized",
                     "type": "Button",
                     "id": "474c8e53-f27c-47f0-9536-8afa738bea6b",
@@ -62,17 +53,6 @@
                     "processors": "",
                     "groups": "",
                     "action": "NewRune",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "b31a5166-9116-43ef-8cf6-e0cc96d25b3a",
-                    "path": "<Keyboard>/space",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "AddVariation",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },

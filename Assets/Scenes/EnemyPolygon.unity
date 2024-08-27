@@ -490,6 +490,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 4133147992681433436, guid: 68c562847aab85bb38d53eb8c9bb20c7, type: 3}
+      propertyPath: recognizer
+      value: 
+      objectReference: {fileID: 11400000, guid: 445af773a4ec4b95fb3b1ae81bfb5d0f, type: 2}
+    - target: {fileID: 4133147992681433436, guid: 68c562847aab85bb38d53eb8c9bb20c7, type: 3}
       propertyPath: showDrawPoints
       value: 1
       objectReference: {fileID: 0}
@@ -761,7 +765,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b18a4fccfc1370bdda10988d338b350b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  recognizer: {fileID: 11400000, guid: e6e7a13fe0541ebf9b0fd5de420d2c9e, type: 2}
+  recognizer: {fileID: 11400000, guid: 445af773a4ec4b95fb3b1ae81bfb5d0f, type: 2}
   textMeshPro: {fileID: 671011345}
 --- !u!1 &746486138
 GameObject:
@@ -1604,7 +1608,7 @@ PrefabInstance:
     - target: {fileID: 7845758583061478427, guid: 9b454918a9a055d84bd117b4f0f88f33, type: 3}
       propertyPath: recognizer
       value: 
-      objectReference: {fileID: 11400000, guid: e6e7a13fe0541ebf9b0fd5de420d2c9e, type: 2}
+      objectReference: {fileID: 11400000, guid: 445af773a4ec4b95fb3b1ae81bfb5d0f, type: 2}
     - target: {fileID: 9100786171447711631, guid: 9b454918a9a055d84bd117b4f0f88f33, type: 3}
       propertyPath: settings
       value: 

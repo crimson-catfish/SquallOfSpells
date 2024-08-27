@@ -59,9 +59,8 @@ namespace SquallOfSpells
         }
 
         // RuneCreationGUI
-        public event Action OnDeleteRune;
-        public event Action OnNewRune;
-        public event Action OnAddVariation;
+        public event Action OnDeleteSigil;
+        public event Action OnNewSigil;
         public event Action OnSelectRecognized;
 
         // Move
@@ -143,9 +142,8 @@ namespace SquallOfSpells
         {
             Controls.RuneCreatingUIActions actions = Controls.RuneCreatingUI;
 
-            actions.DeleteRune.performed += _ => OnDeleteRune?.Invoke();
-            actions.NewRune.performed += _ => OnNewRune?.Invoke();
-            actions.AddVariation.performed += _ => OnAddVariation?.Invoke();
+            actions.DeleteRune.performed += _ => OnDeleteSigil?.Invoke();
+            actions.NewRune.performed += _ => OnNewSigil?.Invoke();
             actions.SelectRecognized.performed += _ => OnSelectRecognized?.Invoke();
         }
 

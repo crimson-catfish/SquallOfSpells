@@ -7,16 +7,16 @@ namespace SquallOfSpells.SpellSystem
     public class SpellCaster : MonoBehaviour
     {
         [SerializeField] private SpellStorage   storage;
-        [SerializeField] private RuneRecognizer recognizer;
+        [SerializeField] private SigilRecognizer recognizer;
         [SerializeField] private InputManager   inputManager;
 
 
-        private void HandleRecognized(Rune rune)
+        private void HandleRecognized(Sigil sigil)
         {
-            if (rune == null)
+            if (sigil == null)
                 return;
 
-            if (!storage.spells.TryGetValue(rune, out GameObject spellObject))
+            if (!storage.spells.TryGetValue(sigil, out GameObject spellObject))
                 return;
 
             if (spellObject.TryGetComponent(out IAimable aimableSpell))

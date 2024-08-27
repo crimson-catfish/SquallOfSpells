@@ -10,13 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ef132027360bf0e4babc5139f04264af, type: 3}
-  m_Name: Rune recognizer
+  m_Name: Sigil recognizer
   m_EditorClassIdentifier: 
-  storage: {fileID: 11400000, guid: be54250f59b104a42828af839132ca3c, type: 2}
+  storage: {fileID: 11400000, guid: b41008c47abf7606dbb98b71e79f9f51, type: 2}
   log: 1
-  averageVariationPower: 1.4
-  averagePointPower: 3
-  sizeDiffPower: 1.6
-  acceptableHeightDifferencePercent: 10
-  acceptableMassCenterDifferencePercent: 10
-  acceptableMismatch: 0.00001
+  acceptableHeightDiff: 0.4
+  acceptableMassCenterDiff: 0.2
+  heightPow: 3
+  acceptableMismatch: 2

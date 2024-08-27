@@ -2,10 +2,10 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace SquallOfSpells.SigilSystem.RuneCreating
+namespace SquallOfSpells.SigilSystem.Creating
 {
     [RequireComponent(typeof(Toggle), typeof(RectTransform), typeof(AspectRatioFitter))]
-    public class RuneToggle : MonoBehaviour
+    public class SigilToggle : MonoBehaviour
     {
         [SerializeField] private AspectRatioFitter ratioFitter;
         [SerializeField] private RawImage          rawImage;
@@ -19,15 +19,15 @@ namespace SquallOfSpells.SigilSystem.RuneCreating
         [SerializeField] private Color selectedColor        = new(0.74f, 0.74f, 0.74f);
         [SerializeField] private Color outlineColorSelected = new(0f, 0f, 0f, 0.82f);
 
-        private Rune       rune;
+        private Sigil       sigil;
         private ScrollRect scrollRect;
 
-        public Rune Rune {
-            get => rune;
+        public Sigil Sigil {
+            get => sigil;
             set
             {
-                rune = value;
-                rawImage.texture = rune.Preview;
+                sigil = value;
+                rawImage.texture = sigil.Preview;
                 ratioFitter.aspectRatio = rawImage.texture.height / (float)rawImage.texture.width;
             }
         }

@@ -1,4 +1,5 @@
 using System;
+using UnityEditor;
 using UnityEngine;
 
 namespace SquallOfSpells.SigilSystem
@@ -7,13 +8,30 @@ namespace SquallOfSpells.SigilSystem
     ///     width always 1, height is positive.
     /// </summary>
     [Serializable]
-    public class Sigil
+    public class Sigil : ScriptableObject
     {
-        public const float width = 1;
-        public       float height;
+        public Vector2[] points;
 
+        public const float width = 1;
+
+        public float   height;
         public Vector2 massCenter = Vector2.zero;
 
-        public Vector2[] points;
+        public string previewPath;
+
+        private Texture2D preview;
+
+#if UNITY_EDITOR
+        public Texture2D Preview {
+            get
+            {
+                if (preview == null)
+                    preview = AssetDatabase.LoadAssetAtPath<Texture2D>(previewPath);
+
+                return preview;
+            }
+            set => preview = value;
+        }
+#endif
     }
 }

@@ -2,12 +2,12 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace SquallOfSpells.SigilSystem.RuneCreating
+namespace SquallOfSpells.SigilSystem.Creating
 {
     [RequireComponent(typeof(RawImage))]
-    public class RecognizedRunePreview : MonoBehaviour
+    public class RecognizedSigilPreview : MonoBehaviour
     {
-        [SerializeField] private RuneRecognizer recognizer;
+        [SerializeField] private SigilRecognizer recognizer;
 
         private RectTransform rectTransform;
         private RawImage      image;
@@ -30,9 +30,9 @@ namespace SquallOfSpells.SigilSystem.RuneCreating
         }
 
 
-        private void HandleRecognition(Rune rune)
+        private void HandleRecognition(Sigil sigil)
         {
-            if (rune is null)
+            if (sigil is null)
             {
                 image.texture = null;
 
@@ -41,11 +41,11 @@ namespace SquallOfSpells.SigilSystem.RuneCreating
 
             rectTransform.sizeDelta = new Vector2
             (
-                rectTransform.rect.height * rune.Preview.width / rune.Preview.height,
+                rectTransform.rect.height * sigil.Preview.width / sigil.Preview.height,
                 rectTransform.rect.height
             );
 
-            image.texture = rune.Preview;
+            image.texture = sigil.Preview;
         }
     }
 }

@@ -5,7 +5,7 @@ namespace SquallOfSpells.SigilSystem
 {
     public class RecognizedRuneName : MonoBehaviour
     {
-        [SerializeField] private RuneRecognizer  recognizer;
+        [SerializeField] private SigilRecognizer  recognizer;
         [SerializeField] private TextMeshProUGUI textMeshPro;
 
 

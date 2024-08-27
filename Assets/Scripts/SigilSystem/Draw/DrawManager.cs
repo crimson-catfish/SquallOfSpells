@@ -7,13 +7,13 @@ using UnityEngine.Serialization;
 namespace SquallOfSpells.SigilSystem.Draw
 {
     [RequireComponent(typeof(UILineRenderer))]
-    public class RuneDrawManager : MonoBehaviour
+    public class DrawManager : MonoBehaviour
     {
-        [FormerlySerializedAs("currentVariation")] public Sigil currentSigil;
+        [HideInInspector] public Sigil currentSigil;
 
         [SerializeField] private InputManager    inputManager;
         [SerializeField] private UILineRenderer  lineRenderer;
-        [SerializeField] private RuneRecognizer  recognizer;
+        [SerializeField] private SigilRecognizer recognizer;
         [SerializeField] private TextMeshProUGUI drawPositionsDisplayer;
 
 
@@ -50,13 +50,13 @@ namespace SquallOfSpells.SigilSystem.Draw
 
         private void OnDrawGizmos()
         {
-            if (!showDrawPoints) return;
+            if (!showDrawPoints || currentSigil is null) return;
 
             foreach (Vector2 point in currentSigil.points)
                 Gizmos.DrawSphere(point * Screen.width, distanceBetweenPoints * Screen.width / 2);
         }
 
-        public event Action<Sigil> OnRuneDrawn;
+        public event Action<Sigil> OnSigilDrawn;
 
 
         private void HandleDrawStart(Vector2 nextDrawPosition)
@@ -95,7 +95,7 @@ namespace SquallOfSpells.SigilSystem.Draw
             CreateSigil();
 
             recognizer.Recognize(currentSigil);
-            OnRuneDrawn?.Invoke(currentSigil);
+            OnSigilDrawn?.Invoke(currentSigil);
 
             if (showDrawPositionsCount)
                 drawPositionsDisplayer.text = drawPositions.Count.ToString();
@@ -121,12 +121,11 @@ namespace SquallOfSpells.SigilSystem.Draw
                 }
             }
 
-            currentSigil = new Sigil
-            {
-                points = drawPoints.ToArray(),
-                height = drawFrame.height / drawFrame.width,
-                massCenter = momentum / drawPoints.Count
-            };
+            currentSigil = ScriptableObject.CreateInstance<Sigil>();
+
+            currentSigil.points = drawPoints.ToArray();
+            currentSigil.height = drawFrame.height / drawFrame.width;
+            currentSigil.massCenter = momentum / drawPoints.Count;
         }
 
         Vector2 MapToFrame(Vector2 vector2)

@@ -46,15 +46,6 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""AddVariation"",
-                    ""type"": ""Button"",
-                    ""id"": ""b75e1a35-3f7a-4f89-a3b5-fb126f773ec2"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
                     ""name"": ""SelectRecognized"",
                     ""type"": ""Button"",
                     ""id"": ""474c8e53-f27c-47f0-9536-8afa738bea6b"",
@@ -84,17 +75,6 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""NewRune"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""b31a5166-9116-43ef-8cf6-e0cc96d25b3a"",
-                    ""path"": ""<Keyboard>/space"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""AddVariation"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -290,7 +270,6 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         m_RuneCreatingUI = asset.FindActionMap("RuneCreatingUI", throwIfNotFound: true);
         m_RuneCreatingUI_DeleteRune = m_RuneCreatingUI.FindAction("DeleteRune", throwIfNotFound: true);
         m_RuneCreatingUI_NewRune = m_RuneCreatingUI.FindAction("NewRune", throwIfNotFound: true);
-        m_RuneCreatingUI_AddVariation = m_RuneCreatingUI.FindAction("AddVariation", throwIfNotFound: true);
         m_RuneCreatingUI_SelectRecognized = m_RuneCreatingUI.FindAction("SelectRecognized", throwIfNotFound: true);
         // Move
         m_Move = asset.FindActionMap("Move", throwIfNotFound: true);
@@ -370,7 +349,6 @@ public partial class @Controls: IInputActionCollection2, IDisposable
     private List<IRuneCreatingUIActions> m_RuneCreatingUIActionsCallbackInterfaces = new List<IRuneCreatingUIActions>();
     private readonly InputAction m_RuneCreatingUI_DeleteRune;
     private readonly InputAction m_RuneCreatingUI_NewRune;
-    private readonly InputAction m_RuneCreatingUI_AddVariation;
     private readonly InputAction m_RuneCreatingUI_SelectRecognized;
     public struct RuneCreatingUIActions
     {
@@ -378,7 +356,6 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         public RuneCreatingUIActions(@Controls wrapper) { m_Wrapper = wrapper; }
         public InputAction @DeleteRune => m_Wrapper.m_RuneCreatingUI_DeleteRune;
         public InputAction @NewRune => m_Wrapper.m_RuneCreatingUI_NewRune;
-        public InputAction @AddVariation => m_Wrapper.m_RuneCreatingUI_AddVariation;
         public InputAction @SelectRecognized => m_Wrapper.m_RuneCreatingUI_SelectRecognized;
         public InputActionMap Get() { return m_Wrapper.m_RuneCreatingUI; }
         public void Enable() { Get().Enable(); }
@@ -395,9 +372,6 @@ public partial class @Controls: IInputActionCollection2, IDisposable
             @NewRune.started += instance.OnNewRune;
             @NewRune.performed += instance.OnNewRune;
             @NewRune.canceled += instance.OnNewRune;
-            @AddVariation.started += instance.OnAddVariation;
-            @AddVariation.performed += instance.OnAddVariation;
-            @AddVariation.canceled += instance.OnAddVariation;
             @SelectRecognized.started += instance.OnSelectRecognized;
             @SelectRecognized.performed += instance.OnSelectRecognized;
             @SelectRecognized.canceled += instance.OnSelectRecognized;
@@ -411,9 +385,6 @@ public partial class @Controls: IInputActionCollection2, IDisposable
             @NewRune.started -= instance.OnNewRune;
             @NewRune.performed -= instance.OnNewRune;
             @NewRune.canceled -= instance.OnNewRune;
-            @AddVariation.started -= instance.OnAddVariation;
-            @AddVariation.performed -= instance.OnAddVariation;
-            @AddVariation.canceled -= instance.OnAddVariation;
             @SelectRecognized.started -= instance.OnSelectRecognized;
             @SelectRecognized.performed -= instance.OnSelectRecognized;
             @SelectRecognized.canceled -= instance.OnSelectRecognized;
@@ -646,7 +617,6 @@ public partial class @Controls: IInputActionCollection2, IDisposable
     {
         void OnDeleteRune(InputAction.CallbackContext context);
         void OnNewRune(InputAction.CallbackContext context);
-        void OnAddVariation(InputAction.CallbackContext context);
         void OnSelectRecognized(InputAction.CallbackContext context);
     }
     public interface IMoveActions
