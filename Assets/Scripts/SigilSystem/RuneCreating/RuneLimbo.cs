@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace SquallOfSpells.RuneSystem.RuneCreating
+namespace SquallOfSpells.SigilSystem.RuneCreating
 {
     public class RuneLimbo : MonoBehaviour
     {

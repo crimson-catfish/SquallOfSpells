@@ -1,5 +1,5 @@
 using AYellowpaper.SerializedCollections;
-using SquallOfSpells.RuneSystem;
+using SquallOfSpells.SigilSystem;
 using UnityEngine;
 
 namespace SquallOfSpells.SpellSystem

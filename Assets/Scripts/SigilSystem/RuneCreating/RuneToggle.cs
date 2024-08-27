@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace SquallOfSpells.RuneSystem.RuneCreating
+namespace SquallOfSpells.SigilSystem.RuneCreating
 {
     [RequireComponent(typeof(Toggle), typeof(RectTransform), typeof(AspectRatioFitter))]
     public class RuneToggle : MonoBehaviour

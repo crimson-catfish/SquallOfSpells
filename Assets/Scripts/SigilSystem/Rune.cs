@@ -2,8 +2,9 @@ using System;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.Serialization;
 
-namespace SquallOfSpells.RuneSystem
+namespace SquallOfSpells.SigilSystem
 {
     /// <summary>
     ///     rune's width always 1, height is positive float.
@@ -13,10 +14,10 @@ namespace SquallOfSpells.RuneSystem
     {
         public const float Width = 1;
 
-        public string              previewPath;
-        public float               averageHeight;
-        public Vector2             averageMassCenter = Vector2.zero;
-        public List<RuneVariation> drawVariations    = new();
+        public                                          string      previewPath;
+        public                                          float       averageHeight;
+        public                                          Vector2     averageMassCenter = Vector2.zero;
+        [FormerlySerializedAs("drawVariations")] public List<Sigil> sigils            = new();
 
         private Texture2D preview;
 
@@ -35,8 +36,8 @@ namespace SquallOfSpells.RuneSystem
 
         public int CompareTo(Rune other)
         {
-            if (drawVariations.GetHashCode() < other.drawVariations.GetHashCode()) return -1;
-            if (drawVariations.GetHashCode() > other.drawVariations.GetHashCode()) return 1;
+            if (sigils.GetHashCode() < other.sigils.GetHashCode()) return -1;
+            if (sigils.GetHashCode() > other.sigils.GetHashCode()) return 1;
 
             return 0;
         }

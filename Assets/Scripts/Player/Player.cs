@@ -1,4 +1,4 @@
-using SquallOfSpells.RuneSystem;
+using SquallOfSpells.SigilSystem;
 using SquallOfSpells.SpellSystem;
 using UnityEngine;
 using UnityEngine.Serialization;

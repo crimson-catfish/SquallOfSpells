@@ -1,5 +1,5 @@
 using System;
-using SquallOfSpells.RuneSystem;
+using SquallOfSpells.SigilSystem;
 using UnityEngine;
 
 namespace SquallOfSpells.SpellSystem

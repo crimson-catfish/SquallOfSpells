@@ -1,13 +1,13 @@
 using System;
 using UnityEngine;
 
-namespace SquallOfSpells.RuneSystem
+namespace SquallOfSpells.SigilSystem
 {
     /// <summary>
-    ///     rune's width always 1, height is positive.
+    ///     width always 1, height is positive.
     /// </summary>
     [Serializable]
-    public class RuneVariation
+    public class Sigil
     {
         public const float width = 1;
         public       float height;

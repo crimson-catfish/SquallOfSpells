@@ -2,13 +2,14 @@ using System;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Serialization;
 
-namespace SquallOfSpells.RuneSystem.Draw
+namespace SquallOfSpells.SigilSystem.Draw
 {
     [RequireComponent(typeof(UILineRenderer))]
     public class RuneDrawManager : MonoBehaviour
     {
-        public RuneVariation currentVariation;
+        [FormerlySerializedAs("currentVariation")] public Sigil currentSigil;
 
         [SerializeField] private InputManager    inputManager;
         [SerializeField] private UILineRenderer  lineRenderer;
@@ -51,11 +52,11 @@ namespace SquallOfSpells.RuneSystem.Draw
         {
             if (!showDrawPoints) return;
 
-            foreach (Vector2 point in currentVariation.points)
+            foreach (Vector2 point in currentSigil.points)
                 Gizmos.DrawSphere(point * Screen.width, distanceBetweenPoints * Screen.width / 2);
         }
 
-        public event Action<RuneVariation> OnRuneDrawn;
+        public event Action<Sigil> OnRuneDrawn;
 
 
         private void HandleDrawStart(Vector2 nextDrawPosition)
@@ -91,16 +92,16 @@ namespace SquallOfSpells.RuneSystem.Draw
             if (drawPositions.Count < 2)
                 return;
 
-            CreateRuneVariation();
+            CreateSigil();
 
-            recognizer.Recognize(currentVariation);
-            OnRuneDrawn?.Invoke(currentVariation);
+            recognizer.Recognize(currentSigil);
+            OnRuneDrawn?.Invoke(currentSigil);
 
             if (showDrawPositionsCount)
                 drawPositionsDisplayer.text = drawPositions.Count.ToString();
         }
 
-        private void CreateRuneVariation()
+        private void CreateSigil()
         {
             List<Vector2> drawPoints = new();
             Vector2 lastPoint = MapToFrame(drawPositions[0]);
@@ -120,7 +121,7 @@ namespace SquallOfSpells.RuneSystem.Draw
                 }
             }
 
-            currentVariation = new RuneVariation
+            currentSigil = new Sigil
             {
                 points = drawPoints.ToArray(),
                 height = drawFrame.height / drawFrame.width,

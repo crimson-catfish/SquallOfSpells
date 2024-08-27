@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace SquallOfSpells.RuneSystem.RuneCreating
+namespace SquallOfSpells.SigilSystem.RuneCreating
 {
     [RequireComponent(typeof(RawImage))]
     public class RecognizedRunePreview : MonoBehaviour

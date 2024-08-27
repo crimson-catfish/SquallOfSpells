@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using SquallOfSpells.RuneSystem;
+using SquallOfSpells.SigilSystem;
 using UnityEditor;
 using UnityEngine;
 
@@ -51,11 +51,11 @@ namespace SquallOfSpells
             AddRuneProperties(rune);
         }
 
-        public void AddVariationToRune(RuneVariation variation, Rune rune)
+        public void AddVariationToRune(Sigil variation, Rune rune)
         {
             RemoveRuneProperties(rune);
 
-            rune.drawVariations.Add(variation);
+            rune.sigils.Add(variation);
 
             AddRuneProperties(rune);
         }

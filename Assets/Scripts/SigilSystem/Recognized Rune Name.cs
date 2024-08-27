@@ -1,7 +1,7 @@
 using TMPro;
 using UnityEngine;
 
-namespace SquallOfSpells.RuneSystem
+namespace SquallOfSpells.SigilSystem
 {
     public class RecognizedRuneName : MonoBehaviour
     {

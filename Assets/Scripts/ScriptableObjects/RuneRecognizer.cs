@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using SquallOfSpells.RuneSystem;
+using SquallOfSpells.SigilSystem;
 using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -35,7 +35,7 @@ namespace SquallOfSpells
             logger = new Logger(this, log);
         }
 
-        public void Recognize(RuneVariation variationToCheck)
+        public void Recognize(Sigil variationToCheck)
         {
             HashSet<int> selectedRuneHashes =
                 new(FindClosestRunesByParams(variationToCheck.height, storage.RunesHeight,
@@ -97,23 +97,23 @@ namespace SquallOfSpells
         ///     Use multithreading.
         /// </summary>
         /// <returns></returns>
-        private float DeepCheck(RuneVariation toCheck, Rune rune)
+        private float DeepCheck(Sigil toCheck, Rune rune)
         {
             float totalMismatch = 0;
 
-            foreach (RuneVariation variation in rune.drawVariations)
+            foreach (Sigil variation in rune.sigils)
             {
-                totalMismatch += GetVariationMismatch(variation, toCheck);
-                totalMismatch += GetVariationMismatch(toCheck, variation);
+                totalMismatch += GetSigilMismatch(variation, toCheck);
+                totalMismatch += GetSigilMismatch(toCheck, variation);
             }
 
             logger.Log("total " + rune.name + " rune mismatch: " + totalMismatch);
 
             return totalMismatch /
-                   math.pow(rune.drawVariations.Count, averageVariationPower);
+                   math.pow(rune.sigils.Count, averageVariationPower);
         }
 
-        private float GetVariationMismatch(RuneVariation baseVariation, RuneVariation maskVariation)
+        private float GetSigilMismatch(Sigil baseVariation, Sigil maskVariation)
         {
             float totalMismatch = 0;
 

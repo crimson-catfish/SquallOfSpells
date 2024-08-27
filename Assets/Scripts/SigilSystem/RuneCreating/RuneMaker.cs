@@ -1,11 +1,11 @@
 #if UNITY_EDITOR
-using SquallOfSpells.RuneSystem.Draw;
+using SquallOfSpells.SigilSystem.Draw;
 using Unity.Mathematics;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace SquallOfSpells.RuneSystem.RuneCreating
+namespace SquallOfSpells.SigilSystem.RuneCreating
 {
     public class RuneMaker : MonoBehaviour
     {
@@ -25,7 +25,7 @@ namespace SquallOfSpells.RuneSystem.RuneCreating
         [SerializeField]              private int   pointRadius   = 4;
         [SerializeField, Range(0, 1)] private float pointDarkness = 0.3f;
 
-        private RuneVariation currentVariation;
+        private Sigil currentSigil;
 
         private void OnEnable()
         {
@@ -33,7 +33,7 @@ namespace SquallOfSpells.RuneSystem.RuneCreating
             inputManager.OnNewRune += SaveCurrentVariationToNewRune;
             inputManager.OnDeleteRune += DeleteCurrentRune;
 
-            drawManager.OnRuneDrawn += variation => currentVariation = variation;
+            drawManager.OnRuneDrawn += sigil => currentSigil = sigil;
         }
 
         private void OnDisable()
@@ -54,7 +54,7 @@ namespace SquallOfSpells.RuneSystem.RuneCreating
 
         public void SaveCurrentVariationToNewRune()
         {
-            if (!DoesVariationHaveEnoughPoints(currentVariation)) return;
+            if (!DoesSigilHaveEnoughPoints(currentSigil)) return;
 
             Rune rune = ScriptableObject.CreateInstance<Rune>();
             AssetDatabase.CreateAsset(rune, AssetDatabase.GenerateUniqueAssetPath("Assets/Resources/Runes/rune.asset"));
@@ -119,7 +119,7 @@ namespace SquallOfSpells.RuneSystem.RuneCreating
             Undo.SetCurrentGroupName("delete rune");
         }
 
-        private bool DoesVariationHaveEnoughPoints(RuneVariation variation)
+        private bool DoesSigilHaveEnoughPoints(Sigil variation)
         {
             if (variation == null)
             {
@@ -140,35 +140,35 @@ namespace SquallOfSpells.RuneSystem.RuneCreating
 
         private void AddCurrentVariationToRune(Rune rune)
         {
-            if (!DoesVariationHaveEnoughPoints(currentVariation)) return;
-            if (rune.drawVariations.Contains(currentVariation)) return;
+            if (!DoesSigilHaveEnoughPoints(currentSigil)) return;
+            if (rune.sigils.Contains(currentSigil)) return;
 
             // update rune data
             rune.averageMassCenter =
-                (rune.averageMassCenter * rune.drawVariations.Count + currentVariation.massCenter) /
-                (rune.drawVariations.Count + 1);
+                (rune.averageMassCenter * rune.sigils.Count + currentSigil.massCenter) /
+                (rune.sigils.Count + 1);
 
-            rune.averageHeight = (rune.averageHeight * rune.drawVariations.Count + currentVariation.height) /
-                                 (rune.drawVariations.Count + 1);
+            rune.averageHeight = (rune.averageHeight * rune.sigils.Count + currentSigil.height) /
+                                 (rune.sigils.Count + 1);
 
-            if (!rune.drawVariations.Contains(currentVariation))
-                rune.drawVariations.Add(currentVariation);
+            if (!rune.sigils.Contains(currentSigil))
+                rune.sigils.Add(currentSigil);
 
             // resize preview texture
             Texture2D tex = rune.Preview;
             Texture2D oldPreview = new(tex.width, tex.height, textureFormat, false);
             Graphics.CopyTexture(tex, oldPreview);
-            tex.Reinitialize(width, (int)math.max(tex.height, currentVariation.height * width));
+            tex.Reinitialize(width, (int)math.max(tex.height, currentSigil.height * width));
 
             tex.SetPixels(0, (tex.height - oldPreview.height) / 2, oldPreview.width, oldPreview.height,
                 oldPreview.GetPixels(0, 0, oldPreview.width, oldPreview.height));
 
 
             // add new draw variation on preview texture
-            foreach (Vector2 point in currentVariation.points)
+            foreach (Vector2 point in currentSigil.points)
             {
                 int x = (int)(point.x * (tex.width - border * 2)) + border - pointRadius;
-                int y = (int)(point.y / currentVariation.height * (tex.height - border * 2)) + border - pointRadius;
+                int y = (int)(point.y / currentSigil.height * (tex.height - border * 2)) + border - pointRadius;
 
                 Color[] colors = tex.GetPixels(x, y, pointRadius, pointRadius);
 

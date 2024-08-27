@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace SquallOfSpells.RuneSystem.RuneCreating
+namespace SquallOfSpells.SigilSystem.RuneCreating
 {
     public class RuneTogglesContainer : MonoBehaviour
     {
