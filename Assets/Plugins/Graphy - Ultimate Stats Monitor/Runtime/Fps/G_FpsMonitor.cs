@@ -83,7 +83,6 @@ namespace Tayx.Graphy.Fps
             m_fpsSamples.CopyTo( m_fpsSamplesSorted, 0 );
 
             /*
-             * TODO: Find a faster way to do this.
              *      We can probably avoid copying the full array every time
              *      and insert the new item already sorted in the list.
              */

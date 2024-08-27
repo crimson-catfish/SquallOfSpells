@@ -18,7 +18,7 @@ using UnityEditor;
 
 namespace Tayx.Graphy
 {
-    [CustomEditor( typeof( GraphyManager ) )]
+    [CustomEditor(typeof(GraphyManager))]
     internal class GraphyManagerEditor : Editor
     {
         #region Variables -> Private
@@ -139,98 +139,98 @@ namespace Tayx.Graphy
 
         private void OnEnable()
         {
-            m_target = (GraphyManager) target;
+            m_target = (GraphyManager)target;
 
             SerializedObject serObj = serializedObject;
 
             #region Section -> Settings
 
-            m_graphyMode = serObj.FindProperty( "m_graphyMode" );
+            m_graphyMode = serObj.FindProperty("m_graphyMode");
 
-            m_enableOnStartup = serObj.FindProperty( "m_enableOnStartup" );
+            m_enableOnStartup = serObj.FindProperty("m_enableOnStartup");
 
-            m_keepAlive = serObj.FindProperty( "m_keepAlive" );
+            m_keepAlive = serObj.FindProperty("m_keepAlive");
 
-            m_background = serObj.FindProperty( "m_background" );
-            m_backgroundColor = serObj.FindProperty( "m_backgroundColor" );
+            m_background = serObj.FindProperty("m_background");
+            m_backgroundColor = serObj.FindProperty("m_backgroundColor");
 
-            m_enableHotkeys = serObj.FindProperty( "m_enableHotkeys" );
+            m_enableHotkeys = serObj.FindProperty("m_enableHotkeys");
 
-            m_toggleModeKeyCode = serObj.FindProperty( "m_toggleModeKeyCode" );
+            m_toggleModeKeyCode = serObj.FindProperty("m_toggleModeKeyCode");
 
-            m_toggleModeCtrl = serObj.FindProperty( "m_toggleModeCtrl" );
-            m_toggleModeAlt = serObj.FindProperty( "m_toggleModeAlt" );
+            m_toggleModeCtrl = serObj.FindProperty("m_toggleModeCtrl");
+            m_toggleModeAlt = serObj.FindProperty("m_toggleModeAlt");
 
-            m_toggleActiveKeyCode = serObj.FindProperty( "m_toggleActiveKeyCode" );
+            m_toggleActiveKeyCode = serObj.FindProperty("m_toggleActiveKeyCode");
 
-            m_toggleActiveCtrl = serObj.FindProperty( "m_toggleActiveCtrl" );
-            m_toggleActiveAlt = serObj.FindProperty( "m_toggleActiveAlt" );
+            m_toggleActiveCtrl = serObj.FindProperty("m_toggleActiveCtrl");
+            m_toggleActiveAlt = serObj.FindProperty("m_toggleActiveAlt");
 
-            m_graphModulePosition = serObj.FindProperty( "m_graphModulePosition" );
+            m_graphModulePosition = serObj.FindProperty("m_graphModulePosition");
 
-            m_graphModuleOffset = serObj.FindProperty( "m_graphModuleOffset" );
+            m_graphModuleOffset = serObj.FindProperty("m_graphModuleOffset");
 
             #endregion
 
             #region Section -> FPS
 
-            m_fpsModuleState = serObj.FindProperty( "m_fpsModuleState" );
+            m_fpsModuleState = serObj.FindProperty("m_fpsModuleState");
 
-            m_goodFpsColor = serObj.FindProperty( "m_goodFpsColor" );
-            m_goodFpsThreshold = serObj.FindProperty( "m_goodFpsThreshold" );
+            m_goodFpsColor = serObj.FindProperty("m_goodFpsColor");
+            m_goodFpsThreshold = serObj.FindProperty("m_goodFpsThreshold");
 
-            m_cautionFpsColor = serObj.FindProperty( "m_cautionFpsColor" );
-            m_cautionFpsThreshold = serObj.FindProperty( "m_cautionFpsThreshold" );
+            m_cautionFpsColor = serObj.FindProperty("m_cautionFpsColor");
+            m_cautionFpsThreshold = serObj.FindProperty("m_cautionFpsThreshold");
 
-            m_criticalFpsColor = serObj.FindProperty( "m_criticalFpsColor" );
+            m_criticalFpsColor = serObj.FindProperty("m_criticalFpsColor");
 
-            m_fpsGraphResolution = serObj.FindProperty( "m_fpsGraphResolution" );
+            m_fpsGraphResolution = serObj.FindProperty("m_fpsGraphResolution");
 
-            m_fpsTextUpdateRate = serObj.FindProperty( "m_fpsTextUpdateRate" );
+            m_fpsTextUpdateRate = serObj.FindProperty("m_fpsTextUpdateRate");
 
             #endregion
 
             #region Section -> RAM
 
-            m_ramModuleState = serObj.FindProperty( "m_ramModuleState" );
+            m_ramModuleState = serObj.FindProperty("m_ramModuleState");
 
-            m_allocatedRamColor = serObj.FindProperty( "m_allocatedRamColor" );
-            m_reservedRamColor = serObj.FindProperty( "m_reservedRamColor" );
-            m_monoRamColor = serObj.FindProperty( "m_monoRamColor" );
+            m_allocatedRamColor = serObj.FindProperty("m_allocatedRamColor");
+            m_reservedRamColor = serObj.FindProperty("m_reservedRamColor");
+            m_monoRamColor = serObj.FindProperty("m_monoRamColor");
 
-            m_ramGraphResolution = serObj.FindProperty( "m_ramGraphResolution" );
+            m_ramGraphResolution = serObj.FindProperty("m_ramGraphResolution");
 
-            m_ramTextUpdateRate = serObj.FindProperty( "m_ramTextUpdateRate" );
+            m_ramTextUpdateRate = serObj.FindProperty("m_ramTextUpdateRate");
 
             #endregion
 
             #region Section -> Audio
 
-            m_findAudioListenerInCameraIfNull = serObj.FindProperty( "m_findAudioListenerInCameraIfNull" );
+            m_findAudioListenerInCameraIfNull = serObj.FindProperty("m_findAudioListenerInCameraIfNull");
 
-            m_audioListener = serObj.FindProperty( "m_audioListener" );
+            m_audioListener = serObj.FindProperty("m_audioListener");
 
-            m_audioModuleState = serObj.FindProperty( "m_audioModuleState" );
+            m_audioModuleState = serObj.FindProperty("m_audioModuleState");
 
-            m_audioGraphColor = serObj.FindProperty( "m_audioGraphColor" );
+            m_audioGraphColor = serObj.FindProperty("m_audioGraphColor");
 
-            m_audioGraphResolution = serObj.FindProperty( "m_audioGraphResolution" );
+            m_audioGraphResolution = serObj.FindProperty("m_audioGraphResolution");
 
-            m_audioTextUpdateRate = serObj.FindProperty( "m_audioTextUpdateRate" );
+            m_audioTextUpdateRate = serObj.FindProperty("m_audioTextUpdateRate");
 
-            m_FFTWindow = serObj.FindProperty( "m_FFTWindow" );
+            m_FFTWindow = serObj.FindProperty("m_FFTWindow");
 
-            m_spectrumSize = serObj.FindProperty( "m_spectrumSize" );
+            m_spectrumSize = serObj.FindProperty("m_spectrumSize");
 
             #endregion
 
             #region Section -> Advanced Settings
 
-            m_advancedModulePosition = serObj.FindProperty( "m_advancedModulePosition" );
+            m_advancedModulePosition = serObj.FindProperty("m_advancedModulePosition");
 
-            m_advancedModuleOffset = serObj.FindProperty( "m_advancedModuleOffset" );
-            
-            m_advancedModuleState = serObj.FindProperty( "m_advancedModuleState" );
+            m_advancedModuleOffset = serObj.FindProperty("m_advancedModuleOffset");
+
+            m_advancedModuleState = serObj.FindProperty("m_advancedModuleState");
 
             #endregion
         }
@@ -241,9 +241,10 @@ namespace Tayx.Graphy
 
         public override void OnInspectorGUI()
         {
-            if( m_target == null && target == null )
+            if (m_target == null && target == null)
             {
                 base.OnInspectorGUI();
+
                 return;
             }
 
@@ -252,22 +253,22 @@ namespace Tayx.Graphy
 
             //===== CONTENT REGION ========================================================================
 
-            GUILayout.Space( 20 );
+            GUILayout.Space(20);
 
             #region Section -> Logo
 
-            if( GraphyEditorStyle.ManagerLogoTexture != null )
+            if (GraphyEditorStyle.ManagerLogoTexture != null)
             {
                 GUILayout.Label
                 (
                     image: GraphyEditorStyle.ManagerLogoTexture,
-                    style: new GUIStyle( GUI.skin.GetStyle( "Label" ) )
+                    style: new GUIStyle(GUI.skin.GetStyle("Label"))
                     {
                         alignment = TextAnchor.UpperCenter
                     }
                 );
 
-                GUILayout.Space( 10 );
+                GUILayout.Space(10);
             }
             else
             {
@@ -280,7 +281,7 @@ namespace Tayx.Graphy
 
             #endregion
 
-            GUILayout.Space( 5 ); //Extra pixels added when the logo is used.
+            GUILayout.Space(5); //Extra pixels added when the logo is used.
 
             #region Section -> Settings
 
@@ -298,7 +299,7 @@ namespace Tayx.Graphy
                 )
             );
 
-            GUILayout.Space( 10 );
+            GUILayout.Space(10);
 
             m_enableOnStartup.boolValue = EditorGUILayout.Toggle
             (
@@ -312,7 +313,7 @@ namespace Tayx.Graphy
             );
 
             // This is a neat trick to hide Graphy in the Scene if it's going to be deactivated in play mode so that it doesn't use screen space.
-            if( !Application.isPlaying )
+            if (!Application.isPlaying)
             {
                 m_target.GetComponent<Canvas>().enabled = m_enableOnStartup.boolValue;
             }
@@ -328,7 +329,7 @@ namespace Tayx.Graphy
                 value: m_keepAlive.boolValue
             );
 
-            GUILayout.Space( 10 );
+            GUILayout.Space(10);
 
             EditorGUILayout.BeginHorizontal();
 
@@ -342,11 +343,11 @@ namespace Tayx.Graphy
                 value: m_background.boolValue
             );
 
-            m_backgroundColor.colorValue = EditorGUILayout.ColorField( m_backgroundColor.colorValue );
+            m_backgroundColor.colorValue = EditorGUILayout.ColorField(m_backgroundColor.colorValue);
 
             EditorGUILayout.EndHorizontal();
 
-            GUILayout.Space( 10 );
+            GUILayout.Space(10);
 
             m_enableHotkeys.boolValue = EditorGUILayout.Toggle
             (
@@ -359,7 +360,7 @@ namespace Tayx.Graphy
                 value: m_enableHotkeys.boolValue
             );
 
-            if( m_enableHotkeys.boolValue )
+            if (m_enableHotkeys.boolValue)
             {
                 EditorGUILayout.BeginHorizontal();
 
@@ -442,7 +443,7 @@ namespace Tayx.Graphy
                 EditorGUILayout.EndHorizontal();
             }
 
-            GUILayout.Space( 15 );
+            GUILayout.Space(15);
 
             EditorGUIUtility.labelWidth = 155;
             EditorGUIUtility.fieldWidth = 35;
@@ -469,7 +470,7 @@ namespace Tayx.Graphy
 
             #endregion
 
-            GUILayout.Space( 20 );
+            GUILayout.Space(20);
 
             #region Section -> FPS
 
@@ -481,9 +482,9 @@ namespace Tayx.Graphy
                 toggleOnLabelClick: true
             );
 
-            GUILayout.Space( 5 );
+            GUILayout.Space(5);
 
-            if( m_fpsModuleInspectorToggle )
+            if (m_fpsModuleInspectorToggle)
             {
                 EditorGUILayout.PropertyField
                 (
@@ -495,9 +496,9 @@ namespace Tayx.Graphy
                     )
                 );
 
-                GUILayout.Space( 5 );
+                GUILayout.Space(5);
 
-                EditorGUILayout.LabelField( "Fps thresholds and colors:" );
+                EditorGUILayout.LabelField("Fps thresholds and colors:");
 
                 EditorGUI.indentLevel++;
 
@@ -513,15 +514,15 @@ namespace Tayx.Graphy
                     value: m_goodFpsThreshold.intValue
                 );
 
-                m_goodFpsColor.colorValue = EditorGUILayout.ColorField( m_goodFpsColor.colorValue );
+                m_goodFpsColor.colorValue = EditorGUILayout.ColorField(m_goodFpsColor.colorValue);
 
                 EditorGUILayout.EndHorizontal();
 
-                if( m_goodFpsThreshold.intValue <= m_cautionFpsThreshold.intValue && m_goodFpsThreshold.intValue > 1 )
+                if (m_goodFpsThreshold.intValue <= m_cautionFpsThreshold.intValue && m_goodFpsThreshold.intValue > 1)
                 {
                     m_cautionFpsThreshold.intValue = m_goodFpsThreshold.intValue - 1;
                 }
-                else if( m_goodFpsThreshold.intValue <= 1 )
+                else if (m_goodFpsThreshold.intValue <= 1)
                 {
                     m_goodFpsThreshold.intValue = 2;
                 }
@@ -538,15 +539,15 @@ namespace Tayx.Graphy
                     value: m_cautionFpsThreshold.intValue
                 );
 
-                m_cautionFpsColor.colorValue = EditorGUILayout.ColorField( m_cautionFpsColor.colorValue );
+                m_cautionFpsColor.colorValue = EditorGUILayout.ColorField(m_cautionFpsColor.colorValue);
 
                 EditorGUILayout.EndHorizontal();
 
-                if( m_cautionFpsThreshold.intValue >= m_goodFpsThreshold.intValue )
+                if (m_cautionFpsThreshold.intValue >= m_goodFpsThreshold.intValue)
                 {
                     m_cautionFpsThreshold.intValue = m_goodFpsThreshold.intValue - 1;
                 }
-                else if( m_cautionFpsThreshold.intValue <= 0 )
+                else if (m_cautionFpsThreshold.intValue <= 0)
                 {
                     m_cautionFpsThreshold.intValue = 1;
                 }
@@ -564,13 +565,13 @@ namespace Tayx.Graphy
                     value: 0
                 );
 
-                m_criticalFpsColor.colorValue = EditorGUILayout.ColorField( m_criticalFpsColor.colorValue );
+                m_criticalFpsColor.colorValue = EditorGUILayout.ColorField(m_criticalFpsColor.colorValue);
 
                 EditorGUILayout.EndHorizontal();
 
                 EditorGUI.indentLevel--;
 
-                if( m_fpsModuleState.intValue == 0 )
+                if (m_fpsModuleState.intValue == 0)
                 {
                     m_fpsGraphResolution.intValue = EditorGUILayout.IntSlider
                     (
@@ -600,7 +601,7 @@ namespace Tayx.Graphy
 
             #endregion
 
-            GUILayout.Space( 20 );
+            GUILayout.Space(20);
 
             #region Section -> RAM
 
@@ -612,9 +613,9 @@ namespace Tayx.Graphy
                 toggleOnLabelClick: true
             );
 
-            GUILayout.Space( 5 );
+            GUILayout.Space(5);
 
-            if( m_ramModuleInspectorToggle )
+            if (m_ramModuleInspectorToggle)
             {
                 EditorGUILayout.PropertyField
                 (
@@ -626,9 +627,9 @@ namespace Tayx.Graphy
                     )
                 );
 
-                GUILayout.Space( 5 );
+                GUILayout.Space(5);
 
-                EditorGUILayout.LabelField( "Graph colors:" );
+                EditorGUILayout.LabelField("Graph colors:");
 
                 EditorGUI.indentLevel++;
 
@@ -652,7 +653,7 @@ namespace Tayx.Graphy
 
                 EditorGUI.indentLevel--;
 
-                if( m_ramModuleState.intValue == 0 )
+                if (m_ramModuleState.intValue == 0)
                 {
                     m_ramGraphResolution.intValue = EditorGUILayout.IntSlider(
                         new GUIContent
@@ -681,7 +682,7 @@ namespace Tayx.Graphy
 
             #endregion
 
-            GUILayout.Space( 20 );
+            GUILayout.Space(20);
 
             #region Section -> Audio
 
@@ -693,9 +694,9 @@ namespace Tayx.Graphy
                 toggleOnLabelClick: true
             );
 
-            GUILayout.Space( 5 );
+            GUILayout.Space(5);
 
-            if( m_audioModuleInspectorToggle )
+            if (m_audioModuleInspectorToggle)
             {
                 EditorGUILayout.PropertyField
                 (
@@ -707,7 +708,7 @@ namespace Tayx.Graphy
                     )
                 );
 
-                GUILayout.Space( 5 );
+                GUILayout.Space(5);
 
                 EditorGUILayout.PropertyField
                 (
@@ -731,7 +732,7 @@ namespace Tayx.Graphy
                     )
                 );
 
-                if( m_audioModuleState.intValue == 0 )
+                if (m_audioModuleState.intValue == 0)
                 {
                     m_audioGraphColor.colorValue = EditorGUILayout.ColorField
                     (
@@ -752,11 +753,10 @@ namespace Tayx.Graphy
                     );
 
                     // Forces the value to be a multiple of 3, this way the audio graph is painted correctly
-                    if( m_audioGraphResolution.intValue % 3 != 0 && m_audioGraphResolution.intValue < 300 )
+                    if (m_audioGraphResolution.intValue % 3 != 0 && m_audioGraphResolution.intValue < 300)
                     {
                         m_audioGraphResolution.intValue += 3 - m_audioGraphResolution.intValue % 3;
                     }
-                    //TODO: Figure out why a static version of the ForceMultipleOf3 isnt used.
                 }
 
                 EditorGUILayout.PropertyField
@@ -786,21 +786,21 @@ namespace Tayx.Graphy
                 int closestSpectrumIndex = 0;
                 int minDistanceToSpectrumValue = 100000;
 
-                for( int i = 0; i < m_spectrumSizeValues.Length; i++ )
+                for (int i = 0; i < m_spectrumSizeValues.Length; i++)
                 {
                     int newDistance = Mathf.Abs
                     (
-                        value: m_spectrumSize.intValue - m_spectrumSizeValues[ i ]
+                        value: m_spectrumSize.intValue - m_spectrumSizeValues[i]
                     );
 
-                    if( newDistance < minDistanceToSpectrumValue )
+                    if (newDistance < minDistanceToSpectrumValue)
                     {
                         minDistanceToSpectrumValue = newDistance;
                         closestSpectrumIndex = i;
                     }
                 }
 
-                m_spectrumSize.intValue = m_spectrumSizeValues[ closestSpectrumIndex ];
+                m_spectrumSize.intValue = m_spectrumSizeValues[closestSpectrumIndex];
 
                 m_audioTextUpdateRate.intValue = EditorGUILayout.IntSlider
                 (
@@ -817,7 +817,7 @@ namespace Tayx.Graphy
 
             #endregion
 
-            GUILayout.Space( 20 );
+            GUILayout.Space(20);
 
             #region Section -> Advanced Settings
 
@@ -829,11 +829,11 @@ namespace Tayx.Graphy
                 toggleOnLabelClick: true
             );
 
-            GUILayout.Space( 5 );
+            GUILayout.Space(5);
 
-            if( m_advancedModuleInspectorToggle )
+            if (m_advancedModuleInspectorToggle)
             {
-                EditorGUILayout.PropertyField( m_advancedModulePosition );
+                EditorGUILayout.PropertyField(m_advancedModulePosition);
 
                 EditorGUILayout.PropertyField
                 (
@@ -844,7 +844,7 @@ namespace Tayx.Graphy
                         tooltip: "Defines how far from the corner the module will be located."
                     )
                 );
-                
+
                 EditorGUILayout.PropertyField
                 (
                     m_advancedModuleState,
