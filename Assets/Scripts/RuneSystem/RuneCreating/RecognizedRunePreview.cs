@@ -9,11 +9,13 @@ namespace SquallOfSpells.RuneSystem.RuneCreating
     {
         [SerializeField] private RuneRecognizer recognizer;
 
-        private RawImage image;
+        private RectTransform rectTransform;
+        private RawImage      image;
 
 
         private void Start()
         {
+            rectTransform = this.GetComponent<RectTransform>();
             image = GetComponent<RawImage>();
         }
 
@@ -30,7 +32,20 @@ namespace SquallOfSpells.RuneSystem.RuneCreating
 
         private void HandleRecognition(Rune rune)
         {
-            image.texture = rune == null ? null : rune.Preview;
+            if (rune is null)
+            {
+                image.texture = null;
+
+                return;
+            }
+
+            rectTransform.sizeDelta = new Vector2
+            (
+                rectTransform.rect.height * rune.Preview.width / rune.Preview.height,
+                rectTransform.rect.height
+            );
+
+            image.texture = rune.Preview;
         }
     }
 }

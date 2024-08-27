@@ -505,6 +505,10 @@ PrefabInstance:
       propertyPath: drawPositionsDisplayer
       value: 
       objectReference: {fileID: 24706182}
+    - target: {fileID: 4133147992681433436, guid: 68c562847aab85bb38d53eb8c9bb20c7, type: 3}
+      propertyPath: showDrawPositionsCount
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5050452680365730991, guid: 68c562847aab85bb38d53eb8c9bb20c7, type: 3}
       propertyPath: m_Name
       value: Draw Canvas

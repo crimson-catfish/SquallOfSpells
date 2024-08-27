@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Rune recognizer
   m_EditorClassIdentifier: 
   storage: {fileID: 11400000, guid: be54250f59b104a42828af839132ca3c, type: 2}
-  log: 0
+  log: 1
   averageVariationPower: 1.4
   averagePointPower: 3
   sizeDiffPower: 1.6
