@@ -24,11 +24,11 @@ public partial class @Controls: IInputActionCollection2, IDisposable
     ""name"": ""Controls"",
     ""maps"": [
         {
-            ""name"": ""RuneCreatingUI"",
+            ""name"": ""SigilCreatingUI"",
             ""id"": ""70420c8d-d3f9-448f-8958-45cc3dab5a28"",
             ""actions"": [
                 {
-                    ""name"": ""DeleteRune"",
+                    ""name"": ""Delete"",
                     ""type"": ""Button"",
                     ""id"": ""8ccd02ad-9358-40c5-8942-090c9ba0c56f"",
                     ""expectedControlType"": ""Button"",
@@ -37,7 +37,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""NewRune"",
+                    ""name"": ""New"",
                     ""type"": ""Button"",
                     ""id"": ""a66a0e3a-9d37-4740-bae6-476a81c901cf"",
                     ""expectedControlType"": ""Button"",
@@ -63,7 +63,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""DeleteRune"",
+                    ""action"": ""Delete"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -74,7 +74,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""NewRune"",
+                    ""action"": ""New"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -266,11 +266,11 @@ public partial class @Controls: IInputActionCollection2, IDisposable
     ],
     ""controlSchemes"": []
 }");
-        // RuneCreatingUI
-        m_RuneCreatingUI = asset.FindActionMap("RuneCreatingUI", throwIfNotFound: true);
-        m_RuneCreatingUI_DeleteRune = m_RuneCreatingUI.FindAction("DeleteRune", throwIfNotFound: true);
-        m_RuneCreatingUI_NewRune = m_RuneCreatingUI.FindAction("NewRune", throwIfNotFound: true);
-        m_RuneCreatingUI_SelectRecognized = m_RuneCreatingUI.FindAction("SelectRecognized", throwIfNotFound: true);
+        // SigilCreatingUI
+        m_SigilCreatingUI = asset.FindActionMap("SigilCreatingUI", throwIfNotFound: true);
+        m_SigilCreatingUI_Delete = m_SigilCreatingUI.FindAction("Delete", throwIfNotFound: true);
+        m_SigilCreatingUI_New = m_SigilCreatingUI.FindAction("New", throwIfNotFound: true);
+        m_SigilCreatingUI_SelectRecognized = m_SigilCreatingUI.FindAction("SelectRecognized", throwIfNotFound: true);
         // Move
         m_Move = asset.FindActionMap("Move", throwIfNotFound: true);
         m_Move_Direction = m_Move.FindAction("Direction", throwIfNotFound: true);
@@ -344,67 +344,67 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         return asset.FindBinding(bindingMask, out action);
     }
 
-    // RuneCreatingUI
-    private readonly InputActionMap m_RuneCreatingUI;
-    private List<IRuneCreatingUIActions> m_RuneCreatingUIActionsCallbackInterfaces = new List<IRuneCreatingUIActions>();
-    private readonly InputAction m_RuneCreatingUI_DeleteRune;
-    private readonly InputAction m_RuneCreatingUI_NewRune;
-    private readonly InputAction m_RuneCreatingUI_SelectRecognized;
-    public struct RuneCreatingUIActions
+    // SigilCreatingUI
+    private readonly InputActionMap m_SigilCreatingUI;
+    private List<ISigilCreatingUIActions> m_SigilCreatingUIActionsCallbackInterfaces = new List<ISigilCreatingUIActions>();
+    private readonly InputAction m_SigilCreatingUI_Delete;
+    private readonly InputAction m_SigilCreatingUI_New;
+    private readonly InputAction m_SigilCreatingUI_SelectRecognized;
+    public struct SigilCreatingUIActions
     {
         private @Controls m_Wrapper;
-        public RuneCreatingUIActions(@Controls wrapper) { m_Wrapper = wrapper; }
-        public InputAction @DeleteRune => m_Wrapper.m_RuneCreatingUI_DeleteRune;
-        public InputAction @NewRune => m_Wrapper.m_RuneCreatingUI_NewRune;
-        public InputAction @SelectRecognized => m_Wrapper.m_RuneCreatingUI_SelectRecognized;
-        public InputActionMap Get() { return m_Wrapper.m_RuneCreatingUI; }
+        public SigilCreatingUIActions(@Controls wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Delete => m_Wrapper.m_SigilCreatingUI_Delete;
+        public InputAction @New => m_Wrapper.m_SigilCreatingUI_New;
+        public InputAction @SelectRecognized => m_Wrapper.m_SigilCreatingUI_SelectRecognized;
+        public InputActionMap Get() { return m_Wrapper.m_SigilCreatingUI; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
         public bool enabled => Get().enabled;
-        public static implicit operator InputActionMap(RuneCreatingUIActions set) { return set.Get(); }
-        public void AddCallbacks(IRuneCreatingUIActions instance)
+        public static implicit operator InputActionMap(SigilCreatingUIActions set) { return set.Get(); }
+        public void AddCallbacks(ISigilCreatingUIActions instance)
         {
-            if (instance == null || m_Wrapper.m_RuneCreatingUIActionsCallbackInterfaces.Contains(instance)) return;
-            m_Wrapper.m_RuneCreatingUIActionsCallbackInterfaces.Add(instance);
-            @DeleteRune.started += instance.OnDeleteRune;
-            @DeleteRune.performed += instance.OnDeleteRune;
-            @DeleteRune.canceled += instance.OnDeleteRune;
-            @NewRune.started += instance.OnNewRune;
-            @NewRune.performed += instance.OnNewRune;
-            @NewRune.canceled += instance.OnNewRune;
+            if (instance == null || m_Wrapper.m_SigilCreatingUIActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_SigilCreatingUIActionsCallbackInterfaces.Add(instance);
+            @Delete.started += instance.OnDelete;
+            @Delete.performed += instance.OnDelete;
+            @Delete.canceled += instance.OnDelete;
+            @New.started += instance.OnNew;
+            @New.performed += instance.OnNew;
+            @New.canceled += instance.OnNew;
             @SelectRecognized.started += instance.OnSelectRecognized;
             @SelectRecognized.performed += instance.OnSelectRecognized;
             @SelectRecognized.canceled += instance.OnSelectRecognized;
         }
 
-        private void UnregisterCallbacks(IRuneCreatingUIActions instance)
+        private void UnregisterCallbacks(ISigilCreatingUIActions instance)
         {
-            @DeleteRune.started -= instance.OnDeleteRune;
-            @DeleteRune.performed -= instance.OnDeleteRune;
-            @DeleteRune.canceled -= instance.OnDeleteRune;
-            @NewRune.started -= instance.OnNewRune;
-            @NewRune.performed -= instance.OnNewRune;
-            @NewRune.canceled -= instance.OnNewRune;
+            @Delete.started -= instance.OnDelete;
+            @Delete.performed -= instance.OnDelete;
+            @Delete.canceled -= instance.OnDelete;
+            @New.started -= instance.OnNew;
+            @New.performed -= instance.OnNew;
+            @New.canceled -= instance.OnNew;
             @SelectRecognized.started -= instance.OnSelectRecognized;
             @SelectRecognized.performed -= instance.OnSelectRecognized;
             @SelectRecognized.canceled -= instance.OnSelectRecognized;
         }
 
-        public void RemoveCallbacks(IRuneCreatingUIActions instance)
+        public void RemoveCallbacks(ISigilCreatingUIActions instance)
         {
-            if (m_Wrapper.m_RuneCreatingUIActionsCallbackInterfaces.Remove(instance))
+            if (m_Wrapper.m_SigilCreatingUIActionsCallbackInterfaces.Remove(instance))
                 UnregisterCallbacks(instance);
         }
 
-        public void SetCallbacks(IRuneCreatingUIActions instance)
+        public void SetCallbacks(ISigilCreatingUIActions instance)
         {
-            foreach (var item in m_Wrapper.m_RuneCreatingUIActionsCallbackInterfaces)
+            foreach (var item in m_Wrapper.m_SigilCreatingUIActionsCallbackInterfaces)
                 UnregisterCallbacks(item);
-            m_Wrapper.m_RuneCreatingUIActionsCallbackInterfaces.Clear();
+            m_Wrapper.m_SigilCreatingUIActionsCallbackInterfaces.Clear();
             AddCallbacks(instance);
         }
     }
-    public RuneCreatingUIActions @RuneCreatingUI => new RuneCreatingUIActions(this);
+    public SigilCreatingUIActions @SigilCreatingUI => new SigilCreatingUIActions(this);
 
     // Move
     private readonly InputActionMap m_Move;
@@ -613,10 +613,10 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         }
     }
     public SwingActions @Swing => new SwingActions(this);
-    public interface IRuneCreatingUIActions
+    public interface ISigilCreatingUIActions
     {
-        void OnDeleteRune(InputAction.CallbackContext context);
-        void OnNewRune(InputAction.CallbackContext context);
+        void OnDelete(InputAction.CallbackContext context);
+        void OnNew(InputAction.CallbackContext context);
         void OnSelectRecognized(InputAction.CallbackContext context);
     }
     public interface IMoveActions

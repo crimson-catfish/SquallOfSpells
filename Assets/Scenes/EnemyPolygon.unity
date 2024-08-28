@@ -631,7 +631,7 @@ GameObject:
   - component: {fileID: 671011346}
   - component: {fileID: 671011344}
   m_Layer: 2
-  m_Name: Recognized Rune Name
+  m_Name: Recognized Sigil Name
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

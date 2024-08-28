@@ -12,7 +12,7 @@ EditorBuildSettings:
     path: Assets/Scenes/EnemyPolygon.unity
     guid: dccbed51e4e5032b39ed35473ca05673
   - enabled: 0
-    path: Assets/Editor/RuneCreating.unity
+    path: Assets/Editor/SigilCreating.unity
     guid: 8c184a99cba34acbc9c75c196d5c05c3
   m_configObjects:
     com.unity.adaptiveperformance.google.android.provider_settings: {fileID: 11400000, guid: 1df3dbf06f8c4ee49be5dece94a639a4, type: 2}

@@ -2,11 +2,11 @@
     "name": "Controls",
     "maps": [
         {
-            "name": "RuneCreatingUI",
+            "name": "SigilCreatingUI",
             "id": "70420c8d-d3f9-448f-8958-45cc3dab5a28",
             "actions": [
                 {
-                    "name": "DeleteRune",
+                    "name": "Delete",
                     "type": "Button",
                     "id": "8ccd02ad-9358-40c5-8942-090c9ba0c56f",
                     "expectedControlType": "Button",
@@ -15,7 +15,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "NewRune",
+                    "name": "New",
                     "type": "Button",
                     "id": "a66a0e3a-9d37-4740-bae6-476a81c901cf",
                     "expectedControlType": "Button",
@@ -41,7 +41,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "DeleteRune",
+                    "action": "Delete",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -52,7 +52,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "NewRune",
+                    "action": "New",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },

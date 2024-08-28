@@ -3,20 +3,20 @@ using UnityEngine;
 
 namespace SquallOfSpells.SigilSystem
 {
-    public class RecognizedRuneName : MonoBehaviour
+    public class RecognizedSigilName : MonoBehaviour
     {
-        [SerializeField] private SigilRecognizer  recognizer;
+        [SerializeField] private SigilRecognizer recognizer;
         [SerializeField] private TextMeshProUGUI textMeshPro;
 
 
         private void OnEnable()
         {
-            recognizer.OnRecognized += rune =>
+            recognizer.OnRecognized += sigil =>
             {
                 // Debug.Assert(rune != null, "rune != null");
                 // image.texture = rune == null ? null : rune.Preview;
 
-                textMeshPro.text = rune == null ? "" : rune.name;
+                textMeshPro.text = sigil == null ? "" : sigil.name;
             };
         }
     }

@@ -88,8 +88,8 @@ namespace SquallOfSpells
 #if UNITY_EDITOR
             if (scene.name == "RuneCreating")
             {
-                Controls.RuneCreatingUI.Enable();
-                SetRuneCreatingUIActions();
+                Controls.SigilCreatingUI.Enable();
+                SetCreatingUIActions();
             }
 #endif
             Controls.Move.Enable();
@@ -138,12 +138,12 @@ namespace SquallOfSpells
             return false;
         }
 
-        private void SetRuneCreatingUIActions()
+        private void SetCreatingUIActions()
         {
-            Controls.RuneCreatingUIActions actions = Controls.RuneCreatingUI;
+            Controls.SigilCreatingUIActions actions = Controls.SigilCreatingUI;
 
-            actions.DeleteRune.performed += _ => OnDeleteSigil?.Invoke();
-            actions.NewRune.performed += _ => OnNewSigil?.Invoke();
+            actions.Delete.performed += _ => OnDeleteSigil?.Invoke();
+            actions.New.performed += _ => OnNewSigil?.Invoke();
             actions.SelectRecognized.performed += _ => OnSelectRecognized?.Invoke();
         }
 
