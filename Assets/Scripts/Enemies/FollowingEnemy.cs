@@ -24,8 +24,8 @@ namespace SquallOfSpells
             Vector3 position = this.transform.position;
             Vector3 direction = this.player.transform.position - position;
 
-            float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-            this.transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle));
+            // float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+            // this.transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle));
 
             if (direction.magnitude > attackRange)
                 position += direction.normalized * (speed * Time.deltaTime);
