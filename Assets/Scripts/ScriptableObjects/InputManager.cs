@@ -17,8 +17,7 @@ namespace SquallOfSpells
 
         [SerializeField] private bool log;
 
-        private readonly List<Canvas> enabledCanvases = new();
-        private readonly float        screenWidth     = Screen.width;
+        private readonly float screenWidth = Screen.width;
 
         private Camera         _mainCamera;
         private Transform      _playerTransform;
@@ -99,28 +98,14 @@ namespace SquallOfSpells
             SetMoveActions();
             SetDrawActions();
             SetAimActions();
-
-            UpdateCanvasesList();
         }
 
-        private void UpdateCanvasesList()
-        {
-            eventSystem = FindObjectOfType<EventSystem>();
-            allCanvases = FindObjectsOfType<Canvas>();
-
-            foreach (Canvas canvas in allCanvases)
-            {
-                if (canvas.enabled && canvas.gameObject.layer == LayerMask.NameToLayer("UI"))
-                    enabledCanvases.Add(canvas);
-            }
-        }
-
-        private bool IsOverAnyUI(Vector2 point)
+        private bool IsOverUI(Vector2 point)
         {
             PointerEventData pointerData;
             List<RaycastResult> results;
 
-            foreach (Canvas canvas in enabledCanvases)
+            foreach (Canvas canvas in CanvasManager.uiCanvases)
             {
                 results = new List<RaycastResult>();
 
@@ -177,7 +162,7 @@ namespace SquallOfSpells
         {
             Vector2 startPositionPixels = Controls.Draw.Position.ReadValue<Vector2>();
 
-            if (IsOverAnyUI(startPositionPixels))
+            if (IsOverUI(startPositionPixels))
                 return;
 
             logger.Log("Draw contact start");
@@ -200,7 +185,7 @@ namespace SquallOfSpells
         {
             Vector2 startPositionPixels = Controls.Aim.Position.ReadValue<Vector2>();
 
-            if (IsOverAnyUI(startPositionPixels))
+            if (IsOverUI(startPositionPixels))
                 return;
 
             logger.Log("Aim contact start");

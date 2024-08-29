@@ -9,12 +9,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ef132027360bf0e4babc5139f04264af, type: 3}
-  m_Name: Sigil recognizer
+  m_Script: {fileID: 11500000, guid: e9bbba638e17405496297277e0b9ba17, type: 3}
+  m_Name: Canvas manager
   m_EditorClassIdentifier: 
-  storage: {fileID: 11400000, guid: b41008c47abf7606dbb98b71e79f9f51, type: 2}
-  log: 0
-  acceptableHeightDiff: 0.4
-  acceptableMassCenterDiff: 0.2
-  heightPow: 3
-  acceptableMismatch: 2
