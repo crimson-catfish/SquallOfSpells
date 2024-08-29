@@ -6,7 +6,7 @@ namespace SquallOfSpells.SpellSystem
 {
     public class SpellCaster : MonoBehaviour
     {
-        [SerializeField] private SpellStorage   storage;
+        [SerializeField] private ActionStorage   storage;
         [SerializeField] private SigilRecognizer recognizer;
         [SerializeField] private InputManager   inputManager;
 

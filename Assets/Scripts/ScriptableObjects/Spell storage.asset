@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Spell storage
   m_EditorClassIdentifier: 
   spells:
-    _serializedList:
-    - Key: {fileID: 11400000, guid: ebc68e16701b8d53b9182a8e297aa170, type: 2}
-      Value: {fileID: 338541250264457780, guid: fe4926cbb76e1477d8fe3b1ca4e19b41, type: 3}
-    - Key: {fileID: 11400000, guid: 167e473a7023f74d4a0965e0d39bac11, type: 2}
-      Value: {fileID: 6003316438310008955, guid: 04173987edf621250bca9803e2f4cf7a, type: 3}
+    _serializedList: []
+  pauseMenuActions:
+    _serializedList: []
+  mainMenuActions:
+    _serializedList: []
