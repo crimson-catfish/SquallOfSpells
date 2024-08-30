@@ -11,8 +11,6 @@ namespace SquallOfSpells
         [SerializeField] private     InputManager    inputManager;
         [SerializeField] private     SigilRecognizer recognizer;
         [SerializeField] private new Rigidbody2D     rigidbody;
-        [FormerlySerializedAs("spellStorage"), FormerlySerializedAs("spellContainer"), SerializeField]
-        private ActionStorage actionStorage;
 
         [SerializeField] private float moveSpeed = 2f;
 

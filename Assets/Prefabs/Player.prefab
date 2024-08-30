@@ -54,7 +54,7 @@ MonoBehaviour:
   inputManager: {fileID: 11400000, guid: 03d0acaf65387b45e8744ba57b0b8613, type: 2}
   recognizer: {fileID: 0}
   rigidbody: {fileID: 0}
-  spellStorage: {fileID: 0}
+  actionStorage: {fileID: 0}
   moveSpeed: 3
 --- !u!114 &4510702143249838437
 MonoBehaviour:

@@ -1,4 +1,5 @@
 using System;
+using AYellowpaper.SerializedCollections;
 using SquallOfSpells.SigilSystem;
 using UnityEngine;
 
@@ -6,9 +7,10 @@ namespace SquallOfSpells.SpellSystem
 {
     public class SpellCaster : MonoBehaviour
     {
-        [SerializeField] private ActionStorage   storage;
         [SerializeField] private SigilRecognizer recognizer;
-        [SerializeField] private InputManager   inputManager;
+        [SerializeField] private InputManager    inputManager;
+
+        [SerializeField] private SerializedDictionary<Sigil, GameObject> spells;
 
 
         private void HandleRecognized(Sigil sigil)
@@ -16,7 +18,7 @@ namespace SquallOfSpells.SpellSystem
             if (sigil == null)
                 return;
 
-            if (!storage.spells.TryGetValue(sigil, out GameObject spellObject))
+            if (!spells.TryGetValue(sigil, out GameObject spellObject))
                 return;
 
             if (spellObject.TryGetComponent(out IAimable aimableSpell))

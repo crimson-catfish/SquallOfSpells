@@ -256,6 +256,11 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!1 &117395059 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7385254010383006501, guid: 9b454918a9a055d84bd117b4f0f88f33, type: 3}
+  m_PrefabInstance: {fileID: 3374572613076456356}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &244283493
 GameObject:
   m_ObjectHideFlags: 0
@@ -495,7 +500,7 @@ PrefabInstance:
       objectReference: {fileID: 11400000, guid: 445af773a4ec4b95fb3b1ae81bfb5d0f, type: 2}
     - target: {fileID: 4133147992681433436, guid: 68c562847aab85bb38d53eb8c9bb20c7, type: 3}
       propertyPath: showDrawPoints
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4133147992681433436, guid: 68c562847aab85bb38d53eb8c9bb20c7, type: 3}
       propertyPath: acceptableError
@@ -511,7 +516,7 @@ PrefabInstance:
       objectReference: {fileID: 24706182}
     - target: {fileID: 4133147992681433436, guid: 68c562847aab85bb38d53eb8c9bb20c7, type: 3}
       propertyPath: showDrawPositionsCount
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5050452680365730991, guid: 68c562847aab85bb38d53eb8c9bb20c7, type: 3}
       propertyPath: m_Name
@@ -1022,7 +1027,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1198922753
 Transform:
   m_ObjectHideFlags: 0
@@ -1133,6 +1138,11 @@ Transform:
   - {fileID: 1198922753}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1945490198 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2890471075663709355, guid: 9b454918a9a055d84bd117b4f0f88f33, type: 3}
+  m_PrefabInstance: {fileID: 3374572613076456356}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2042440940
 GameObject:
   m_ObjectHideFlags: 0
@@ -1546,6 +1556,26 @@ PrefabInstance:
       propertyPath: recognizer
       value: 
       objectReference: {fileID: 11400000, guid: 445af773a4ec4b95fb3b1ae81bfb5d0f, type: 2}
+    - target: {fileID: 7845758583061478427, guid: 9b454918a9a055d84bd117b4f0f88f33, type: 3}
+      propertyPath: spells._serializedList.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7845758583061478427, guid: 9b454918a9a055d84bd117b4f0f88f33, type: 3}
+      propertyPath: spells._serializedList.Array.data[0].Key
+      value: 
+      objectReference: {fileID: 11400000, guid: 0f8ced6fb111997d091222c5a3a5c683, type: 2}
+    - target: {fileID: 7845758583061478427, guid: 9b454918a9a055d84bd117b4f0f88f33, type: 3}
+      propertyPath: spells._serializedList.Array.data[1].Key
+      value: 
+      objectReference: {fileID: 11400000, guid: fd7341f050165cdf3abae5f96fcc3524, type: 2}
+    - target: {fileID: 7845758583061478427, guid: 9b454918a9a055d84bd117b4f0f88f33, type: 3}
+      propertyPath: spells._serializedList.Array.data[0].Value
+      value: 
+      objectReference: {fileID: 117395059}
+    - target: {fileID: 7845758583061478427, guid: 9b454918a9a055d84bd117b4f0f88f33, type: 3}
+      propertyPath: spells._serializedList.Array.data[1].Value
+      value: 
+      objectReference: {fileID: 1945490198}
     - target: {fileID: 9100786171447711631, guid: 9b454918a9a055d84bd117b4f0f88f33, type: 3}
       propertyPath: settings
       value: 
@@ -1794,8 +1824,8 @@ SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 2042440943}
-  - {fileID: 3374572613076456356}
   - {fileID: 427290005}
+  - {fileID: 3374572613076456356}
   - {fileID: 746486141}
   - {fileID: 1168980810}
   - {fileID: 4394312170046107181}
