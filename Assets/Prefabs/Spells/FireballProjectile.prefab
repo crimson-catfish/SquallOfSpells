@@ -42,11 +42,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 8882211435051311793}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 581889a1f21b4dbeb8f62e3d5e5a71a1, type: 3}
+  m_Script: {fileID: 11500000, guid: 40910185a0d140aa9d9cff715f14e48f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 25
-  speed: 9.7
+  damage: 10
+  ownerTag: Player
+  speed: 18
 --- !u!212 &5266992344228242525
 SpriteRenderer:
   m_ObjectHideFlags: 0

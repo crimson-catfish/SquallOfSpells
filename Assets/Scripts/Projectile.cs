@@ -1,17 +1,20 @@
-using System;
+using SquallOfSpells.SpellSystem;
 using UnityEngine;
+using UnityEngine.Serialization;
 
-namespace SquallOfSpells.SpellSystem
+namespace SquallOfSpells
 {
     public class Projectile : AttackSpell
     {
-        [SerializeField] private float speed;
+        [SerializeField] private string ownerTag;
+        [SerializeField] private float  speed;
+
 
         private void Update()
         {
             RaycastHit2D hit = CheckForHit();
 
-            if (hit.collider)
+            if (hit.collider is not null && !hit.collider.gameObject.CompareTag(ownerTag))
             {
                 DealDamage(hit.transform.gameObject);
                 Destroy(this.gameObject);
