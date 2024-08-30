@@ -12,3 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e9bbba638e17405496297277e0b9ba17, type: 3}
   m_Name: Canvas manager
   m_EditorClassIdentifier: 
+  log: 0

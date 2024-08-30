@@ -13,8 +13,7 @@ namespace SquallOfSpells.SigilSystem
         {
             recognizer.OnRecognized += sigil =>
             {
-                // Debug.Assert(rune != null, "rune != null");
-                // image.texture = rune == null ? null : rune.Preview;
+                Debug.Log(sigil == null ? "not recognized" : sigil.name);
 
                 textMeshPro.text = sigil == null ? "" : sigil.name;
             };

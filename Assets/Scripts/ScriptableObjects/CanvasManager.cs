@@ -7,15 +7,20 @@ namespace SquallOfSpells
     [CreateAssetMenu(fileName = "Canvas manager", menuName = "Scriptable objects/Canvas manager")]
     public class CanvasManager : ScriptableObject
     {
-        public static List<Canvas> uiCanvases = new();
+        [SerializeField] private bool log;
+
+        public readonly List<Canvas> uiCanvases = new();
 
         private void OnEnable()
         {
+            if (log)
+                Debug.Log("enabled");
+
             SceneManager.sceneLoaded += (_, _) => UpdateUICanvasesList();
         }
 
 
-        public static void EnableCanvas(Canvas canvas)
+        public void EnableCanvas(Canvas canvas)
         {
             canvas.enabled = true;
 
@@ -23,7 +28,7 @@ namespace SquallOfSpells
                 uiCanvases.Add(canvas);
         }
 
-        public static void DisableCanvas(Canvas canvas)
+        public void DisableCanvas(Canvas canvas)
         {
             canvas.enabled = false;
 
@@ -31,14 +36,24 @@ namespace SquallOfSpells
                 uiCanvases.Remove(canvas);
         }
 
-        public static void UpdateUICanvasesList()
+        private void UpdateUICanvasesList()
         {
+            uiCanvases.Clear();
+
+            if (log)
+                Debug.Log("updating canvases...");
+
             Canvas[] allCanvases = FindObjectsOfType<Canvas>();
 
             foreach (Canvas canvas in allCanvases)
             {
                 if (canvas.enabled && canvas.gameObject.layer == LayerMask.NameToLayer("UI"))
+                {
                     uiCanvases.Add(canvas);
+
+                    if (log)
+                        Debug.Log(canvas);
+                }
             }
         }
     }

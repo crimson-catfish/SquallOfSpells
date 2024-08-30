@@ -13,4 +13,5 @@ MonoBehaviour:
   m_Name: Input manager
   m_EditorClassIdentifier: 
   settings: {fileID: 11400000, guid: 5a862e82871ef1e128f61f035ee4829a, type: 2}
+  canvasManager: {fileID: 11400000, guid: 381c559a058e74ffbb6e651edd6760a9, type: 2}
   log: 0

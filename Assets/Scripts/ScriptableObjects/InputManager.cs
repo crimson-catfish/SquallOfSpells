@@ -14,6 +14,8 @@ namespace SquallOfSpells
     public class InputManager : ScriptableObject
     {
         [SerializeField] private InputSettings settings;
+        [SerializeField] private CanvasManager canvasManager;
+
 
         [SerializeField] private bool log;
 
@@ -105,7 +107,7 @@ namespace SquallOfSpells
             PointerEventData pointerData;
             List<RaycastResult> results;
 
-            foreach (Canvas canvas in CanvasManager.uiCanvases)
+            foreach (Canvas canvas in canvasManager.uiCanvases)
             {
                 results = new List<RaycastResult>();
 

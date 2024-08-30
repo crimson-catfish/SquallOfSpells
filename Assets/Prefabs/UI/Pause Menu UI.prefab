@@ -348,8 +348,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 090d53d0810c7cbcabc2ddfa14dbf18e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  canvasManager: {fileID: 11400000, guid: 381c559a058e74ffbb6e651edd6760a9, type: 2}
   inGameUI: {fileID: 0}
-  pauseMenuUI: {fileID: 4466273677043211118}
+  pauseMenuUI: {fileID: 4269383578031424604}
 --- !u!222 &890826473652605393
 CanvasRenderer:
   m_ObjectHideFlags: 0

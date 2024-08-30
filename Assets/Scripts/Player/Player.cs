@@ -8,10 +8,11 @@ namespace SquallOfSpells
     [RequireComponent(typeof(Health))]
     public class Player : MonoBehaviour
     {
-        [SerializeField]                                                                              private     InputManager    inputManager;
-        [SerializeField]                                                                              private     SigilRecognizer recognizer;
-        [SerializeField]                                                                              private new Rigidbody2D     rigidbody;
-        [FormerlySerializedAs("spellStorage"),FormerlySerializedAs("spellContainer"), SerializeField] private     ActionStorage   actionStorage;
+        [SerializeField] private     InputManager    inputManager;
+        [SerializeField] private     SigilRecognizer recognizer;
+        [SerializeField] private new Rigidbody2D     rigidbody;
+        [FormerlySerializedAs("spellStorage"), FormerlySerializedAs("spellContainer"), SerializeField]
+        private ActionStorage actionStorage;
 
         [SerializeField] private float moveSpeed = 2f;
 
@@ -20,6 +21,8 @@ namespace SquallOfSpells
 
         private void OnEnable()
         {
+            Debug.Log("player enabled!");
+
             inputManager.OnMove += HandleNewMoveDirection;
             inputManager.OnAimDirectionChange += HandleAimDirectionChange;
             inputManager.OnAimCast += HandleAimCast;

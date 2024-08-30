@@ -1022,7 +1022,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1198922753
 Transform:
   m_ObjectHideFlags: 0
@@ -1050,11 +1050,55 @@ Canvas:
   m_CorrespondingSourceObject: {fileID: 2606926339448775707, guid: 24a33723d46105968be8973d13d1c5b8, type: 3}
   m_PrefabInstance: {fileID: 240270988028310621}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1466419478
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1466419481}
+  - component: {fileID: 1466419480}
+  m_Layer: 0
+  m_Name: Performance Manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!50 &1466419479 stripped
 Rigidbody2D:
   m_CorrespondingSourceObject: {fileID: 518959049955366800, guid: 9b454918a9a055d84bd117b4f0f88f33, type: 3}
   m_PrefabInstance: {fileID: 3374572613076456356}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1466419480
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1466419478}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fb93c220e48adc7d993cf3fc86b43630, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &1466419481
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1466419478}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 342.5, y: 1444.5, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1631227041
 GameObject:
   m_ObjectHideFlags: 0
@@ -1201,6 +1245,10 @@ PrefabInstance:
       propertyPath: pauseMenuUI
       value: 
       objectReference: {fileID: 973322071}
+    - target: {fileID: 3806503555266898382, guid: 24a33723d46105968be8973d13d1c5b8, type: 3}
+      propertyPath: canvasManager
+      value: 
+      objectReference: {fileID: 11400000, guid: 381c559a058e74ffbb6e651edd6760a9, type: 2}
     - target: {fileID: 3932921153488975545, guid: 24a33723d46105968be8973d13d1c5b8, type: 3}
       propertyPath: m_TargetGraphic
       value: 
@@ -1624,6 +1672,10 @@ PrefabInstance:
       propertyPath: pauseMenuUI
       value: 
       objectReference: {fileID: 973322071}
+    - target: {fileID: 1769184958068405062, guid: dfcd80a7dd369f410aa261afd21c7f2f, type: 3}
+      propertyPath: canvasManager
+      value: 
+      objectReference: {fileID: 11400000, guid: 381c559a058e74ffbb6e651edd6760a9, type: 2}
     - target: {fileID: 3197070021289554100, guid: dfcd80a7dd369f410aa261afd21c7f2f, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -1748,3 +1800,4 @@ SceneRoots:
   - {fileID: 1168980810}
   - {fileID: 4394312170046107181}
   - {fileID: 1631227042}
+  - {fileID: 1466419481}
