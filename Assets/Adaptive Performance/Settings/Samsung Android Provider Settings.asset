@@ -172,9 +172,9 @@ MonoBehaviour:
       m_Scale: 1
       m_VisualImpact: 2
       m_Target: 7
-      m_MaxLevel: 45
-      m_MinBound: 15
-      m_MaxBound: 60
+      m_MaxLevel: 60
+      m_MinBound: 60
+      m_MaxBound: 120
     m_AdaptiveResolution:
       m_Name: Adaptive Resolution
       m_Enabled: 0
