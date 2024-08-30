@@ -19,8 +19,6 @@ namespace SquallOfSpells
 
         private void OnEnable()
         {
-            Debug.Log("player enabled!");
-
             inputManager.OnMove += HandleNewMoveDirection;
             inputManager.OnAimDirectionChange += HandleAimDirectionChange;
             inputManager.OnAimCast += HandleAimCast;
