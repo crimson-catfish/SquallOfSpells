@@ -26,7 +26,12 @@ namespace SquallOfSpells.SpellSystem
 
             if (spellObject.TryGetComponent(out IClick clickCaster))
             {
-                aimableSpell.AimInit();
+                if (spellObject.TryGetComponent(out SpriteRenderer spriteRenderer))
+                {
+                    spriteRenderer.enabled = true;
+
+                    inputManager.OnAimCast += _ => spriteRenderer.enabled = false;
+                }
 
                 inputManager.SwitchToActionMap(inputManager.Controls.Aim);
 
