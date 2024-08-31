@@ -1,5 +1,8 @@
 /Assets/Resources/Runes/
 .directory
+
+*.kra*
+
 mono_crash.mem.*.blob
 /Assets/Scripts/Test.cs
 TestInputSettings.cs
