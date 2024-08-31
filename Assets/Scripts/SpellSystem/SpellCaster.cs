@@ -23,6 +23,8 @@ namespace SquallOfSpells.SpellSystem
 
             if (spellObject.TryGetComponent(out IAimable aimableSpell))
             {
+                aimableSpell.AimInit();
+
                 inputManager.SwitchToActionMap(inputManager.Controls.Aim);
                 inputManager.OnAimCast += aimableSpell.Cast;
                 inputManager.OnAimCast += _ => inputManager.OnAimCast -= aimableSpell.Cast;

@@ -1,18 +1,24 @@
 using SquallOfSpells.Plugins;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace SquallOfSpells.SpellSystem
 {
     public class ShotgunCaster : MonoBehaviour, IAimable
     {
+        [SerializeField] private GameObject     shotgunProjectile;
+        [SerializeField] private SpriteRenderer spriteRenderer;
+
+
         [SerializeField] private int   numberOfBullets;
         [SerializeField] private float spreadAngle;
         [SerializeField] private float spreadHorizontal;
         [SerializeField] private float spreadAlong;
 
-        [SerializeField] private GameObject shotgunProjectile;
 
+        public void AimInit()
+        {
+            spriteRenderer.enabled = true;
+        }
 
         public void Cast(Vector2 direction)
         {
@@ -36,6 +42,8 @@ namespace SquallOfSpells.SpellSystem
 
                 Instantiate(shotgunProjectile, position, rotation);
             }
+
+            spriteRenderer.enabled = false;
         }
     }
 }
