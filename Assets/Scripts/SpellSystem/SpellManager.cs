@@ -5,10 +5,12 @@ using UnityEngine;
 
 namespace SquallOfSpells.SpellSystem
 {
-    public class SpellCaster : MonoBehaviour
+    public class SpellManager : MonoBehaviour
     {
         [SerializeField] private SigilRecognizer recognizer;
         [SerializeField] private InputManager    inputManager;
+        [SerializeField] private AimableSpells   aimableSpells;
+
 
         [SerializeField] private SerializedDictionary<Sigil, GameObject> spells;
 
