@@ -9,8 +9,8 @@ namespace SquallOfSpells.SpellSystem
     {
         [SerializeField] private SigilRecognizer recognizer;
         [SerializeField] private InputManager    inputManager;
-        [SerializeField] private AimableSpells   aimableSpells;
-
+        [FormerlySerializedAs("clickCasters"), FormerlySerializedAs("aimableSpells"), SerializeField]
+        private ClickSpells clickSpells;
 
         [SerializeField] private SerializedDictionary<Sigil, GameObject> spells;
 
@@ -23,13 +23,15 @@ namespace SquallOfSpells.SpellSystem
             if (!spells.TryGetValue(sigil, out GameObject spellObject))
                 return;
 
-            if (spellObject.TryGetComponent(out IAimable aimableSpell))
+
+            if (spellObject.TryGetComponent(out IClick clickCaster))
             {
                 aimableSpell.AimInit();
 
                 inputManager.SwitchToActionMap(inputManager.Controls.Aim);
-                inputManager.OnAimCast += aimableSpell.Cast;
-                inputManager.OnAimCast += _ => inputManager.OnAimCast -= aimableSpell.Cast;
+
+                inputManager.OnAimCast += clickCaster.Cast; 
+                inputManager.OnAimCast += _ => inputManager.OnAimCast -= clickCaster.Cast;
             }
         }
 

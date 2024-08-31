@@ -1,5 +1,36 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1538852873313560626
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8775648526146966388}
+  m_Layer: 0
+  m_Name: HoldSpells
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8775648526146966388
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1538852873313560626}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2719285077934940273}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4230735849268552375
 GameObject:
   m_ObjectHideFlags: 0
@@ -36,6 +67,7 @@ Transform:
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 3353865760171653557}
+  - {fileID: 8775648526146966388}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &9100786171447711631
@@ -81,7 +113,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   recognizer: {fileID: 11400000, guid: 445af773a4ec4b95fb3b1ae81bfb5d0f, type: 2}
   inputManager: {fileID: 11400000, guid: 03d0acaf65387b45e8744ba57b0b8613, type: 2}
-  aimableSpells: {fileID: 0}
+  clickSpells: {fileID: 0}
   spells:
     _serializedList:
     - Key: {fileID: 11400000, guid: 0f8ced6fb111997d091222c5a3a5c683, type: 2}
@@ -172,8 +204,8 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 1.0442069, y: -0.06253074}
-  m_Size: {x: 1.9454088, y: 5.7933044}
+  m_Offset: {x: -0.8777029, y: -0.06253069}
+  m_Size: {x: 1.6641521, y: 5.7933044}
   m_Direction: 0
 --- !u!50 &518959049955366800
 Rigidbody2D:
@@ -213,7 +245,7 @@ GameObject:
   - component: {fileID: 3353865760171653557}
   - component: {fileID: 5918369996953771543}
   m_Layer: 0
-  m_Name: Aimable Spells
+  m_Name: ClickSpells
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
