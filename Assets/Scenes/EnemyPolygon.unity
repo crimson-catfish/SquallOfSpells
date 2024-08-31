@@ -256,11 +256,6 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
---- !u!1 &117395059 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7385254010383006501, guid: 9b454918a9a055d84bd117b4f0f88f33, type: 3}
-  m_PrefabInstance: {fileID: 3374572613076456356}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &244283493
 GameObject:
   m_ObjectHideFlags: 0
@@ -1072,11 +1067,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!50 &1466419479 stripped
-Rigidbody2D:
-  m_CorrespondingSourceObject: {fileID: 518959049955366800, guid: 9b454918a9a055d84bd117b4f0f88f33, type: 3}
-  m_PrefabInstance: {fileID: 3374572613076456356}
-  m_PrefabAsset: {fileID: 0}
 --- !u!114 &1466419480
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1138,11 +1128,6 @@ Transform:
   - {fileID: 1198922753}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1945490198 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2890471075663709355, guid: 9b454918a9a055d84bd117b4f0f88f33, type: 3}
-  m_PrefabInstance: {fileID: 3374572613076456356}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2042440940
 GameObject:
   m_ObjectHideFlags: 0
@@ -1444,10 +1429,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 518959049955366800, guid: 9b454918a9a055d84bd117b4f0f88f33, type: 3}
-      propertyPath: m_Constraints
-      value: 4
-      objectReference: {fileID: 0}
     - target: {fileID: 1249050672756384944, guid: 9b454918a9a055d84bd117b4f0f88f33, type: 3}
       propertyPath: m_Name
       value: Wall
@@ -1457,24 +1438,12 @@ PrefabInstance:
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 2719285077934940273, guid: 9b454918a9a055d84bd117b4f0f88f33, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 0.91
-      objectReference: {fileID: 0}
-    - target: {fileID: 2719285077934940273, guid: 9b454918a9a055d84bd117b4f0f88f33, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 0.91
-      objectReference: {fileID: 0}
-    - target: {fileID: 2719285077934940273, guid: 9b454918a9a055d84bd117b4f0f88f33, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 0.91
-      objectReference: {fileID: 0}
-    - target: {fileID: 2719285077934940273, guid: 9b454918a9a055d84bd117b4f0f88f33, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: -0.158
       objectReference: {fileID: 0}
     - target: {fileID: 2719285077934940273, guid: 9b454918a9a055d84bd117b4f0f88f33, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: -0.155
       objectReference: {fileID: 0}
     - target: {fileID: 2719285077934940273, guid: 9b454918a9a055d84bd117b4f0f88f33, type: 3}
       propertyPath: m_LocalPosition.z
@@ -1552,42 +1521,10 @@ PrefabInstance:
       propertyPath: spreadHorizontal
       value: 0.1
       objectReference: {fileID: 0}
-    - target: {fileID: 7845758583061478427, guid: 9b454918a9a055d84bd117b4f0f88f33, type: 3}
-      propertyPath: recognizer
-      value: 
-      objectReference: {fileID: 11400000, guid: 445af773a4ec4b95fb3b1ae81bfb5d0f, type: 2}
-    - target: {fileID: 7845758583061478427, guid: 9b454918a9a055d84bd117b4f0f88f33, type: 3}
-      propertyPath: spells._serializedList.Array.size
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 7845758583061478427, guid: 9b454918a9a055d84bd117b4f0f88f33, type: 3}
-      propertyPath: spells._serializedList.Array.data[0].Key
-      value: 
-      objectReference: {fileID: 11400000, guid: 0f8ced6fb111997d091222c5a3a5c683, type: 2}
-    - target: {fileID: 7845758583061478427, guid: 9b454918a9a055d84bd117b4f0f88f33, type: 3}
-      propertyPath: spells._serializedList.Array.data[1].Key
-      value: 
-      objectReference: {fileID: 11400000, guid: fd7341f050165cdf3abae5f96fcc3524, type: 2}
-    - target: {fileID: 7845758583061478427, guid: 9b454918a9a055d84bd117b4f0f88f33, type: 3}
-      propertyPath: spells._serializedList.Array.data[0].Value
-      value: 
-      objectReference: {fileID: 117395059}
-    - target: {fileID: 7845758583061478427, guid: 9b454918a9a055d84bd117b4f0f88f33, type: 3}
-      propertyPath: spells._serializedList.Array.data[1].Value
-      value: 
-      objectReference: {fileID: 1945490198}
     - target: {fileID: 9100786171447711631, guid: 9b454918a9a055d84bd117b4f0f88f33, type: 3}
       propertyPath: settings
       value: 
       objectReference: {fileID: 11400000, guid: 5a862e82871ef1e128f61f035ee4829a, type: 2}
-    - target: {fileID: 9100786171447711631, guid: 9b454918a9a055d84bd117b4f0f88f33, type: 3}
-      propertyPath: rigidbody
-      value: 
-      objectReference: {fileID: 1466419479}
-    - target: {fileID: 9100786171447711631, guid: 9b454918a9a055d84bd117b4f0f88f33, type: 3}
-      propertyPath: recognizer
-      value: 
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
