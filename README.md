@@ -1,6 +1,6 @@
 # Squall of spells
 The main idea is game controlled by "sigils" - a schematic symbols, drawn by player. Each of those has the corresponding spell to cast.
-The spell system is ideologically similar to Magic: majority of the sigils are immediately available to the player, but there is neither a list of possible sigil draws nor a list of spells that sigiles cast. The player explores possible combinations in the process. And player improves their own skills rather than improves game character.
+The spell system is ideologically similar to Magicka: majority of the sigils are immediately available to the player, but there is neither a list of possible sigil draws nor a list of spells that sigiles cast. The player explores possible combinations in the process. And player improves their own skills rather than improves game character.
 
 
 ## Instalation:
