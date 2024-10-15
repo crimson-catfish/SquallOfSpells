@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace SquallOfSpells.SpellSystem
 {
-    public class FireballCaster : MonoBehaviour, IClick
+    public class FireballSpell : MonoBehaviour, IDirectable
     {
         [SerializeField] private GameObject fireballProjectile;
 

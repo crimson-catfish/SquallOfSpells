@@ -1473,8 +1473,13 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 8476865661116314535, guid: 9b454918a9a055d84bd117b4f0f88f33, type: 3}
+      propertyPath: m_Name
+      value: Directable Spells Container
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 1538852873313560626, guid: 9b454918a9a055d84bd117b4f0f88f33, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9b454918a9a055d84bd117b4f0f88f33, type: 3}

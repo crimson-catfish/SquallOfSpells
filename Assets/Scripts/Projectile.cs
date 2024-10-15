@@ -1,10 +1,9 @@
 using SquallOfSpells.SpellSystem;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace SquallOfSpells
 {
-    public class Projectile : AttackSpell
+    public class Projectile : DamageDealer
     {
         [SerializeField] private string ownerTag;
         [SerializeField] private float  speed;

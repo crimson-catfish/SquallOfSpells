@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace SquallOfSpells.SpellSystem
 {
-    public class AttackSpell : MonoBehaviour
+    public class DamageDealer : MonoBehaviour
     {
         [SerializeField] private float damage;
 

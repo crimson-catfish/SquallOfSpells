@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace SquallOfSpells.SpellSystem
 {
-    public class ShotgunCaster : MonoBehaviour, IClick
+    public class ShotgunSpell : MonoBehaviour, IDirectable
     {
         [SerializeField] private GameObject shotgunProjectile;
 

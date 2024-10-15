@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Generic;
 using AYellowpaper.SerializedCollections;
 using SquallOfSpells.SigilSystem;
 using UnityEngine;
@@ -14,37 +16,43 @@ namespace SquallOfSpells.SpellSystem
 
         private void HandleRecognized(Sigil sigil)
         {
-            if (sigil == null)
+            if (sigil is null)
                 return;
 
-            if (!spells.TryGetValue(sigil, out GameObject spellObject))
+            if (!spells.ContainsKey(sigil))
+            {
+                Debug.LogWarning("No corresponding spell for " + sigil.name);
+
                 return;
-
-
-            if (spellObject.TryGetComponent(out IClick clickCaster))
-            {
-                if (spellObject.TryGetComponent(out SpriteRenderer spriteRenderer))
-                {
-                    spriteRenderer.enabled = true;
-
-                    inputManager.OnAimCast += _ => spriteRenderer.enabled = false;
-                }
-
-                inputManager.SwitchToActionMap(inputManager.Controls.Aim);
-
-                inputManager.OnAimCast += clickCaster.Cast;
-                inputManager.OnAimCast += _ => inputManager.OnAimCast -= clickCaster.Cast;
             }
 
-            if (spellObject.TryGetComponent(out IHold holdCaster))
-            {
-            }
+            GameObject spellObject = spells[sigil];
+            ICastable spell = spellObject.GetComponent<ICastable>();
 
-            if (spellObject.TryGetComponent(out IPositionable positionableSpell))
+
+            switch (spell)
             {
-                inputManager.SwitchToActionMap(inputManager.Controls.Aim);
+                case IInstant instant:
+                    instant.Cast();
+
+                    break;
+
+                case IDirectable directable:
+                    if (spellObject.TryGetComponent(out SpriteRenderer spriteRenderer))
+                    {
+                        spriteRenderer.enabled = true;
+
+                        inputManager.OnAimCast += _ => spriteRenderer.enabled = false;
+                    }
+
+                    inputManager.SwitchToActionMap(inputManager.Controls.Aim);
+
+                    inputManager.OnAimCast += directable.Cast;
+                    inputManager.OnAimCast += _ => inputManager.OnAimCast -= directable.Cast;
+
+                    break;
             }
-        }
+        }   
 
         private void OnEnable()
         {

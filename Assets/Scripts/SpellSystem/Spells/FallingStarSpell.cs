@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace SquallOfSpells.SpellSystem
 {
-    public class FallingStarCaster : MonoBehaviour, IPositionable
+    public class FallingStarSpell : MonoBehaviour, IPositionable
     {
         [SerializeField] private GameObject fallingStar;
 

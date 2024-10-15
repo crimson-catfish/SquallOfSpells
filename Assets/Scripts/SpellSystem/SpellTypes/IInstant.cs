@@ -1,6 +1,6 @@
 namespace SquallOfSpells.SpellSystem
 {
-    public interface INonTargetable
+    public interface IInstant : ICastable
     {
         public void Cast();
     }
