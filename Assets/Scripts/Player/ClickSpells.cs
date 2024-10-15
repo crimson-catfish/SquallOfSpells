@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace SquallOfSpells
 {
-    public class AimableSpells : MonoBehaviour
+    public class ClickSpells : MonoBehaviour
     {
         [SerializeField] private InputManager inputManager;
 

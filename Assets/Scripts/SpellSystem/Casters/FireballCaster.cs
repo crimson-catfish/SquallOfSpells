@@ -4,7 +4,7 @@ namespace SquallOfSpells.SpellSystem
 {
     public class FireballCaster : MonoBehaviour, IClick
     {
-        [SerializeField] private GameObject     fireballProjectile;
+        [SerializeField] private GameObject fireballProjectile;
 
 
         public void Cast(Vector2 direction)

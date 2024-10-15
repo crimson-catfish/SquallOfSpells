@@ -1,16 +1,13 @@
-using System;
 using AYellowpaper.SerializedCollections;
 using SquallOfSpells.SigilSystem;
 using UnityEngine;
 
 namespace SquallOfSpells.SpellSystem
 {
-    public class SpellManager : MonoBehaviour
+    public class CastManager : MonoBehaviour
     {
         [SerializeField] private SigilRecognizer recognizer;
         [SerializeField] private InputManager    inputManager;
-        [FormerlySerializedAs("clickCasters"), FormerlySerializedAs("aimableSpells"), SerializeField]
-        private ClickSpells clickSpells;
 
         [SerializeField] private SerializedDictionary<Sigil, GameObject> spells;
 
@@ -35,8 +32,17 @@ namespace SquallOfSpells.SpellSystem
 
                 inputManager.SwitchToActionMap(inputManager.Controls.Aim);
 
-                inputManager.OnAimCast += clickCaster.Cast; 
+                inputManager.OnAimCast += clickCaster.Cast;
                 inputManager.OnAimCast += _ => inputManager.OnAimCast -= clickCaster.Cast;
+            }
+
+            if (spellObject.TryGetComponent(out IHold holdCaster))
+            {
+            }
+
+            if (spellObject.TryGetComponent(out IPositionable positionableSpell))
+            {
+                inputManager.SwitchToActionMap(inputManager.Controls.Aim);
             }
         }
 
