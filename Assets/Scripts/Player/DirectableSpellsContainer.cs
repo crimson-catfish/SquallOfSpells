@@ -20,7 +20,7 @@ namespace SquallOfSpells
 
         private void HandleAimDirectionChange(Vector2 direction)
         {
-                float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+            float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
             this.transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle));
         }
     }
