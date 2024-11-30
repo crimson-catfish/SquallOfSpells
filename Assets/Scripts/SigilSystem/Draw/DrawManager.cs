@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace SquallOfSpells.SigilSystem.Draw
 {
@@ -128,7 +127,7 @@ namespace SquallOfSpells.SigilSystem.Draw
             currentSigil.massCenter = momentum / drawPoints.Count;
         }
 
-        Vector2 MapToFrame(Vector2 vector2)
+        private Vector2 MapToFrame(Vector2 vector2)
         {
             return new Vector2
             (

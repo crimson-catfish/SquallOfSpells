@@ -9,7 +9,7 @@ namespace SquallOfSpells
         private void Update()
         {
             Follow();
-            transform.Rotate(rotationSpeed * Time.deltaTime);
+            this.transform.Rotate(rotationSpeed * Time.deltaTime);
         }
     }
 }

@@ -5,8 +5,8 @@ namespace SquallOfSpells.Plugins
 {
     public class Logger
     {
-        private readonly Object _owner;
         private readonly bool   _enabled;
+        private readonly Object _owner;
 
         public Logger(Object owner, bool enabled = true)
         {

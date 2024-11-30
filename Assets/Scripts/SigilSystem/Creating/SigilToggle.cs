@@ -16,11 +16,11 @@ namespace SquallOfSpells.SigilSystem.Creating
 
         [Header("Transition color settings")]
         [SerializeField] private Color normalColor = new(1f, 1f, 1f, 0.75f);
-        [SerializeField] private Color selectedColor        = new(0.74f, 0.74f, 0.74f);
-        [SerializeField] private Color outlineColorSelected = new(0f, 0f, 0f, 0.82f);
+        [SerializeField] private Color      selectedColor        = new(0.74f, 0.74f, 0.74f);
+        [SerializeField] private Color      outlineColorSelected = new(0f, 0f, 0f, 0.82f);
+        private                  ScrollRect scrollRect;
 
-        private Sigil       sigil;
-        private ScrollRect scrollRect;
+        private Sigil sigil;
 
         public Sigil Sigil {
             get => sigil;

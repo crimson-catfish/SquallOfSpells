@@ -8,14 +8,14 @@ namespace SquallOfSpells.SigilSystem.Creating
     public class RecognizedSigilPreview : MonoBehaviour
     {
         [SerializeField] private SigilRecognizer recognizer;
+        private                  RawImage        image;
 
         private RectTransform rectTransform;
-        private RawImage      image;
 
 
         private void Start()
         {
-            rectTransform = this.GetComponent<RectTransform>();
+            rectTransform = GetComponent<RectTransform>();
             image = GetComponent<RawImage>();
         }
 

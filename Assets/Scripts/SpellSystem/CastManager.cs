@@ -1,5 +1,3 @@
-using System;
-using System.Collections.Generic;
 using AYellowpaper.SerializedCollections;
 using SquallOfSpells.SigilSystem;
 using UnityEngine;
@@ -12,6 +10,16 @@ namespace SquallOfSpells.SpellSystem
         [SerializeField] private InputManager    inputManager;
 
         [SerializeField] private SerializedDictionary<Sigil, GameObject> spells;
+
+        private void OnEnable()
+        {
+            recognizer.OnRecognized += HandleRecognized;
+        }
+
+        private void OnDisable()
+        {
+            recognizer.OnRecognized -= HandleRecognized;
+        }
 
 
         private void HandleRecognized(Sigil sigil)
@@ -52,16 +60,6 @@ namespace SquallOfSpells.SpellSystem
 
                     break;
             }
-        }   
-
-        private void OnEnable()
-        {
-            recognizer.OnRecognized += HandleRecognized;
-        }
-
-        private void OnDisable()
-        {
-            recognizer.OnRecognized -= HandleRecognized;
         }
     }
 }

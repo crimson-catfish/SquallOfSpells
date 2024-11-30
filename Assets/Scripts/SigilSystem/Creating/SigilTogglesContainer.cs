@@ -8,11 +8,11 @@ namespace SquallOfSpells.SigilSystem.Creating
 {
     public class SigilTogglesContainer : MonoBehaviour
     {
-        [SerializeField]                                          private InputManager    inputManager;
-        [SerializeField]                                          private SigilRecognizer recognizer;
-        [FormerlySerializedAs("runeTogglePrefab"),SerializeField] private GameObject      sigilTogglePrefab;
-        [SerializeField]                                          private SigilStorage    storage;
-        [SerializeField]                                          private ToggleGroup     toggleGroup;
+        [SerializeField]                                           private InputManager    inputManager;
+        [SerializeField]                                           private SigilRecognizer recognizer;
+        [FormerlySerializedAs("runeTogglePrefab"), SerializeField] private GameObject      sigilTogglePrefab;
+        [SerializeField]                                           private SigilStorage    storage;
+        [SerializeField]                                           private ToggleGroup     toggleGroup;
 
         private readonly Dictionary<int, Toggle> toggles = new();
         private          Sigil                   currentRecognized;

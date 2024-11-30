@@ -1,7 +1,5 @@
 using SquallOfSpells.SigilSystem;
-using SquallOfSpells.SpellSystem;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace SquallOfSpells
 {
@@ -17,14 +15,14 @@ namespace SquallOfSpells
         private Sigil   lastRecognized;
         private Vector2 moveDirection;
 
-        private void OnEnable()
-        {
-            inputManager.OnMove += HandleNewMoveDirection;
-        }
-
         private void FixedUpdate()
         {
             rigidbody.velocity = moveDirection;
+        }
+
+        private void OnEnable()
+        {
+            inputManager.OnMove += HandleNewMoveDirection;
         }
 
         private void HandleNewMoveDirection(Vector2 direction)

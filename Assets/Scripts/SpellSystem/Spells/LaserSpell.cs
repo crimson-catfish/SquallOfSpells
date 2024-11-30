@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 namespace SquallOfSpells.SpellSystem
@@ -6,17 +7,17 @@ namespace SquallOfSpells.SpellSystem
     {
         public void StartCasting(Vector2 direction)
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
 
         public void NewDirection(Vector2 direction)
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
 
         public void Release()
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
     }
 }
