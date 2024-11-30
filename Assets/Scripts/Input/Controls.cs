@@ -179,7 +179,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
             ""id"": ""8180be9d-9e8f-4520-9b34-6fe273809ff1"",
             ""actions"": [
                 {
-                    ""name"": ""Position"",
+                    ""name"": ""Position0"",
                     ""type"": ""Value"",
                     ""id"": ""03add1ce-e451-4256-9d1c-458d0e496335"",
                     ""expectedControlType"": ""Vector2"",
@@ -188,10 +188,28 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": true
                 },
                 {
-                    ""name"": ""Contact"",
-                    ""type"": ""Button"",
+                    ""name"": ""Position1"",
+                    ""type"": ""Value"",
+                    ""id"": ""fe8a0edb-bee4-4080-b2af-763c0ca5f64f"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Contact0"",
+                    ""type"": ""Value"",
                     ""id"": ""7452fa12-faa5-466c-a921-78453d0a5976"",
-                    ""expectedControlType"": ""Button"",
+                    ""expectedControlType"": ""Touch"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Contact1"",
+                    ""type"": ""Value"",
+                    ""id"": ""acb84b36-db2d-4675-8f61-cf5721fe2984"",
+                    ""expectedControlType"": ""Touch"",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
@@ -201,22 +219,44 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""94787778-87a4-4178-9976-1ab7126ef9d9"",
-                    ""path"": ""<Touchscreen>/primaryTouch/position"",
+                    ""path"": ""<Touchscreen>/touch0/position"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Position"",
+                    ""action"": ""Position0"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
                 {
                     ""name"": """",
                     ""id"": ""528ebb1c-0209-488a-8723-1e34f407391f"",
-                    ""path"": ""<Touchscreen>/primaryTouch/press"",
+                    ""path"": ""<Touchscreen>/touch0/press"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Contact"",
+                    ""action"": ""Contact0"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""57c51e2a-f939-4e75-9b18-57be967c91f0"",
+                    ""path"": ""<Touchscreen>/touch1/press"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Contact1"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""61921f50-dcc3-44dc-bc51-22fedf0b40d7"",
+                    ""path"": ""<Touchscreen>/touch1/position"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Position1"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -331,8 +371,10 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         m_Move_Direction = m_Move.FindAction("Direction", throwIfNotFound: true);
         // Draw
         m_Draw = asset.FindActionMap("Draw", throwIfNotFound: true);
-        m_Draw_Position = m_Draw.FindAction("Position", throwIfNotFound: true);
-        m_Draw_Contact = m_Draw.FindAction("Contact", throwIfNotFound: true);
+        m_Draw_Position0 = m_Draw.FindAction("Position0", throwIfNotFound: true);
+        m_Draw_Position1 = m_Draw.FindAction("Position1", throwIfNotFound: true);
+        m_Draw_Contact0 = m_Draw.FindAction("Contact0", throwIfNotFound: true);
+        m_Draw_Contact1 = m_Draw.FindAction("Contact1", throwIfNotFound: true);
         // Aim
         m_Aim = asset.FindActionMap("Aim", throwIfNotFound: true);
         m_Aim_Position = m_Aim.FindAction("Position", throwIfNotFound: true);
@@ -510,14 +552,18 @@ public partial class @Controls: IInputActionCollection2, IDisposable
     // Draw
     private readonly InputActionMap m_Draw;
     private List<IDrawActions> m_DrawActionsCallbackInterfaces = new List<IDrawActions>();
-    private readonly InputAction m_Draw_Position;
-    private readonly InputAction m_Draw_Contact;
+    private readonly InputAction m_Draw_Position0;
+    private readonly InputAction m_Draw_Position1;
+    private readonly InputAction m_Draw_Contact0;
+    private readonly InputAction m_Draw_Contact1;
     public struct DrawActions
     {
         private @Controls m_Wrapper;
         public DrawActions(@Controls wrapper) { m_Wrapper = wrapper; }
-        public InputAction @Position => m_Wrapper.m_Draw_Position;
-        public InputAction @Contact => m_Wrapper.m_Draw_Contact;
+        public InputAction @Position0 => m_Wrapper.m_Draw_Position0;
+        public InputAction @Position1 => m_Wrapper.m_Draw_Position1;
+        public InputAction @Contact0 => m_Wrapper.m_Draw_Contact0;
+        public InputAction @Contact1 => m_Wrapper.m_Draw_Contact1;
         public InputActionMap Get() { return m_Wrapper.m_Draw; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -527,22 +573,34 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         {
             if (instance == null || m_Wrapper.m_DrawActionsCallbackInterfaces.Contains(instance)) return;
             m_Wrapper.m_DrawActionsCallbackInterfaces.Add(instance);
-            @Position.started += instance.OnPosition;
-            @Position.performed += instance.OnPosition;
-            @Position.canceled += instance.OnPosition;
-            @Contact.started += instance.OnContact;
-            @Contact.performed += instance.OnContact;
-            @Contact.canceled += instance.OnContact;
+            @Position0.started += instance.OnPosition0;
+            @Position0.performed += instance.OnPosition0;
+            @Position0.canceled += instance.OnPosition0;
+            @Position1.started += instance.OnPosition1;
+            @Position1.performed += instance.OnPosition1;
+            @Position1.canceled += instance.OnPosition1;
+            @Contact0.started += instance.OnContact0;
+            @Contact0.performed += instance.OnContact0;
+            @Contact0.canceled += instance.OnContact0;
+            @Contact1.started += instance.OnContact1;
+            @Contact1.performed += instance.OnContact1;
+            @Contact1.canceled += instance.OnContact1;
         }
 
         private void UnregisterCallbacks(IDrawActions instance)
         {
-            @Position.started -= instance.OnPosition;
-            @Position.performed -= instance.OnPosition;
-            @Position.canceled -= instance.OnPosition;
-            @Contact.started -= instance.OnContact;
-            @Contact.performed -= instance.OnContact;
-            @Contact.canceled -= instance.OnContact;
+            @Position0.started -= instance.OnPosition0;
+            @Position0.performed -= instance.OnPosition0;
+            @Position0.canceled -= instance.OnPosition0;
+            @Position1.started -= instance.OnPosition1;
+            @Position1.performed -= instance.OnPosition1;
+            @Position1.canceled -= instance.OnPosition1;
+            @Contact0.started -= instance.OnContact0;
+            @Contact0.performed -= instance.OnContact0;
+            @Contact0.canceled -= instance.OnContact0;
+            @Contact1.started -= instance.OnContact1;
+            @Contact1.performed -= instance.OnContact1;
+            @Contact1.canceled -= instance.OnContact1;
         }
 
         public void RemoveCallbacks(IDrawActions instance)
@@ -680,8 +738,10 @@ public partial class @Controls: IInputActionCollection2, IDisposable
     }
     public interface IDrawActions
     {
-        void OnPosition(InputAction.CallbackContext context);
-        void OnContact(InputAction.CallbackContext context);
+        void OnPosition0(InputAction.CallbackContext context);
+        void OnPosition1(InputAction.CallbackContext context);
+        void OnContact0(InputAction.CallbackContext context);
+        void OnContact1(InputAction.CallbackContext context);
     }
     public interface IAimActions
     {

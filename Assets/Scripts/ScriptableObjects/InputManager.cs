@@ -16,7 +16,6 @@ namespace SquallOfSpells
         [SerializeField] private InputSettings settings;
         [SerializeField] private CanvasManager canvasManager;
 
-
         [SerializeField] private bool log;
 
         private readonly float screenWidth = Screen.width;
@@ -104,14 +103,11 @@ namespace SquallOfSpells
 
         private bool IsOverUI(Vector2 point)
         {
-            PointerEventData pointerData;
-            List<RaycastResult> results;
-
             foreach (Canvas canvas in canvasManager.uiCanvases)
             {
-                results = new List<RaycastResult>();
+                List<RaycastResult> results = new();
 
-                pointerData = new PointerEventData(eventSystem) { position = point };
+                PointerEventData pointerData = new(eventSystem) { position = point };
 
                 if (canvas.TryGetComponent<GraphicRaycaster>(out var raycaster) == false)
                     continue;
@@ -149,10 +145,16 @@ namespace SquallOfSpells
         {
             Controls.DrawActions actions = Controls.Draw;
 
-            actions.Contact.started += HandleDrawContactStart;
+            actions.Contact0.started += HandleContact0Start;
+            actions.Contact1.started += HandleContact1Start;
 
-            actions.Position.performed += context =>
-                OnNextDrawPosition?.Invoke(context.ReadValue<Vector2>());
+            // actions.Contact0.started += _ => Debug.Log("Contact 0 started");
+            // actions.Contact0.performed += _ => Debug.Log("Contact 0 performed");
+            // actions.Contact0.canceled += _ => Debug.Log("Contact 0 canceled");
+            //
+            // actions.Contact1.started += _ => Debug.Log("Contact 1 started");
+            // actions.Contact1.performed += _ => Debug.Log("Contact 1 performed");
+            // actions.Contact1.canceled += _ => Debug.Log("Contact 1 canceled");
         }
 
         private void SetAimActions()
@@ -160,27 +162,63 @@ namespace SquallOfSpells
             Controls.Aim.Contact.started += HandleAimContactStart;
         }
 
-        private void HandleDrawContactStart(InputAction.CallbackContext _)
+        private void HandleContact0Start(InputAction.CallbackContext _)
         {
-            Vector2 startPositionPixels = Controls.Draw.Position.ReadValue<Vector2>();
+            Vector2 startPositionPixels = Controls.Draw.Position0.ReadValue<Vector2>();
 
             if (IsOverUI(startPositionPixels))
                 return;
 
+            Controls.Draw.Position0.performed += HandleNewDrawPosition;
+
+            HandleDrawContactStart(startPositionPixels);
+
+            Controls.Draw.Contact0.canceled += HandleDrawContactEnd;
+        }
+
+        private void HandleContact1Start(InputAction.CallbackContext _)
+        {
+            Vector2 startPositionPixels = Controls.Draw.Position1.ReadValue<Vector2>();
+
+            if (IsOverUI(startPositionPixels))
+                return;
+
+            Controls.Draw.Position1.performed += HandleNewDrawPosition;
+
+            HandleDrawContactStart(startPositionPixels);
+
+            Controls.Draw.Contact1.canceled += HandleDrawContactEnd;
+        }
+
+        private void HandleDrawContactStart(Vector2 startPositionPixels)
+        {
             logger.Log("Draw contact start");
 
             OnDrawStart?.Invoke(startPositionPixels);
 
-            Controls.Draw.Contact.canceled += HandleDrawContactEnd;
+            Controls.Draw.Contact0.started -= HandleContact0Start;
+            Controls.Draw.Contact1.started -= HandleContact1Start;
+        }
+
+        private void HandleNewDrawPosition(InputAction.CallbackContext context)
+        {
+            OnNextDrawPosition?.Invoke(context.ReadValue<Vector2>());
         }
 
         private void HandleDrawContactEnd(InputAction.CallbackContext _)
         {
             logger.Log("Draw contact end");
 
-
             OnDrawEnd?.Invoke();
-            Controls.Draw.Contact.canceled -= HandleDrawContactEnd;
+
+            Controls.Draw.Position0.performed -= HandleNewDrawPosition;
+            Controls.Draw.Position1.performed -= HandleNewDrawPosition;
+
+            Controls.Draw.Contact0.started += HandleContact0Start;
+            Controls.Draw.Contact1.started += HandleContact1Start;
+
+            Controls.Draw.Contact0.canceled -= HandleDrawContactEnd;
+            Controls.Draw.Contact1.canceled -= HandleDrawContactEnd;
         }
 
         private void HandleAimContactStart(InputAction.CallbackContext _)
