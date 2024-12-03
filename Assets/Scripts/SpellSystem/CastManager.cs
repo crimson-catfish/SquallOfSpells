@@ -34,32 +34,11 @@ namespace SquallOfSpells.SpellSystem
                 return;
             }
 
+
             GameObject spellObject = spells[sigil];
             ICastable spell = spellObject.GetComponent<ICastable>();
 
-
-            switch (spell)
-            {
-                case IInstant instant:
-                    instant.Cast();
-
-                    break;
-
-                case IDirectable directable:
-                    if (spellObject.TryGetComponent(out SpriteRenderer spriteRenderer))
-                    {
-                        spriteRenderer.enabled = true;
-
-                        inputManager.OnAimCast += _ => spriteRenderer.enabled = false;
-                    }
-
-                    inputManager.SwitchToActionMap(inputManager.Controls.Aim);
-
-                    inputManager.OnAimCast += directable.Cast;
-                    inputManager.OnAimCast += _ => inputManager.OnAimCast -= directable.Cast;
-
-                    break;
-            }
+            spell.Cast();
         }
     }
 }

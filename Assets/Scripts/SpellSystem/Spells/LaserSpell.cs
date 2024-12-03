@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace SquallOfSpells.SpellSystem
 {
-    public class LaserSpell : MonoBehaviour, IDirectableContinious
+    public class LaserSpell : MonoBehaviour
     {
         public void StartCasting(Vector2 direction)
         {

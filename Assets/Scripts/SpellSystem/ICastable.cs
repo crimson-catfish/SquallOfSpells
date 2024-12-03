@@ -4,6 +4,6 @@ namespace SquallOfSpells.SpellSystem
 {
     public interface ICastable
     {
-        GameObject gameObject { get; }
+        public void Cast();
     }
 }
