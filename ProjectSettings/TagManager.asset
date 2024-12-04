@@ -11,13 +11,13 @@ TagManager:
   - 
   - Water
   - UI
-  - Enviroment
+  - Static
   - Enemy
   - EnemyProjectiles
   - PlayerProjectiles
   - PlayerDashing
   - Player
-  - 
+  - Breakable
   - 
   - 
   - 
