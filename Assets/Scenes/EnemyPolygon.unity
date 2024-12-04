@@ -1231,13 +1231,21 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 6332277407908334910, guid: 9b454918a9a055d84bd117b4f0f88f33, type: 3}
+      propertyPath: aimer
+      value: 
+      objectReference: {fileID: 3374572613076456358}
+    - target: {fileID: 6332277407908334910, guid: 9b454918a9a055d84bd117b4f0f88f33, type: 3}
+      propertyPath: autoAimRange
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 7036926769589236473, guid: 9b454918a9a055d84bd117b4f0f88f33, type: 3}
       propertyPath: aimer
       value: 
       objectReference: {fileID: 3374572613076456358}
     - target: {fileID: 7036926769589236473, guid: 9b454918a9a055d84bd117b4f0f88f33, type: 3}
       propertyPath: autoAimRange
-      value: 99999
+      value: 15
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

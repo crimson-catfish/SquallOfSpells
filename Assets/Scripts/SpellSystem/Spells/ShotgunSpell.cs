@@ -1,20 +1,25 @@
 using SquallOfSpells.Plugins;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace SquallOfSpells.SpellSystem
 {
-    public class ShotgunSpell : MonoBehaviour
+    public class ShotgunSpell : MonoBehaviour, ICastable
     {
         [SerializeField] private GameObject shotgunProjectile;
+        [SerializeField] private Aimer      aimer;
 
-        [SerializeField] private int   numberOfBullets;
-        [SerializeField] private float spreadAngle;
-        [SerializeField] private float spreadHorizontal;
-        [SerializeField] private float spreadAlong;
+        [SerializeField]                                   private int   numberOfBullets;
+        [SerializeField]                                   private float spreadAngle;
+        [SerializeField]                                   private float spreadHorizontal;
+        [SerializeField]                                   private float spreadAlong;
+        [FormerlySerializedAs("aimRange"), SerializeField] private float autoAimRange;
 
 
-        public void Cast(Vector2 direction)
+        public void Cast()
         {
+            Vector2 direction = aimer.ClosestTarget(autoAimRange) - (Vector2)this.transform.position;
+
             for (int i = 0; i < numberOfBullets; i++)
             {
                 Vector2 bulletDirection =
