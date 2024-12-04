@@ -29,7 +29,7 @@ namespace SquallOfSpells.SpellSystem
                     }
                 }
 
-                if (closestDistanceSqr != float.MaxValue)
+                if (!Mathf.Approximately(closestDistanceSqr, float.MaxValue))
                     return closestTarget;
             }
 
